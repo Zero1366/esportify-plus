@@ -7,6 +7,7 @@ import { saveSession, type UserRole } from "../session";
 interface DemoUser {
   id: number;
   username: string;
+  password: string;
   role: UserRole;
 }
 
@@ -17,17 +18,14 @@ const passwordInput = document.querySelector<HTMLInputElement>("#passwordInput")
 const demoUsers: DemoUser[] = [
   {
     id: 1,
-    username: "user",
+    username: "player",
+    password: "player123",
     role: "user"
   },
   {
     id: 2,
     username: "organizer",
-    role: "organizer"
-  },
-  {
-    id: 3,
-    username: "organisateur",
+    password: "orga123",
     role: "organizer"
   }
 ];
@@ -48,26 +46,17 @@ function showMessage(message: string): void {
   alert(message);
 }
 
-function loginDemoUser(username: string, password: string): DemoUser | null {
+function findDemoUser(username: string, password: string): DemoUser | null {
   const cleanUsername = username.trim().toLowerCase();
-  const cleanPassword = password.trim().toLowerCase();
+  const cleanPassword = password.trim();
 
-  const user = demoUsers.find((item) => item.username === cleanUsername);
-
-  if (!user) {
-    return null;
-  }
-
-  const validPassword =
-    cleanPassword === cleanUsername ||
-    cleanPassword === "demo" ||
-    cleanPassword === "test";
-
-  if (!validPassword) {
-    return null;
-  }
-
-  return user;
+  return (
+    demoUsers.find(
+      (user) =>
+        user.username.toLowerCase() === cleanUsername &&
+        user.password === cleanPassword
+    ) ?? null
+  );
 }
 
 loginForm?.addEventListener("submit", async (event) => {
@@ -81,9 +70,7 @@ loginForm?.addEventListener("submit", async (event) => {
     return;
   }
 
-  const isAdminLogin = username.toLowerCase() === "admin";
-
-  if (isAdminLogin) {
+  if (username.toLowerCase() === "admin") {
     const result = await loginAdminWithFallback(username, password);
 
     if (!result.success) {
@@ -97,21 +84,24 @@ loginForm?.addEventListener("submit", async (event) => {
       role: result.role
     });
 
-    showMessage(result.message);
     window.location.href = getRedirectUrl(result.role);
     return;
   }
 
-  const demoUser = loginDemoUser(username, password);
+  const demoUser = findDemoUser(username, password);
 
   if (!demoUser) {
     showMessage(
-      "Compte introuvable. Essayez user/user, organizer/organizer ou admin/admin."
+      "Compte introuvable. Essayez admin/admin123, organizer/orga123 ou player/player123."
     );
     return;
   }
 
-  saveSession(demoUser);
+  saveSession({
+    id: demoUser.id,
+    username: demoUser.username,
+    role: demoUser.role
+  });
 
   window.location.href = getRedirectUrl(demoUser.role);
 });
