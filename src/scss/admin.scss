@@ -360,6 +360,266 @@
 }
 
 /* =========================
+   VERSUS BOARD
+========================= */
+
+.admin-versus-board {
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 191, 102, 0.18);
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(23, 15, 42, 0.62),
+      rgba(38, 24, 68, 0.72)
+    );
+}
+
+.admin-versus-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.45rem;
+
+  padding: 0.55rem;
+
+  border-bottom: 1px solid rgba(255, 191, 102, 0.16);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(88, 78, 255, 0.18),
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 82, 82, 0.18)
+    );
+}
+
+.admin-versus-team {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+
+  min-width: 0;
+  min-height: 46px;
+  padding: 0.55rem 0.75rem;
+
+  border-radius: 13px;
+}
+
+.admin-versus-team--nova {
+  justify-content: flex-start;
+
+  border: 1px solid rgba(120, 170, 255, 0.42);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(78, 68, 225, 0.96),
+      rgba(50, 45, 128, 0.96)
+    );
+}
+
+.admin-versus-team--pulse {
+  justify-content: flex-end;
+
+  border: 1px solid rgba(255, 120, 120, 0.42);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(196, 36, 36, 0.96),
+      rgba(112, 44, 76, 0.96)
+    );
+}
+
+.admin-versus-team img {
+  flex: 0 0 auto;
+
+  width: 30px;
+  height: 30px;
+
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.admin-versus-team span {
+  display: inline-block;
+
+  color: #fffaf0;
+
+  font-size: 0.84rem;
+  font-weight: 1000;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.admin-versus-team--pulse img {
+  order: 2;
+}
+
+.admin-versus-team--pulse span {
+  order: 1;
+}
+
+.admin-versus-emblem {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 0 !important;
+}
+
+.admin-versus-emblem__img {
+  display: block;
+
+  width: 42px;
+  height: 42px;
+
+  object-fit: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.admin-versus-list {
+  display: grid;
+}
+
+.admin-versus-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr);
+  align-items: stretch;
+  gap: 0.35rem;
+
+  overflow: hidden;
+  padding: 0.34rem 0.5rem;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+.admin-versus-row:last-child {
+  border-bottom: 0;
+}
+
+.admin-versus-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.admin-versus-row-separator {
+  display: block;
+
+  width: 20px;
+  min-width: 20px;
+
+  font-size: 0;
+  color: transparent;
+}
+
+.admin-versus-player {
+  display: grid;
+  gap: 0.14rem;
+
+  min-width: 0;
+  overflow: hidden;
+
+  padding: 0.38rem 0.46rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.022)
+    );
+}
+
+.admin-player-trigger {
+  display: grid;
+  gap: 0.14rem;
+
+  width: 100%;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+  color: inherit;
+
+  text-align: left;
+}
+
+.admin-player-trigger:disabled {
+  cursor: default;
+}
+
+.admin-versus-player strong,
+.admin-player-trigger strong {
+  margin: 0;
+
+  color: #fffaf0;
+
+  font-family:
+    "Trebuchet MS",
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+
+  font-size: 0.78rem;
+  font-weight: 1000;
+  line-height: 1.05;
+  letter-spacing: 0.025em;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.admin-versus-player span,
+.admin-player-trigger span {
+  color: var(--color-muted);
+
+  font-size: 0.58rem;
+  font-weight: 850;
+  line-height: 1.15;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.admin-versus-player.is-warning {
+  border-color: rgba(255, 191, 102, 0.5);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 191, 102, 0.16),
+      rgba(255, 255, 255, 0.035)
+    );
+}
+
+.admin-versus-player.is-danger {
+  border-color: rgba(255, 82, 82, 0.85);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(155, 35, 55, 0.88),
+      rgba(93, 32, 76, 0.92)
+    );
+}
+
+/* =========================
    SCORE STRIP
 ========================= */
 
@@ -652,6 +912,61 @@
 
   .admin-live-card {
     padding: 0.7rem;
+  }
+
+  .admin-versus-header {
+    grid-template-columns: minmax(0, 1fr) 38px minmax(0, 1fr);
+    gap: 0.3rem;
+    padding: 0.5rem;
+  }
+
+  .admin-versus-team {
+    min-height: 38px;
+    padding: 0.42rem 0.5rem;
+    gap: 0.35rem;
+  }
+
+  .admin-versus-team img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .admin-versus-team span {
+    font-size: 0.58rem;
+  }
+
+  .admin-versus-emblem,
+  .admin-versus-emblem__img {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+  }
+
+  .admin-versus-row {
+    grid-template-columns: minmax(0, 1fr) 12px minmax(0, 1fr);
+    gap: 0.22rem;
+    padding: 0.32rem;
+  }
+
+  .admin-versus-row-separator {
+    width: 12px;
+    min-width: 12px;
+  }
+
+  .admin-versus-player {
+    padding: 0.32rem;
+    border-radius: 10px;
+  }
+
+  .admin-versus-player strong,
+  .admin-player-trigger strong {
+    font-size: 0.58rem;
+  }
+
+  .admin-versus-player span,
+  .admin-player-trigger span {
+    font-size: 0.46rem;
+    line-height: 1.2;
   }
 
   .admin-score-strip strong {

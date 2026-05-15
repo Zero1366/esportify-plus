@@ -6,7 +6,6 @@ import { hasRole, isAuthenticated } from "../session";
 const playIcon = new URL("../../UI/Play.png", import.meta.url).href;
 const pauseIcon = new URL("../../UI/Pause.png", import.meta.url).href;
 const replayIcon = new URL("../../UI/Replay.png", import.meta.url).href;
-
 const versusIcon = new URL("../../UI/vs.png", import.meta.url).href;
 
 const novaTeamLogo = new URL(
@@ -19,11 +18,22 @@ const pulseTeamLogo = new URL(
   import.meta.url
 ).href;
 
+type TeamName = "Nova Squad" | "Red Pulse";
+
 interface LiveStep {
   round: string;
   scoreA: number;
   scoreB: number;
   message: string;
+}
+
+interface AdminPlayer {
+  id: number;
+  username: string;
+  team: TeamName;
+  role: string;
+  points: number;
+  status: string;
 }
 
 const adminLivePanel =
@@ -77,7 +87,159 @@ const liveSteps: LiveStep[] = [
   }
 ];
 
+const adminPlayers: AdminPlayer[] = [
+  {
+    id: 1,
+    username: "Frost",
+    team: "Nova Squad",
+    role: "Capitaine",
+    points: 0,
+    status: "OK"
+  },
+  {
+    id: 2,
+    username: "Lynx",
+    team: "Nova Squad",
+    role: "Joueur",
+    points: 0,
+    status: "OK"
+  },
+  {
+    id: 3,
+    username: "Drift",
+    team: "Nova Squad",
+    role: "Joueur",
+    points: 0,
+    status: "OK"
+  },
+  {
+    id: 4,
+    username: "NovaK",
+    team: "Nova Squad",
+    role: "Joueur",
+    points: 0,
+    status: "OK"
+  },
+  {
+    id: 5,
+    username: "Stryke",
+    team: "Nova Squad",
+    role: "Joueur",
+    points: 0,
+    status: "OK"
+  },
+  {
+    id: 6,
+    username: "RazeX",
+    team: "Red Pulse",
+    role: "Joueur",
+    points: 0,
+    status: "OK"
+  },
+  {
+    id: 7,
+    username: "Venom",
+    team: "Red Pulse",
+    role: "Joueur",
+    points: 0,
+    status: "OK"
+  },
+  {
+    id: 8,
+    username: "Rift",
+    team: "Red Pulse",
+    role: "Capitaine",
+    points: 0,
+    status: "OK"
+  },
+  {
+    id: 9,
+    username: "Kairo",
+    team: "Red Pulse",
+    role: "Joueur",
+    points: 0,
+    status: "OK"
+  },
+  {
+    id: 10,
+    username: "Blaze",
+    team: "Red Pulse",
+    role: "Joueur",
+    points: 0,
+    status: "OK"
+  }
+];
+
+function syncPlayersWithLiveStep(): void {
+  adminPlayers.forEach((player) => {
+    player.points = 0;
+    player.status = "OK";
+  });
+
+  if (currentStep >= 1) {
+    adminPlayers[0].points = 1;
+  }
+
+  if (currentStep >= 2) {
+    adminPlayers[1].points = 2;
+    adminPlayers[5].points = 1;
+    adminPlayers[7].points = 2;
+  }
+
+  if (currentStep >= 3) {
+    adminPlayers[2].points = 2;
+    adminPlayers[6].points = 2;
+    adminPlayers[8].points = 1;
+  }
+
+  if (currentStep >= 4) {
+    adminPlayers[7].points = 4;
+    adminPlayers[7].status = "À vérifier";
+  }
+
+  if (currentStep >= 5) {
+    adminPlayers[8].points = 3;
+    adminPlayers[8].status = "Surveillé";
+  }
+
+  if (currentStep >= 6) {
+    adminPlayers[3].points = 3;
+    adminPlayers[4].points = 5;
+    adminPlayers[9].points = 1;
+  }
+}
+
+function renderPlayerCell(player: AdminPlayer): string {
+  const statusClass =
+    player.status === "À vérifier"
+      ? "is-danger"
+      : player.status === "Surveillé"
+        ? "is-warning"
+        : "";
+
+  return `
+    <div class="admin-versus-player ${statusClass}">
+      <button
+        class="admin-player-trigger"
+        type="button"
+        disabled
+      >
+        <strong>${player.username}</strong>
+        <span>${player.role} · ${player.points} pts · ${player.status}</span>
+      </button>
+    </div>
+  `;
+}
+
 function renderVersusBoard(): string {
+  const novaPlayers = adminPlayers.filter(
+    (player) => player.team === "Nova Squad"
+  );
+
+  const pulsePlayers = adminPlayers.filter(
+    (player) => player.team === "Red Pulse"
+  );
+
   return `
     <section class="admin-versus-board">
       <header class="admin-versus-header">
@@ -100,12 +262,32 @@ function renderVersusBoard(): string {
           <span>Red Pulse</span>
         </div>
       </header>
+
+      <div class="admin-versus-list">
+        ${novaPlayers
+          .map((novaPlayer, index) => {
+            const pulsePlayer = pulsePlayers[index];
+
+            if (!pulsePlayer) return "";
+
+            return `
+              <div class="admin-versus-row">
+                ${renderPlayerCell(novaPlayer)}
+                <span class="admin-versus-row-separator"></span>
+                ${renderPlayerCell(pulsePlayer)}
+              </div>
+            `;
+          })
+          .join("")}
+      </div>
     </section>
   `;
 }
 
 function renderLivePanel(): void {
   if (!adminLivePanel) return;
+
+  syncPlayersWithLiveStep();
 
   const step = liveSteps[currentStep];
 
