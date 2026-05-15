@@ -41,6 +41,7 @@ const adminLivePanel =
 
 let currentStep = 0;
 let isLivePlaying = false;
+let liveTimer: number | null = null;
 
 const liveSteps: LiveStep[] = [
   {
@@ -88,87 +89,24 @@ const liveSteps: LiveStep[] = [
 ];
 
 const adminPlayers: AdminPlayer[] = [
-  {
-    id: 1,
-    username: "Frost",
-    team: "Nova Squad",
-    role: "Capitaine",
-    points: 0,
-    status: "OK"
-  },
-  {
-    id: 2,
-    username: "Lynx",
-    team: "Nova Squad",
-    role: "Joueur",
-    points: 0,
-    status: "OK"
-  },
-  {
-    id: 3,
-    username: "Drift",
-    team: "Nova Squad",
-    role: "Joueur",
-    points: 0,
-    status: "OK"
-  },
-  {
-    id: 4,
-    username: "NovaK",
-    team: "Nova Squad",
-    role: "Joueur",
-    points: 0,
-    status: "OK"
-  },
-  {
-    id: 5,
-    username: "Stryke",
-    team: "Nova Squad",
-    role: "Joueur",
-    points: 0,
-    status: "OK"
-  },
-  {
-    id: 6,
-    username: "RazeX",
-    team: "Red Pulse",
-    role: "Joueur",
-    points: 0,
-    status: "OK"
-  },
-  {
-    id: 7,
-    username: "Venom",
-    team: "Red Pulse",
-    role: "Joueur",
-    points: 0,
-    status: "OK"
-  },
-  {
-    id: 8,
-    username: "Rift",
-    team: "Red Pulse",
-    role: "Capitaine",
-    points: 0,
-    status: "OK"
-  },
-  {
-    id: 9,
-    username: "Kairo",
-    team: "Red Pulse",
-    role: "Joueur",
-    points: 0,
-    status: "OK"
-  },
-  {
-    id: 10,
-    username: "Blaze",
-    team: "Red Pulse",
-    role: "Joueur",
-    points: 0,
-    status: "OK"
-  }
+  { id: 1, username: "Frost", team: "Nova Squad", role: "Capitaine", points: 0, status: "OK" },
+  { id: 2, username: "Lynx", team: "Nova Squad", role: "Joueur", points: 0, status: "OK" },
+  { id: 3, username: "Drift", team: "Nova Squad", role: "Joueur", points: 0, status: "OK" },
+  { id: 4, username: "NovaK", team: "Nova Squad", role: "Joueur", points: 0, status: "OK" },
+  { id: 5, username: "Stryke", team: "Nova Squad", role: "Joueur", points: 0, status: "OK" },
+  { id: 6, username: "RazeX", team: "Red Pulse", role: "Joueur", points: 0, status: "OK" },
+  { id: 7, username: "Venom", team: "Red Pulse", role: "Joueur", points: 0, status: "OK" },
+  { id: 8, username: "Rift", team: "Red Pulse", role: "Capitaine", points: 0, status: "OK" },
+  { id: 9, username: "Kairo", team: "Red Pulse", role: "Joueur", points: 0, status: "OK" },
+  { id: 10, username: "Blaze", team: "Red Pulse", role: "Joueur", points: 0, status: "OK" }
 ];
+
+function stopLiveTimer(): void {
+  if (liveTimer !== null) {
+    window.clearInterval(liveTimer);
+    liveTimer = null;
+  }
+}
 
 function syncPlayersWithLiveStep(): void {
   adminPlayers.forEach((player) => {
@@ -377,24 +315,34 @@ function bindReplayControls(): void {
   );
 
   playButton?.addEventListener("click", () => {
+    if (liveTimer !== null) return;
+
     isLivePlaying = true;
-
-    if (currentStep < liveSteps.length - 1) {
-      currentStep++;
-    }
-
     renderLivePanel();
+
+    liveTimer = window.setInterval(() => {
+      if (currentStep >= liveSteps.length - 1) {
+        stopLiveTimer();
+        isLivePlaying = false;
+        renderLivePanel();
+        return;
+      }
+
+      currentStep++;
+      renderLivePanel();
+    }, 1800);
   });
 
   pauseButton?.addEventListener("click", () => {
+    stopLiveTimer();
     isLivePlaying = false;
     renderLivePanel();
   });
 
   restartButton?.addEventListener("click", () => {
+    stopLiveTimer();
     isLivePlaying = false;
     currentStep = 0;
-
     renderLivePanel();
   });
 }
@@ -407,7 +355,6 @@ function protectPage(): void {
 }
 
 protectPage();
-
 renderLivePanel();
 
 document.body.classList.add("is-ready");
