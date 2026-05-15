@@ -311,3 +311,60 @@
     }
   }
 }
+
+/* =========================
+   REPLAY FINAL POLISH
+========================= */
+
+.replay-page {
+  .replay-card,
+  .replay-actions-card {
+    border-color: rgba(255, 191, 102, 0.24);
+  }
+
+  .replay-status {
+    overflow-wrap: anywhere;
+  }
+
+  .replay-control-btn::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.14),
+        transparent 45%
+      );
+
+    pointer-events: none;
+  }
+
+  .replay-control-btn img {
+    position: relative;
+    z-index: 1;
+
+    filter:
+      drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45))
+      brightness(1.05);
+  }
+
+  .replay-feed li:first-child,
+  .replay-feed__item:first-child {
+    border-color: rgba(255, 191, 102, 0.28);
+  }
+}
+
+@media (max-width: 560px) {
+  .replay-page {
+    .replay-controls {
+      gap: 0.6rem;
+    }
+
+    .replay-score {
+      margin: 1rem 0;
+    }
+  }
+}

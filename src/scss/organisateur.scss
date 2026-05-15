@@ -289,3 +289,51 @@
     justify-content: center;
   }
 }
+
+/* =========================
+   ORGANIZER FINAL POLISH
+========================= */
+
+.organizer-stat,
+.available-event-card,
+.organizer-request-block {
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.organizer-stat:hover,
+.available-event-card:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(255, 191, 102, 0.32);
+
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+.organizer-request-form input:focus,
+.organizer-request-form select:focus {
+  border-color: var(--color-accent);
+}
+
+.available-event-card__title,
+.available-event-card__meta {
+  word-break: break-word;
+}
+
+@media (max-width: 560px) {
+  .organizer-stat:hover,
+  .available-event-card:hover {
+    transform: none;
+  }
+
+  .available-event-card__title {
+    font-size: 0.9rem;
+  }
+
+  .available-event-card__meta {
+    font-size: 0.68rem;
+  }
+}

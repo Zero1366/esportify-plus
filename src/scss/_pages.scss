@@ -616,3 +616,64 @@
     height: 100px;
   }
 }
+
+/* =========================
+   FINAL POLISH
+========================= */
+
+.event-card,
+.list-item,
+.auth-card,
+.auth-demo-info {
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.list-item:hover,
+.auth-demo-info:hover {
+  border-color: rgba(255, 191, 102, 0.28);
+}
+
+.event-status {
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.auth-demo-info strong {
+  color: var(--color-accent-soft);
+}
+
+.events-page .event-card .btn {
+  margin-top: auto;
+}
+
+.toast {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 560px) {
+  .mobile-view-tabs {
+    top: 0.5rem;
+  }
+
+  .events-page .events-filters,
+  .events-page .filters-card {
+    margin-bottom: 1rem;
+  }
+
+  .event-status {
+    font-size: 0.7rem;
+  }
+
+  .event-card h2,
+  .event-card h3 {
+    font-size: 1rem;
+  }
+
+  .toast {
+    font-size: 0.9rem;
+  }
+}
