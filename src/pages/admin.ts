@@ -8,24 +8,12 @@ const pauseIcon = new URL("../../UI/Pause.png", import.meta.url).href;
 const replayIcon = new URL("../../UI/Replay.png", import.meta.url).href;
 const versusIcon = new URL("../../UI/vs.png", import.meta.url).href;
 
-const novaTeamLogo = new URL(
-  "../../LogoTeams/CardNovaSquad.png",
-  import.meta.url
-).href;
+const novaTeamLogo = new URL("../../LogoTeams/CardNovaSquad.png", import.meta.url).href;
+const pulseTeamLogo = new URL("../../LogoTeams/RedPulseCard.png", import.meta.url).href;
 
-const pulseTeamLogo = new URL(
-  "../../LogoTeams/RedPulseCard.png",
-  import.meta.url
-).href;
-
+type PlayerStatus = "active" | "warned" | "suspended" | "banned";
+type RiskLevel = "safe" | "medium" | "high";
 type TeamName = "Nova Squad" | "Red Pulse";
-
-interface LiveStep {
-  round: string;
-  scoreA: number;
-  scoreB: number;
-  message: string;
-}
 
 interface AdminPlayer {
   id: number;
@@ -33,38 +21,56 @@ interface AdminPlayer {
   team: TeamName;
   role: string;
   points: number;
-  status: string;
+  risk: RiskLevel;
+  status: PlayerStatus;
 }
 
-const adminLivePanel =
-  document.querySelector<HTMLElement>("#adminLivePanel");
+interface LiveStep {
+  round: string;
+  scoreA: number;
+  scoreB: number;
+  message: string;
+  incidentPlayerId: number | null;
+}
+
+const adminLivePanel = document.querySelector<HTMLElement>("#adminLivePanel");
+const adminLastAction = document.querySelector<HTMLElement>("#adminLastAction");
 
 let currentStep = 0;
 let isLivePlaying = false;
 let liveTimer: number | null = null;
+let openedPlayerActionsId: number | null = null;
+
+const ignoredIncidentPlayerIds = new Set<number>();
 
 const liveSteps: LiveStep[] = [
-  { round: "Avant-match", scoreA: 0, scoreB: 0, message: "Connexion des équipes." },
-  { round: "Round 1", scoreA: 1, scoreB: 0, message: "Nova Squad prend l'avantage." },
-  { round: "Round 8", scoreA: 5, scoreB: 3, message: "Red Pulse revient." },
-  { round: "Round 14", scoreA: 8, scoreB: 6, message: "Rythme élevé côté Red Pulse." },
-  { round: "Round 18", scoreA: 10, scoreB: 9, message: "Action suspecte détectée." },
-  { round: "Round 21", scoreA: 12, scoreB: 10, message: "Message agressif signalé." },
-  { round: "Round 24", scoreA: 13, scoreB: 11, message: "Match terminé." }
+  { round: "Avant-match", scoreA: 0, scoreB: 0, message: "Connexion des équipes.", incidentPlayerId: null },
+  { round: "Round 1", scoreA: 1, scoreB: 0, message: "Nova Squad prend l'avantage.", incidentPlayerId: null },
+  { round: "Round 8", scoreA: 5, scoreB: 3, message: "Red Pulse revient.", incidentPlayerId: null },
+  { round: "Round 14", scoreA: 8, scoreB: 6, message: "Rythme élevé côté Red Pulse.", incidentPlayerId: null },
+  { round: "Round 18", scoreA: 10, scoreB: 9, message: "Action suspecte détectée.", incidentPlayerId: 8 },
+  { round: "Round 21", scoreA: 12, scoreB: 10, message: "Message agressif signalé.", incidentPlayerId: 9 },
+  { round: "Round 24", scoreA: 13, scoreB: 11, message: "Match terminé.", incidentPlayerId: null }
 ];
 
 const adminPlayers: AdminPlayer[] = [
-  { id: 1, username: "Frost", team: "Nova Squad", role: "Capitaine", points: 0, status: "OK" },
-  { id: 2, username: "Lynx", team: "Nova Squad", role: "Joueur", points: 0, status: "OK" },
-  { id: 3, username: "Drift", team: "Nova Squad", role: "Joueur", points: 0, status: "OK" },
-  { id: 4, username: "NovaK", team: "Nova Squad", role: "Joueur", points: 0, status: "OK" },
-  { id: 5, username: "Stryke", team: "Nova Squad", role: "Joueur", points: 0, status: "OK" },
-  { id: 6, username: "RazeX", team: "Red Pulse", role: "Joueur", points: 0, status: "OK" },
-  { id: 7, username: "Venom", team: "Red Pulse", role: "Joueur", points: 0, status: "OK" },
-  { id: 8, username: "Rift", team: "Red Pulse", role: "Capitaine", points: 0, status: "OK" },
-  { id: 9, username: "Kairo", team: "Red Pulse", role: "Joueur", points: 0, status: "OK" },
-  { id: 10, username: "Blaze", team: "Red Pulse", role: "Joueur", points: 0, status: "OK" }
+  { id: 1, username: "Frost", team: "Nova Squad", role: "Capitaine", points: 0, risk: "safe", status: "active" },
+  { id: 2, username: "Lynx", team: "Nova Squad", role: "Joueur", points: 0, risk: "safe", status: "active" },
+  { id: 3, username: "Drift", team: "Nova Squad", role: "Joueur", points: 0, risk: "safe", status: "active" },
+  { id: 4, username: "NovaK", team: "Nova Squad", role: "Joueur", points: 0, risk: "safe", status: "active" },
+  { id: 5, username: "Stryke", team: "Nova Squad", role: "Joueur", points: 0, risk: "safe", status: "active" },
+  { id: 6, username: "RazeX", team: "Red Pulse", role: "Joueur", points: 0, risk: "safe", status: "active" },
+  { id: 7, username: "Venom", team: "Red Pulse", role: "Joueur", points: 0, risk: "safe", status: "active" },
+  { id: 8, username: "Rift", team: "Red Pulse", role: "Capitaine", points: 0, risk: "safe", status: "active" },
+  { id: 9, username: "Kairo", team: "Red Pulse", role: "Joueur", points: 0, risk: "safe", status: "active" },
+  { id: 10, username: "Blaze", team: "Red Pulse", role: "Joueur", points: 0, risk: "safe", status: "active" }
 ];
+
+function setLastAction(message: string): void {
+  if (adminLastAction) {
+    adminLastAction.textContent = `Dernière action : ${message}`;
+  }
+}
 
 function stopLiveTimer(): void {
   if (liveTimer !== null) {
@@ -73,10 +79,26 @@ function stopLiveTimer(): void {
   }
 }
 
+function getRiskLabel(risk: RiskLevel): string {
+  if (risk === "high") return "À vérifier";
+  if (risk === "medium") return "Surveillé";
+  return "OK";
+}
+
+function getStatusLabel(status: PlayerStatus): string {
+  if (status === "warned") return "Averti";
+  if (status === "suspended") return "Suspendu";
+  if (status === "banned") return "Banni";
+  return "Actif";
+}
+
 function syncPlayersWithLiveStep(): void {
   adminPlayers.forEach((player) => {
     player.points = 0;
-    player.status = "OK";
+
+    if (player.status === "active" && !ignoredIncidentPlayerIds.has(player.id)) {
+      player.risk = "safe";
+    }
   });
 
   if (currentStep >= 1) adminPlayers[0].points = 1;
@@ -95,12 +117,18 @@ function syncPlayersWithLiveStep(): void {
 
   if (currentStep >= 4) {
     adminPlayers[7].points = 4;
-    adminPlayers[7].status = "À vérifier";
+
+    if (adminPlayers[7].status === "active" && !ignoredIncidentPlayerIds.has(8)) {
+      adminPlayers[7].risk = "high";
+    }
   }
 
   if (currentStep >= 5) {
     adminPlayers[8].points = 3;
-    adminPlayers[8].status = "Surveillé";
+
+    if (adminPlayers[8].status === "active" && !ignoredIncidentPlayerIds.has(9)) {
+      adminPlayers[8].risk = "medium";
+    }
   }
 
   if (currentStep >= 6) {
@@ -110,32 +138,46 @@ function syncPlayersWithLiveStep(): void {
   }
 }
 
-function renderPlayerCell(player: AdminPlayer): string {
-  const statusClass =
-    player.status === "À vérifier"
-      ? "is-danger"
-      : player.status === "Surveillé"
-        ? "is-warning"
-        : "";
+function renderPlayerActions(player: AdminPlayer): string {
+  if (openedPlayerActionsId !== player.id || player.status === "banned") {
+    return "";
+  }
 
   return `
-    <div class="admin-versus-player ${statusClass}">
-      <button class="admin-player-trigger" type="button" disabled>
+    <div class="admin-inline-actions">
+      <button class="btn btn--ghost btn--small admin-player-ignore-btn" type="button" data-id="${player.id}">Ignorer</button>
+      <button class="btn btn--ghost btn--small admin-player-warn-btn" type="button" data-id="${player.id}">Avertir</button>
+      <button class="btn btn--ghost btn--small admin-player-suspend-btn" type="button" data-id="${player.id}">Suspendre</button>
+      <button class="btn btn--ghost btn--small admin-player-ban-btn" type="button" data-id="${player.id}">Bannir</button>
+    </div>
+  `;
+}
+
+function renderPlayerCell(player: AdminPlayer): string {
+  const canOpenActions = player.risk !== "safe" && player.status === "active";
+  const selectedClass = openedPlayerActionsId === player.id ? "is-selected" : "";
+  const riskClass = player.risk === "high" ? "is-danger" : player.risk === "medium" ? "is-warning" : "";
+
+  return `
+    <div class="admin-versus-player ${riskClass} ${selectedClass} ${canOpenActions ? "is-clickable" : ""}">
+      <button
+        class="admin-player-trigger"
+        type="button"
+        data-id="${player.id}"
+        ${canOpenActions ? "" : "disabled"}
+      >
         <strong>${player.username}</strong>
-        <span>${player.role} · ${player.points} pts · ${player.status}</span>
+        <span>${player.role} · ${player.points} pts · ${getRiskLabel(player.risk)} · ${getStatusLabel(player.status)}</span>
       </button>
+
+      ${renderPlayerActions(player)}
     </div>
   `;
 }
 
 function renderVersusBoard(): string {
-  const novaPlayers = adminPlayers.filter(
-    (player) => player.team === "Nova Squad"
-  );
-
-  const pulsePlayers = adminPlayers.filter(
-    (player) => player.team === "Red Pulse"
-  );
+  const novaPlayers = adminPlayers.filter((player) => player.team === "Nova Squad");
+  const pulsePlayers = adminPlayers.filter((player) => player.team === "Red Pulse");
 
   return `
     <section class="admin-versus-board">
@@ -156,20 +198,18 @@ function renderVersusBoard(): string {
       </header>
 
       <div class="admin-versus-list">
-        ${novaPlayers
-          .map((novaPlayer, index) => {
-            const pulsePlayer = pulsePlayers[index];
-            if (!pulsePlayer) return "";
+        ${novaPlayers.map((novaPlayer, index) => {
+          const pulsePlayer = pulsePlayers[index];
+          if (!pulsePlayer) return "";
 
-            return `
-              <div class="admin-versus-row">
-                ${renderPlayerCell(novaPlayer)}
-                <span class="admin-versus-row-separator"></span>
-                ${renderPlayerCell(pulsePlayer)}
-              </div>
-            `;
-          })
-          .join("")}
+          return `
+            <div class="admin-versus-row">
+              ${renderPlayerCell(novaPlayer)}
+              <span class="admin-versus-row-separator"></span>
+              ${renderPlayerCell(pulsePlayer)}
+            </div>
+          `;
+        }).join("")}
       </div>
     </section>
   `;
@@ -218,27 +258,15 @@ function renderLivePanel(): void {
       <p class="organizer-summary">${step.message}</p>
 
       <div class="replay-controls">
-        <button
-          class="replay-control-btn admin-live-play-btn ${isLivePlaying ? "is-active" : ""}"
-          type="button"
-          aria-label="Lire le live"
-        >
+        <button class="replay-control-btn admin-live-play-btn ${isLivePlaying ? "is-active" : ""}" type="button" aria-label="Lire le live">
           <img src="${playIcon}" alt="" aria-hidden="true" />
         </button>
 
-        <button
-          class="replay-control-btn admin-live-pause-btn ${!isLivePlaying ? "is-active" : ""}"
-          type="button"
-          aria-label="Mettre le live en pause"
-        >
+        <button class="replay-control-btn admin-live-pause-btn ${!isLivePlaying ? "is-active" : ""}" type="button" aria-label="Mettre le live en pause">
           <img src="${pauseIcon}" alt="" aria-hidden="true" />
         </button>
 
-        <button
-          class="replay-control-btn admin-live-restart-btn"
-          type="button"
-          aria-label="Réinitialiser le live"
-        >
+        <button class="replay-control-btn admin-live-restart-btn" type="button" aria-label="Réinitialiser le live">
           <img src="${replayIcon}" alt="" aria-hidden="true" />
         </button>
       </div>
@@ -250,6 +278,7 @@ function advanceLiveStep(): void {
   if (currentStep >= liveSteps.length - 1) {
     stopLiveTimer();
     isLivePlaying = false;
+    setLastAction("Match terminé.");
     renderLivePanel();
     return;
   }
@@ -270,21 +299,66 @@ function playLive(): void {
 function pauseLive(): void {
   stopLiveTimer();
   isLivePlaying = false;
+  setLastAction("Live mis en pause.");
   renderLivePanel();
 }
 
 function restartLive(): void {
   stopLiveTimer();
-  isLivePlaying = false;
+
   currentStep = 0;
+  isLivePlaying = false;
+  openedPlayerActionsId = null;
+  ignoredIncidentPlayerIds.clear();
+
+  adminPlayers.forEach((player) => {
+    player.points = 0;
+    player.risk = "safe";
+    player.status = "active";
+  });
+
+  setLastAction("Live réinitialisé.");
   renderLivePanel();
 }
 
-function bindReplayControls(): void {
+function updatePlayerStatus(id: number, status: PlayerStatus): void {
+  const player = adminPlayers.find((item) => item.id === id);
+  if (!player) return;
+
+  player.status = status;
+  openedPlayerActionsId = null;
+
+  if (status === "active") {
+    player.risk = "safe";
+    ignoredIncidentPlayerIds.add(player.id);
+  }
+
+  if (status === "warned") {
+    player.risk = "medium";
+  }
+
+  if (status === "suspended" || status === "banned") {
+    player.risk = "high";
+  }
+
+  setLastAction(`${player.username} : ${getStatusLabel(status)}.`);
+  renderLivePanel();
+}
+
+function bindAdminActions(): void {
   document.addEventListener("click", (event) => {
     const target = event.target;
 
     if (!(target instanceof HTMLElement)) return;
+
+    const playerTrigger = target.closest(".admin-player-trigger");
+
+    if (playerTrigger instanceof HTMLElement) {
+      const playerId = Number(playerTrigger.dataset.id);
+      openedPlayerActionsId = openedPlayerActionsId === playerId ? null : playerId;
+      renderLivePanel();
+      return;
+    }
 
     if (target.closest(".admin-live-play-btn")) {
       playLive();
@@ -298,6 +372,30 @@ function bindReplayControls(): void {
 
     if (target.closest(".admin-live-restart-btn")) {
       restartLive();
+      return;
+    }
+
+    const ignoreButton = target.closest(".admin-player-ignore-btn");
+    if (ignoreButton instanceof HTMLElement) {
+      updatePlayerStatus(Number(ignoreButton.dataset.id), "active");
+      return;
+    }
+
+    const warnButton = target.closest(".admin-player-warn-btn");
+    if (warnButton instanceof HTMLElement) {
+      updatePlayerStatus(Number(warnButton.dataset.id), "warned");
+      return;
+    }
+
+    const suspendButton = target.closest(".admin-player-suspend-btn");
+    if (suspendButton instanceof HTMLElement) {
+      updatePlayerStatus(Number(suspendButton.dataset.id), "suspended");
+      return;
+    }
+
+    const banButton = target.closest(".admin-player-ban-btn");
+    if (banButton instanceof HTMLElement) {
+      updatePlayerStatus(Number(banButton.dataset.id), "banned");
     }
   });
 }
@@ -311,6 +409,6 @@ function protectPage(): void {
 
 protectPage();
 renderLivePanel();
-bindReplayControls();
+bindAdminActions();
 
 document.body.classList.add("is-ready");
