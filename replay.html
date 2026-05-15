@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Replay - Esportify+</title>
+
+  <meta
+    name="description"
+    content="Replay simulé d'un match e-sport sur Esportify+."
+  />
+
+  <script type="module" src="/src/pages/replay.ts"></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <a
+      class="site-logo"
+      href="/index.html"
+      aria-label="Retour à l'accueil Esportify+"
+    >
+      <img src="/Logo/logo.png" alt="Logo Esportify+" />
+    </a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/index.html">Accueil</a>
+      <a href="/events.html">Événements</a>
+      <a href="/replay.html" aria-current="page">Replay</a>
+      <a href="/contact.html">Contact</a>
+
+      <div id="sessionNav"></div>
+    </nav>
+  </header>
+
+  <main class="page replay-page">
+    <section class="hero">
+      <p class="eyebrow">Replay simulé</p>
+
+      <h1>Valorant Night Clash</h1>
+
+      <p>
+        Rejoue un match terminé avec score simulé,
+        actions de match et contrôles simples en TypeScript.
+      </p>
+    </section>
+
+    <section class="card replay-card">
+      <header class="section-title">
+        <p class="eyebrow">Match terminé</p>
+        <h2>Nova Squad vs Red Pulse</h2>
+      </header>
+
+      <div class="replay-score" aria-label="Score du match">
+        <div class="team team--nova">
+          <img src="/LogoTeams/CardNovaSquad.png" alt="Nova Squad" />
+          <strong id="replayScoreA">0</strong>
+        </div>
+
+        <span class="versus" aria-label="Versus">
+          <img src="/UI/vs.png" alt="" aria-hidden="true" />
+        </span>
+
+        <div class="team team--pulse">
+          <img src="/LogoTeams/RedPulseCard.png" alt="Red Pulse" />
+          <strong id="replayScoreB">0</strong>
+        </div>
+      </div>
+
+      <p id="replayStatus" class="replay-status" aria-live="polite">
+        Replay prêt · Score initial 0 - 0
+      </p>
+
+      <div class="replay-controls" aria-label="Contrôles du replay">
+        <button
+          id="playReplayBtn"
+          class="replay-control-btn"
+          type="button"
+          aria-label="Lire le replay"
+        >
+          <img src="/UI/play.png" alt="" aria-hidden="true" />
+        </button>
+
+        <button
+          id="pauseReplayBtn"
+          class="replay-control-btn"
+          type="button"
+          aria-label="Mettre le replay en pause"
+        >
+          <img src="/UI/pause.png" alt="" aria-hidden="true" />
+        </button>
+
+        <button
+          id="restartReplayBtn"
+          class="replay-control-btn"
+          type="button"
+          aria-label="Recommencer le replay"
+        >
+          <img src="/UI/replay.png" alt="" aria-hidden="true" />
+        </button>
+      </div>
+    </section>
+
+    <section class="card replay-actions-card">
+      <h2>Actions du match</h2>
+
+      <ul id="replayFeed" class="replay-feed">
+        <li>00:00 · Le replay est prêt. Score : 0 - 0.</li>
+      </ul>
+    </section>
+  </main>
+
+  <div
+    id="toastContainer"
+    class="toast-root"
+    aria-live="assertive"
+    aria-atomic="true"
+  ></div>
+</body>
+</html>

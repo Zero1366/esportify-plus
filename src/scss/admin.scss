@@ -1,0 +1,1184 @@
+/* =========================
+   ADMIN
+========================= */
+
+.admin-page,
+.admin-live-section,
+.admin-live-card,
+.admin-live-details,
+.admin-versus-board,
+.admin-versus-list,
+.admin-versus-row,
+.admin-versus-player,
+.admin-player-trigger,
+.admin-live-log-panel,
+.admin-alerts-panel {
+  min-width: 0;
+}
+
+.admin-page {
+  .card strong {
+    display: block;
+    margin: 0.2rem 0;
+
+    color: var(--color-accent-soft);
+
+    font-size: 1.2rem;
+  }
+}
+
+.admin-page .section-title {
+  margin-bottom: 0.55rem;
+}
+
+.admin-page .section-title .eyebrow {
+  display: none;
+}
+
+.admin-page .section-title h2 {
+  margin: 0 0 0.25rem;
+
+  font-size: 1.35rem;
+  line-height: 1.15;
+}
+
+.admin-last-action {
+  color: var(--color-accent-soft);
+}
+
+/* =========================
+   ADMIN MOBILE TABS
+========================= */
+
+.admin-page .mobile-view-tabs {
+  display: none;
+}
+
+/* =========================
+   ADMIN WRAPPER
+========================= */
+
+.admin-page .organizer-mobile-group {
+  display: grid;
+  gap: 0.7rem;
+
+  padding: 0.85rem;
+
+  border: 1px solid rgba(255, 170, 90, 0.22);
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.02)
+    );
+}
+
+.admin-page .organizer-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+/* =========================
+   ADMIN SUPERVISION
+========================= */
+
+.admin-supervision-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.admin-management-card--hidden {
+  display: none;
+}
+
+/* =========================
+   ADMIN DETAILS / ALERTS
+========================= */
+
+.admin-control-panel,
+.admin-live-details,
+.admin-alerts-panel {
+  min-width: 0;
+  overflow: hidden;
+
+  padding: 0.65rem;
+
+  border: 1px solid rgba(255, 191, 102, 0.24);
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(70, 50, 113, 0.96),
+      rgba(48, 32, 84, 0.96)
+    );
+}
+
+.admin-control-panel summary,
+.admin-live-details summary,
+.admin-alerts-panel summary {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.admin-control-panel summary::-webkit-details-marker,
+.admin-live-details summary::-webkit-details-marker,
+.admin-alerts-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.admin-control-panel summary span,
+.admin-live-details summary span,
+.admin-alerts-panel summary span {
+  color: #ffd28a;
+
+  font-size: 0.68rem;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-control-panel summary strong,
+.admin-live-details summary strong,
+.admin-alerts-panel summary strong {
+  margin: 0;
+
+  color: #fffaf0;
+
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+.admin-control-panel summary em,
+.admin-live-details summary em,
+.admin-alerts-panel summary em {
+  color: var(--color-muted);
+
+  font-size: 0.7rem;
+  font-style: normal;
+  font-weight: 800;
+  text-align: right;
+}
+
+.admin-control-panel summary::after,
+.admin-live-details summary::after,
+.admin-alerts-panel summary::after {
+  content: "Masquer";
+
+  width: fit-content;
+  padding: 0.28rem 0.65rem;
+
+  border: 1px solid rgba(255, 191, 102, 0.22);
+  border-radius: 999px;
+
+  color: #ffd28a;
+
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.admin-control-panel:not([open]) summary::after,
+.admin-live-details:not([open]) summary::after,
+.admin-alerts-panel:not([open]) summary::after {
+  content: "Afficher";
+}
+
+.admin-control-content,
+.admin-live-content {
+  display: grid;
+  gap: 0.7rem;
+
+  margin-top: 0.65rem;
+}
+
+/* =========================
+   ADMIN QUEUE
+========================= */
+
+.admin-alerts-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+
+  margin-top: 0.6rem;
+}
+
+.admin-queue-item {
+  display: grid;
+  gap: 0.45rem;
+
+  min-width: 0;
+  overflow: hidden;
+
+  padding: 0.8rem;
+
+  border: 1px solid rgba(255, 191, 102, 0.16);
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.035)
+    );
+}
+
+.admin-queue-item h3,
+.admin-queue-item p {
+  margin: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.admin-queue-item h3 {
+  color: #fffaf0;
+
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.admin-queue-item p {
+  color: var(--color-muted);
+
+  font-size: 0.66rem;
+  line-height: 1.25;
+}
+
+.admin-queue-item .eyebrow {
+  color: #ffd28a;
+
+  font-size: 0.56rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admin-queue-item .event-status {
+  margin-top: 0.1rem;
+  padding: 0.18rem 0.45rem;
+
+  font-size: 0.56rem;
+}
+
+.admin-queue-item .table-actions {
+  margin-top: 0.1rem;
+}
+
+.admin-queue-item .btn {
+  min-width: auto;
+  min-height: 24px;
+  padding: 0.2rem 0.45rem;
+
+  font-size: 0.55rem;
+}
+
+/* =========================
+   ADMIN LIVE
+========================= */
+
+.admin-live-wrapper {
+  display: grid;
+}
+
+.admin-live-card {
+  display: grid;
+  gap: 0.52rem;
+
+  min-width: 0;
+  overflow: hidden;
+
+  padding: 0.62rem;
+
+  border: 1px solid rgba(255, 191, 102, 0.2);
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(59, 43, 98, 0.98),
+      rgba(40, 25, 72, 0.98)
+    );
+}
+
+.admin-live-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.admin-live-header h3,
+.admin-live-card h3 {
+  margin: 0;
+
+  color: var(--color-accent-soft);
+
+  font-size: 0.84rem;
+}
+
+.admin-live-card p {
+  margin: 0.12rem 0;
+
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+.admin-live-card .eyebrow {
+  margin-bottom: 0.1rem;
+}
+
+/* =========================
+   ADMIN VERSUS BOARD
+========================= */
+
+.admin-versus-board {
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 191, 102, 0.18);
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(23, 15, 42, 0.62),
+      rgba(38, 24, 68, 0.72)
+    );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.035),
+    0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+.admin-versus-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.45rem;
+
+  padding: 0.55rem;
+
+  border-bottom: 1px solid rgba(255, 191, 102, 0.16);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(88, 78, 255, 0.18),
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 82, 82, 0.18)
+    );
+}
+
+.admin-versus-team {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+
+  min-width: 0;
+  min-height: 46px;
+  padding: 0.55rem 0.75rem;
+
+  border-radius: 13px;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.16);
+}
+
+.admin-versus-team--nova {
+  justify-content: flex-start;
+
+  border: 1px solid rgba(120, 170, 255, 0.42);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(78, 68, 225, 0.96),
+      rgba(50, 45, 128, 0.96)
+    );
+}
+
+.admin-versus-team--pulse {
+  justify-content: flex-end;
+
+  border: 1px solid rgba(255, 120, 120, 0.42);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(196, 36, 36, 0.96),
+      rgba(112, 44, 76, 0.96)
+    );
+}
+
+.admin-versus-team img {
+  flex: 0 0 auto;
+
+  width: 30px;
+  height: 30px;
+
+  object-fit: contain;
+  image-rendering: pixelated;
+
+  filter:
+    drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35))
+    saturate(1.08);
+}
+
+.admin-versus-team span {
+  display: inline-block;
+
+  color: #fffaf0;
+
+  font-size: 0.84rem;
+  font-weight: 1000;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.42);
+}
+
+.admin-versus-team--pulse img {
+  order: 2;
+}
+
+.admin-versus-team--pulse span {
+  order: 1;
+}
+
+.admin-versus-emblem {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 0 !important;
+}
+
+.admin-versus-emblem::before {
+  content: none !important;
+}
+
+.admin-versus-emblem__img {
+  display: block;
+
+  width: 42px;
+  height: 42px;
+
+  object-fit: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.admin-versus-list {
+  display: grid;
+}
+
+.admin-versus-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr);
+  align-items: stretch;
+  gap: 0.35rem;
+
+  overflow: hidden;
+  padding: 0.34rem 0.5rem;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+.admin-versus-row:last-child {
+  border-bottom: 0;
+}
+
+.admin-versus-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.admin-versus-row-separator {
+  display: block;
+
+  width: 20px;
+  min-width: 20px;
+
+  font-size: 0;
+  color: transparent;
+}
+
+.admin-versus-player {
+  display: grid;
+  gap: 0.14rem;
+
+  min-width: 0;
+  overflow: hidden;
+
+  padding: 0.38rem 0.46rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.022)
+    );
+}
+
+.admin-versus-row .admin-versus-player:first-child {
+  border-left-color: rgba(120, 170, 255, 0.38);
+}
+
+.admin-versus-row .admin-versus-player:last-child {
+  border-right-color: rgba(255, 150, 120, 0.38);
+}
+
+.admin-player-trigger {
+  display: grid;
+  gap: 0.14rem;
+
+  width: 100%;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+  color: inherit;
+
+  text-align: left;
+}
+
+.admin-player-trigger:disabled {
+  cursor: default;
+}
+
+.admin-versus-player.is-clickable .admin-player-trigger {
+  cursor: pointer;
+}
+
+.admin-versus-player strong,
+.admin-player-trigger strong {
+  margin: 0;
+
+  color: #fffaf0;
+
+  font-family:
+    "Trebuchet MS",
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+
+  font-size: 0.78rem;
+  font-weight: 1000;
+  line-height: 1.05;
+  letter-spacing: 0.025em;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.admin-versus-player span,
+.admin-player-trigger span {
+  color: var(--color-muted);
+
+  font-size: 0.58rem;
+  font-weight: 850;
+  line-height: 1.15;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.admin-versus-player.is-warning {
+  border-color: rgba(255, 191, 102, 0.5);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 191, 102, 0.16),
+      rgba(255, 255, 255, 0.035)
+    );
+}
+
+.admin-versus-player.is-danger {
+  border-color: rgba(255, 82, 82, 0.85);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(155, 35, 55, 0.88),
+      rgba(93, 32, 76, 0.92)
+    );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 120, 120, 0.22),
+    0 0 18px rgba(255, 82, 82, 0.22);
+}
+
+.admin-versus-player.is-danger strong,
+.admin-versus-player.is-danger span,
+.admin-versus-player.is-danger .admin-player-trigger strong,
+.admin-versus-player.is-danger .admin-player-trigger span {
+  color: #fffaf0;
+}
+
+.admin-versus-player.is-danger .admin-player-trigger strong {
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.28);
+}
+
+.admin-versus-player.is-selected {
+  border-color: rgba(255, 191, 102, 0.85);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(170, 50, 65, 0.92),
+      rgba(96, 42, 86, 0.95)
+    );
+}
+
+/* =========================
+   ADMIN INLINE ACTIONS
+========================= */
+
+.admin-inline-actions,
+.admin-player-inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.3rem;
+
+  margin-top: 0.45rem;
+  padding-top: 0.45rem;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.admin-inline-actions .btn,
+.admin-player-inline-actions .btn {
+  justify-content: center;
+
+  min-height: 28px;
+  padding: 0.32rem 0.5rem;
+
+  font-size: 0.68rem;
+  text-align: center;
+}
+
+/* =========================
+   ADMIN SCORE
+========================= */
+
+.admin-score-strip {
+  order: 1;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(130px, 0.65fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 0.45rem;
+
+  padding: 0.5rem;
+
+  border: 1px solid rgba(255, 191, 102, 0.18);
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34, 20, 58, 0.9),
+      rgba(62, 42, 95, 0.78)
+    );
+
+  text-align: center;
+}
+
+.admin-score-strip > div {
+  display: grid;
+  place-items: center;
+  gap: 0.1rem;
+
+  min-width: 0;
+}
+
+.admin-score-strip span {
+  color: var(--color-muted);
+
+  font-size: 0.62rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.admin-score-strip strong {
+  margin: 0;
+
+  color: #ffd28a;
+
+  font-size: 1.45rem;
+  font-weight: 1000;
+  line-height: 1;
+}
+
+.admin-score-strip small {
+  color: var(--color-muted);
+
+  font-size: 0.58rem;
+  font-weight: 850;
+}
+
+.admin-score-strip__center {
+  padding-inline: 0.55rem;
+  border-inline: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* =========================
+   ADMIN REPLAY CONTROLS
+========================= */
+
+.admin-live-card .replay-controls {
+  order: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+
+  margin: 0.85rem 0 0.65rem;
+}
+
+.admin-live-card .replay-control-btn {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 54px;
+  height: 54px;
+  padding: 0;
+
+  border: 1px solid rgba(255, 191, 102, 0.28);
+  border-bottom: 4px solid rgba(10, 6, 22, 0.95);
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(100, 68, 160, 0.98),
+      rgba(42, 25, 76, 0.98)
+    );
+
+  cursor: pointer;
+  overflow: hidden;
+
+  box-shadow:
+    0 8px 0 rgba(18, 10, 32, 0.95),
+    0 14px 24px rgba(0, 0, 0, 0.34);
+
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    filter 0.12s ease,
+    border-bottom-width 0.12s ease;
+}
+
+.admin-live-card .replay-control-btn img {
+  display: block;
+
+  width: 62%;
+  height: 62%;
+
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.admin-live-card .replay-control-btn:hover:not(:disabled):not(.is-active) {
+  transform: translateY(-3px);
+  filter: brightness(1.12);
+}
+
+.admin-live-card .replay-control-btn:active:not(:disabled),
+.admin-live-card .replay-control-btn.is-active {
+  transform: translateY(7px);
+
+  border-color: rgba(255, 191, 102, 0.58);
+  border-bottom-width: 1px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(38, 24, 70, 0.98),
+      rgba(31, 18, 58, 0.98)
+    );
+
+  box-shadow:
+    inset 0 6px 12px rgba(0, 0, 0, 0.58),
+    0 2px 0 rgba(18, 10, 32, 0.95);
+
+  filter: brightness(0.92);
+}
+
+.admin-live-card .replay-control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================
+   ADMIN LOG
+========================= */
+
+.admin-live-log-panel {
+  order: 3;
+
+  min-width: 0;
+  padding: 0.55rem;
+
+  border: 1px solid rgba(255, 191, 102, 0.16);
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.02)
+    );
+}
+
+.admin-scoreboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+
+  margin-bottom: 0.4rem;
+}
+
+.admin-scoreboard-header h3 {
+  margin: 0;
+
+  color: #ffd28a;
+
+  font-size: 0.82rem;
+}
+
+.admin-scoreboard-header span {
+  color: var(--color-muted);
+
+  font-size: 0.6rem;
+  font-weight: 900;
+  text-align: right;
+}
+
+.admin-flux-log {
+  display: grid;
+  gap: 0.3rem;
+
+  max-height: 120px;
+  overflow-y: auto;
+
+  margin: 0.42rem 0 0;
+  padding: 0.16rem;
+
+  list-style: none;
+}
+
+.admin-flux-log li {
+  padding: 0.34rem 0.45rem;
+
+  border-radius: 9px;
+
+  background: rgba(255, 255, 255, 0.052);
+  color: var(--color-muted);
+
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1.25;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.admin-flux-log li.is-alert {
+  background: rgba(255, 82, 82, 0.18);
+  color: #fff0f0;
+}
+
+/* =========================
+   ADMIN RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+  .admin-page .organizer-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .admin-alerts-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .admin-score-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-score-strip__center {
+    order: -1;
+
+    padding: 0.4rem 0;
+
+    border-inline: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media (max-width: 720px) {
+  .admin-live-card {
+    padding: 0.7rem;
+    overflow: hidden;
+  }
+
+  .admin-live-header {
+    display: grid;
+  }
+
+  .admin-alerts-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .admin-page .mobile-view-tabs {
+    display: grid;
+  }
+
+  .admin-page [data-mobile-view-panel] {
+    display: none !important;
+  }
+
+  .admin-page [data-mobile-view-panel].is-active {
+    display: block !important;
+  }
+
+  .admin-page .admin-supervision-grid.is-active {
+    display: grid !important;
+  }
+
+  .admin-page .admin-live-section,
+  .admin-page .admin-live-details,
+  .admin-page .admin-live-wrapper {
+    display: grid;
+    min-width: 0;
+  }
+
+  .admin-page .admin-live-details {
+    width: 100%;
+  }
+
+  .admin-page .hero {
+    margin-bottom: 0.75rem;
+  }
+
+  .admin-page .hero h1 {
+    font-size: 1.65rem;
+  }
+
+  .admin-page .organizer-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-live-card {
+    padding: 0.65rem;
+  }
+
+  .admin-live-header--compact {
+    display: flex;
+  }
+
+  .admin-versus-header {
+    grid-template-columns: minmax(0, 1fr) 38px minmax(0, 1fr);
+    gap: 0.3rem;
+    padding: 0.5rem;
+  }
+
+  .admin-versus-team {
+    min-height: 38px;
+    padding: 0.42rem 0.5rem;
+    gap: 0.35rem;
+  }
+
+  .admin-versus-team img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .admin-versus-team span {
+    font-size: 0.58rem;
+  }
+
+  .admin-versus-emblem,
+  .admin-versus-emblem__img {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+  }
+
+  .admin-versus-row {
+    grid-template-columns: minmax(0, 1fr) 12px minmax(0, 1fr);
+    gap: 0.22rem;
+    padding: 0.32rem;
+  }
+
+  .admin-versus-row-separator {
+    width: 12px;
+    min-width: 12px;
+  }
+
+  .admin-versus-player {
+    padding: 0.32rem;
+    border-radius: 10px;
+  }
+
+  .admin-versus-player strong,
+  .admin-player-trigger strong {
+    font-size: 0.58rem;
+  }
+
+  .admin-versus-player span,
+  .admin-player-trigger span {
+    font-size: 0.46rem;
+    line-height: 1.2;
+  }
+
+  .admin-inline-actions,
+  .admin-player-inline-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .admin-inline-actions .btn,
+  .admin-player-inline-actions .btn {
+    width: 100%;
+    min-height: 28px;
+    padding: 0.25rem 0.35rem;
+    font-size: 0.56rem;
+  }
+
+  .admin-score-strip {
+    gap: 0.42rem;
+    padding: 0.5rem;
+  }
+
+  .admin-score-strip strong {
+    font-size: 1.25rem;
+  }
+
+  .admin-score-strip span {
+    font-size: 0.58rem;
+  }
+
+  .admin-score-strip small {
+    font-size: 0.56rem;
+  }
+
+  .admin-live-log-panel {
+    padding: 0.58rem;
+  }
+
+  .admin-scoreboard-header {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .admin-scoreboard-header span {
+    text-align: left;
+  }
+
+  .admin-live-card .replay-control-btn {
+    width: 46px;
+    height: 46px;
+  }
+
+  .admin-live-card .replay-control-btn img {
+    width: 58%;
+    height: 58%;
+  }
+
+  .admin-control-panel summary,
+  .admin-live-details summary,
+  .admin-alerts-panel summary {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .admin-control-panel summary::after,
+  .admin-live-details summary::after,
+  .admin-alerts-panel summary::after {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 420px) {
+  .admin-versus-header {
+    grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr);
+    gap: 0.25rem;
+  }
+
+  .admin-versus-team {
+    min-height: 34px;
+    padding: 0.35rem 0.42rem;
+  }
+
+  .admin-versus-team img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .admin-versus-team span {
+    font-size: 0.52rem;
+  }
+
+  .admin-versus-emblem,
+  .admin-versus-emblem__img {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+  }
+
+  .admin-versus-player strong,
+  .admin-player-trigger strong {
+    font-size: 0.6rem;
+  }
+
+  .admin-versus-player span,
+  .admin-player-trigger span {
+    font-size: 0.48rem;
+  }
+
+  .admin-inline-actions .btn,
+  .admin-player-inline-actions .btn {
+    font-size: 0.52rem;
+  }
+
+  .admin-score-strip strong {
+    font-size: 1.1rem;
+  }
+}

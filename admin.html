@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Admin - Esportify+</title>
+
+  <meta
+    name="description"
+    content="Espace administrateur Esportify+ avec supervision du live, suivi des demandes et modération."
+  />
+
+  <script type="module" src="/src/pages/admin.ts"></script>
+</head>
+
+<body class="admin-page" data-required-role="admin">
+  <header class="site-header">
+    <a
+      class="site-logo"
+      href="/index.html"
+      aria-label="Retour à l'accueil Esportify+"
+    >
+      <img
+        src="/Logo/logo.png"
+        alt="Logo Esportify+"
+      />
+    </a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/index.html">Accueil</a>
+      <a href="/events.html">Événements</a>
+      <a href="/replay.html">Replay</a>
+      <a href="/contact.html">Contact</a>
+
+      <div id="sessionNav"></div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div id="roleBanner" class="role-banner">
+      <span>Vérification de la session...</span>
+    </div>
+
+    <section class="card organizer-panel organizer-dashboard">
+      <section class="hero">
+        <p class="eyebrow">Espace administrateur</p>
+
+        <h1>Supervision de la plateforme</h1>
+
+        <p class="hero-subtitle">
+          Suivez le live, contrôlez les incidents et gérez les demandes.
+        </p>
+      </section>
+
+      <div class="mobile-view-tabs" aria-label="Navigation mobile administrateur">
+        <button
+          class="mobile-view-tab is-active"
+          type="button"
+          data-mobile-view-button="summary"
+        >
+          Résumé
+        </button>
+
+        <button
+          class="mobile-view-tab"
+          type="button"
+          data-mobile-view-button="live"
+        >
+          Live
+        </button>
+      </div>
+
+      <section
+        class="organizer-mobile-group is-active"
+        data-mobile-view-panel="summary"
+      >
+        <details class="admin-control-panel" open>
+          <summary>
+            <span>Centre de contrôle</span>
+            <strong>Résumé admin</strong>
+            <em>Demandes, signalements et actions</em>
+          </summary>
+
+          <div class="admin-control-content">
+            <header class="section-title section-title--clean">
+              <h2>Centre de contrôle</h2>
+
+              <p class="organizer-summary">
+                Demandes, signalements, joueurs suivis et actions traitées.
+              </p>
+
+              <p
+                id="adminLastAction"
+                class="organizer-summary admin-last-action"
+                aria-live="polite"
+              >
+                Dernière action : aucune action.
+              </p>
+            </header>
+
+            <section class="organizer-stats" aria-label="Résumé administrateur">
+              <article class="organizer-stat">
+                <span class="organizer-stat__icon" aria-hidden="true">📩</span>
+                <strong id="adminRequestsCount">0</strong>
+                <span>Demandes</span>
+              </article>
+
+              <article class="organizer-stat">
+                <span class="organizer-stat__icon" aria-hidden="true">🚩</span>
+                <strong id="adminReportsCount">0</strong>
+                <span>Signalements</span>
+              </article>
+
+              <article class="organizer-stat">
+                <span class="organizer-stat__icon" aria-hidden="true">👥</span>
+                <strong id="adminPlayersCount">0</strong>
+                <span>Joueurs suivis</span>
+              </article>
+
+              <article class="organizer-stat">
+                <span class="organizer-stat__icon" aria-hidden="true">✅</span>
+                <strong id="adminResolvedCount">0</strong>
+                <span>Actions traitées</span>
+              </article>
+            </section>
+
+            <section class="admin-alerts-zone">
+              <details class="admin-alerts-panel" open>
+                <summary>
+                  <span>Suivi admin</span>
+                  <strong>À vérifier</strong>
+                  <em>Demandes et signalements en attente</em>
+                </summary>
+
+                <div
+                  id="adminRequestsList"
+                  class="list admin-alerts-list"
+                  aria-live="polite"
+                ></div>
+              </details>
+            </section>
+          </div>
+        </details>
+      </section>
+
+      <section
+        class="organizer-subsection admin-supervision-grid"
+        data-mobile-view-panel="live"
+      >
+        <section class="admin-live-section">
+          <details class="admin-live-details" open>
+            <summary>
+              <span>Supervision du match</span>
+              <strong>Live admin</strong>
+              <em>Match surveillé en direct</em>
+            </summary>
+
+            <div class="admin-live-content">
+              <div
+                id="adminLivePanel"
+                class="admin-live-wrapper"
+                aria-live="polite"
+              ></div>
+            </div>
+          </details>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <div
+    id="toastContainer"
+    class="toast-root"
+    aria-live="assertive"
+    aria-atomic="true"
+  ></div>
+</body>
+</html>

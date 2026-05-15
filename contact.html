@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Contact - Esportify+</title>
+
+  <meta
+    name="description"
+    content="Formulaire de contact simulé pour envoyer un message à l’équipe Esportify+."
+  />
+
+  <script type="module" src="/src/pages/contact.ts"></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <a
+      class="site-logo"
+      href="/index.html"
+      aria-label="Retour à l'accueil Esportify+"
+    >
+      <img src="/Logo/logo.png" alt="Logo Esportify+" />
+    </a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/index.html">Accueil</a>
+      <a href="/events.html">Événements</a>
+      <a href="/replay.html">Replay</a>
+      <a href="/contact.html" aria-current="page">Contact</a>
+
+      <div id="sessionNav"></div>
+    </nav>
+  </header>
+
+  <main class="page contact-page">
+    <section class="hero">
+      <p class="eyebrow">Contact</p>
+
+      <h1>Contacter Esportify+</h1>
+
+      <p>
+        Utilisez ce formulaire pour poser une question, signaler un problème
+        ou demander des informations sur une compétition.
+      </p>
+    </section>
+
+    <section class="card" aria-labelledby="contactTitle">
+      <h2 id="contactTitle">Envoyer un message</h2>
+
+      <form id="contactForm" class="form">
+        <label for="contactName">
+          Nom
+          <input
+            id="contactName"
+            type="text"
+            autocomplete="name"
+            required
+          />
+        </label>
+
+        <label for="contactEmail">
+          Email
+          <input
+            id="contactEmail"
+            type="email"
+            autocomplete="email"
+            required
+          />
+        </label>
+
+        <label for="contactSubject">
+          Sujet
+          <input
+            id="contactSubject"
+            type="text"
+            required
+          />
+        </label>
+
+        <label for="contactMessage">
+          Message
+          <textarea
+            id="contactMessage"
+            rows="6"
+            required
+          ></textarea>
+        </label>
+
+        <button class="btn btn--primary" type="submit">
+          Envoyer
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <div
+    id="toastContainer"
+    class="toast-root"
+    aria-live="assertive"
+    aria-atomic="true"
+  ></div>
+</body>
+</html>

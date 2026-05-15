@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Accueil - Esportify+</title>
+
+  <meta
+    name="description"
+    content="Plateforme e-sport de démonstration avec événements, replay simulé et rôles utilisateur."
+  />
+
+  <script type="module" src="/src/pages/index.ts"></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <a
+      class="site-logo"
+      href="/index.html"
+      aria-label="Retour à l'accueil Esportify+"
+    >
+      <img src="/Logo/logo.png" alt="Logo Esportify+" />
+    </a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/index.html">Accueil</a>
+      <a href="/events.html">Événements</a>
+      <a href="/replay.html">Replay</a>
+      <a href="/contact.html">Contact</a>
+
+      <div id="sessionNav"></div>
+    </nav>
+  </header>
+
+  <main class="page home-page">
+    <section class="hero">
+      <p class="eyebrow">Plateforme e-sport</p>
+
+      <h1>Bienvenue sur Esportify+</h1>
+
+      <p>
+        Consulte les compétitions, teste les rôles simulés
+        et découvre une plateforme e-sport claire conçue
+        pour la démonstration ECF.
+      </p>
+
+      <div class="actions">
+        <a class="btn btn--primary" href="/events.html">
+          Voir les événements
+        </a>
+
+        <a
+          class="btn btn--ghost"
+          href="/inscription.html"
+          id="roleTestLink"
+        >
+          Connexion
+        </a>
+      </div>
+    </section>
+
+    <section class="grid-3">
+      <article class="card">
+        <h2>Utilisateur</h2>
+
+        <p>
+          Consulte les événements et participe
+          à une compétition.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>Organisateur</h2>
+
+        <p>
+          Gère les événements et les inscriptions simulées.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>Administrateur</h2>
+
+        <p>
+          Valide les demandes et supervise
+          les signalements.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <div
+    id="toastContainer"
+    class="toast-root"
+    aria-live="assertive"
+    aria-atomic="true"
+  ></div>
+</body>
+</html>

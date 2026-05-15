@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Connexion - Esportify+</title>
+
+  <meta
+    name="description"
+    content="Connexion à Esportify+ avec comptes de démonstration utilisateur, organisateur et administrateur."
+  />
+
+  <script type="module" src="/src/pages/inscription.ts"></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <a
+      class="site-logo"
+      href="/index.html"
+      aria-label="Retour à l'accueil Esportify+"
+    >
+      <img src="/Logo/logo.png" alt="Logo Esportify+" />
+    </a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/index.html">Accueil</a>
+      <a href="/events.html">Événements</a>
+      <a href="/replay.html">Replay</a>
+      <a href="/contact.html">Contact</a>
+
+      <div id="sessionNav"></div>
+    </nav>
+  </header>
+
+  <main class="page auth-page">
+    <section class="hero">
+      <p class="eyebrow">Mode démonstration</p>
+
+      <h1>Connexion</h1>
+
+      <p>
+        Connectez-vous avec un compte de test pour vérifier les accès
+        utilisateur, organisateur et administrateur.
+      </p>
+    </section>
+
+    <section
+      class="card auth-card"
+      aria-labelledby="loginTitle"
+    >
+      <h2 id="loginTitle">Se connecter</h2>
+
+      <form
+        id="loginForm"
+        class="form"
+        autocomplete="off"
+      >
+        <label for="usernameInput">
+          Pseudo
+        </label>
+
+        <input
+          id="usernameInput"
+          name="username"
+          type="text"
+          placeholder="admin, organizer ou player"
+          minlength="2"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          required
+        />
+
+        <label for="passwordInput">
+          Mot de passe
+        </label>
+
+        <input
+          id="passwordInput"
+          name="password"
+          type="password"
+          placeholder="Mot de passe du compte"
+          autocomplete="new-password"
+          required
+        />
+
+        <button
+          class="btn btn--primary"
+          type="submit"
+        >
+          Se connecter
+        </button>
+      </form>
+    </section>
+
+    <section
+      class="card auth-card auth-demo-info"
+      aria-labelledby="demoAccountsTitle"
+    >
+      <h2 id="demoAccountsTitle">
+        Comptes de démonstration
+      </h2>
+
+      <ul>
+        <li><strong>Admin :</strong> admin / admin123</li>
+        <li><strong>Organisateur :</strong> organizer / orga123</li>
+        <li><strong>Player :</strong> player / player123</li>
+      </ul>
+    </section>
+  </main>
+
+  <div
+    id="toastContainer"
+    class="toast-root"
+    aria-live="assertive"
+    aria-atomic="true"
+  ></div>
+</body>
+</html>

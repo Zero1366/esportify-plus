@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Organisateur - Esportify+</title>
+
+  <meta
+    name="description"
+    content="Espace organisateur Esportify+ pour suivre les compétitions et proposer une activité."
+  />
+
+  <script type="module" src="/src/pages/organisateur.ts"></script>
+</head>
+
+<body class="organizer-page" data-required-role="organizer">
+  <header class="site-header">
+    <a
+      class="site-logo"
+      href="/index.html"
+      aria-label="Retour à l'accueil Esportify+"
+    >
+      <img src="/Logo/logo.png" alt="Logo Esportify+" />
+    </a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/index.html">Accueil</a>
+      <a href="/events.html">Événements</a>
+      <a href="/replay.html">Replay</a>
+      <a href="/contact.html">Contact</a>
+
+      <div id="sessionNav"></div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div id="roleBanner" class="role-banner">
+      <span>Vérification de la session...</span>
+    </div>
+
+    <section class="hero">
+      <p class="eyebrow">Espace organisateur</p>
+
+      <h1>Gestion des compétitions</h1>
+
+      <p>
+        Suivez la compétition disponible et proposez une nouvelle activité.
+      </p>
+    </section>
+
+    <section class="card organizer-panel organizer-dashboard">
+      <section class="organizer-mobile-group">
+        <header class="section-title">
+          <p class="eyebrow">Tableau organisateur</p>
+
+          <h2>Résumé</h2>
+
+          <p class="organizer-summary">
+            Vue simplifiée pour l’organisateur avec accès rapide au replay.
+          </p>
+        </header>
+
+        <section
+          class="organizer-stats organizer-stats--simple"
+          aria-label="Résumé organisateur"
+        >
+          <article
+            id="availableEventCard"
+            class="organizer-stat organizer-stat--available available-event-card"
+          >
+            <span class="organizer-stat__icon" aria-hidden="true">✅</span>
+            <strong id="eventsStat">0</strong>
+            <span>Disponible</span>
+          </article>
+
+          <article class="organizer-stat organizer-stat--proposal">
+            <span class="organizer-stat__icon" aria-hidden="true">📩</span>
+            <strong id="validatedStat">0</strong>
+            <span>Proposition</span>
+          </article>
+        </section>
+      </section>
+
+      <section class="organizer-mobile-group">
+        <section class="organizer-subsection organizer-request-block">
+          <header class="section-title">
+            <p class="eyebrow">Organisation</p>
+
+            <h2>Proposer un match, événement ou compétition</h2>
+          </header>
+
+          <form
+            id="activityRequestForm"
+            class="form organizer-request-form"
+          >
+            <label for="activityTypeInput">
+              Type
+            </label>
+
+            <select id="activityTypeInput" required>
+              <option value="Match">Match</option>
+              <option value="Tournoi">Tournoi</option>
+              <option value="Événement">Événement</option>
+            </select>
+
+            <label for="activityTitleInput">
+              Nom de l'activité
+            </label>
+
+            <input
+              id="activityTitleInput"
+              type="text"
+              placeholder="Exemple : Night Cup Valorant"
+              minlength="3"
+              required
+            />
+
+            <label for="activityFormatInput">
+              Format de l'activité
+            </label>
+
+            <select id="activityFormatInput" required>
+              <option value="">Choisir un format</option>
+              <option value="Showmatch communautaire">Showmatch communautaire</option>
+              <option value="Tournoi débutant">Tournoi débutant</option>
+              <option value="Cup hebdomadaire">Cup hebdomadaire</option>
+              <option value="Finale événementielle">Finale événementielle</option>
+              <option value="Session découverte">Session découverte</option>
+            </select>
+
+            <label for="activityGameInput">
+              Jeu
+            </label>
+
+            <select id="activityGameInput" required>
+              <option value="">Choisir un jeu</option>
+              <option value="Valorant">Valorant</option>
+              <option value="Rocket League">Rocket League</option>
+              <option value="Super Smash Bros">Super Smash Bros</option>
+              <option value="Apex Legends">Apex Legends</option>
+              <option value="League of Legends">League of Legends</option>
+              <option value="Counter-Strike 2">Counter-Strike 2</option>
+            </select>
+
+            <label for="activityDateInput">
+              Date souhaitée
+            </label>
+
+            <input
+              id="activityDateInput"
+              type="date"
+              required
+            />
+
+            <label for="activityMaxPlayersInput">
+              Joueurs max
+            </label>
+
+            <select id="activityMaxPlayersInput" required>
+              <option value="8">8 joueurs</option>
+              <option value="10">10 joueurs</option>
+              <option value="12">12 joueurs</option>
+              <option value="16" selected>16 joueurs</option>
+              <option value="24">24 joueurs</option>
+              <option value="32">32 joueurs</option>
+              <option value="64">64 joueurs</option>
+            </select>
+
+            <button
+              class="btn btn--primary"
+              type="submit"
+            >
+              Envoyer la proposition
+            </button>
+          </form>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <div
+    id="toastContainer"
+    class="toast-root"
+    aria-live="assertive"
+    aria-atomic="true"
+  ></div>
+</body>
+</html>

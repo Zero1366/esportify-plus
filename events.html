@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Événements - Esportify+</title>
+
+  <meta
+    name="description"
+    content="Liste des événements et tournois publics disponibles sur Esportify+."
+  />
+
+  <script type="module" src="/src/pages/events.ts"></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <a
+      class="site-logo"
+      href="/index.html"
+      aria-label="Retour à l'accueil Esportify+"
+    >
+      <img src="/Logo/logo.png" alt="Logo Esportify+" />
+    </a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/index.html">Accueil</a>
+      <a href="/events.html" aria-current="page">Événements</a>
+      <a href="/replay.html">Replay</a>
+      <a href="/contact.html">Contact</a>
+
+      <div id="sessionNav"></div>
+    </nav>
+  </header>
+
+  <main class="page events-page">
+    <div
+      class="mobile-view-tabs"
+      aria-label="Filtres rapides des événements"
+    >
+      <button
+        class="mobile-view-tab is-active"
+        type="button"
+        data-status-filter="validated"
+      >
+        Disponibles
+      </button>
+
+      <button
+        class="mobile-view-tab"
+        type="button"
+        data-status-filter="pending"
+      >
+        En attente
+      </button>
+
+      <button
+        class="mobile-view-tab"
+        type="button"
+        data-status-filter="cancelled"
+      >
+        Annulés
+      </button>
+    </div>
+
+    <section class="hero">
+      <p class="eyebrow">Compétition</p>
+
+      <h1>Événements et tournois</h1>
+
+      <p>
+        Retrouvez les compétitions disponibles sur Esportify+,
+        consultez les événements en attente et vérifiez les activités annulées.
+      </p>
+    </section>
+
+    <section
+      class="card events-filters"
+      aria-labelledby="eventsFiltersTitle"
+    >
+      <h2 id="eventsFiltersTitle">Filtres</h2>
+
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label class="filter-label" for="eventSearch">
+            Recherche
+          </label>
+
+          <div class="search-field">
+            <span class="search-field__icon" aria-hidden="true">🔍</span>
+
+            <input
+              id="eventSearch"
+              type="search"
+              placeholder="Rechercher un événement ou tournoi..."
+            />
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label" for="eventType">
+            🎮 Type
+          </label>
+
+          <select id="eventType">
+            <option value="all">Tous</option>
+            <option value="tournament">🏆 Tournoi</option>
+            <option value="event">📅 Événement</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label" for="eventStatus">
+            📌 Statut
+          </label>
+
+          <select id="eventStatus">
+            <option value="all">Tous</option>
+            <option value="validated">Disponible</option>
+            <option value="pending">En attente</option>
+            <option value="cancelled">Annulé</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p id="eventsCount" class="events-count">
+        Chargement des événements...
+      </p>
+
+      <div
+        id="eventsGrid"
+        class="events-grid"
+        aria-label="Liste des événements"
+        aria-live="polite"
+      ></div>
+    </section>
+  </main>
+
+  <div
+    id="toastContainer"
+    class="toast-root"
+    aria-live="assertive"
+    aria-atomic="true"
+  ></div>
+</body>
+</html>
