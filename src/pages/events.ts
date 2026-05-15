@@ -8,6 +8,8 @@ import {
   type EventType
 } from "../data";
 
+const valorantImageUrl = new URL("../../Image/arena-live.png", import.meta.url).href;
+
 const eventSearch = document.querySelector<HTMLInputElement>("#eventSearch");
 const eventType = document.querySelector<HTMLSelectElement>("#eventType");
 const eventStatus = document.querySelector<HTMLSelectElement>("#eventStatus");
@@ -42,7 +44,7 @@ function getEventImage(event: EventItem): string {
   return `
     <img
       class="event-card__image"
-      src="/Image/arena-live.png"
+      src="${valorantImageUrl}"
       alt="Illustration du tournoi Valorant Night Clash"
     />
   `;
