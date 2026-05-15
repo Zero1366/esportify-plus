@@ -44,48 +44,13 @@ let isLivePlaying = false;
 let liveTimer: number | null = null;
 
 const liveSteps: LiveStep[] = [
-  {
-    round: "Avant-match",
-    scoreA: 0,
-    scoreB: 0,
-    message: "Connexion des équipes."
-  },
-  {
-    round: "Round 1",
-    scoreA: 1,
-    scoreB: 0,
-    message: "Nova Squad prend l'avantage."
-  },
-  {
-    round: "Round 8",
-    scoreA: 5,
-    scoreB: 3,
-    message: "Red Pulse revient."
-  },
-  {
-    round: "Round 14",
-    scoreA: 8,
-    scoreB: 6,
-    message: "Rythme élevé côté Red Pulse."
-  },
-  {
-    round: "Round 18",
-    scoreA: 10,
-    scoreB: 9,
-    message: "Action suspecte détectée."
-  },
-  {
-    round: "Round 21",
-    scoreA: 12,
-    scoreB: 10,
-    message: "Message agressif signalé."
-  },
-  {
-    round: "Round 24",
-    scoreA: 13,
-    scoreB: 11,
-    message: "Match terminé."
-  }
+  { round: "Avant-match", scoreA: 0, scoreB: 0, message: "Connexion des équipes." },
+  { round: "Round 1", scoreA: 1, scoreB: 0, message: "Nova Squad prend l'avantage." },
+  { round: "Round 8", scoreA: 5, scoreB: 3, message: "Red Pulse revient." },
+  { round: "Round 14", scoreA: 8, scoreB: 6, message: "Rythme élevé côté Red Pulse." },
+  { round: "Round 18", scoreA: 10, scoreB: 9, message: "Action suspecte détectée." },
+  { round: "Round 21", scoreA: 12, scoreB: 10, message: "Message agressif signalé." },
+  { round: "Round 24", scoreA: 13, scoreB: 11, message: "Match terminé." }
 ];
 
 const adminPlayers: AdminPlayer[] = [
@@ -114,9 +79,7 @@ function syncPlayersWithLiveStep(): void {
     player.status = "OK";
   });
 
-  if (currentStep >= 1) {
-    adminPlayers[0].points = 1;
-  }
+  if (currentStep >= 1) adminPlayers[0].points = 1;
 
   if (currentStep >= 2) {
     adminPlayers[1].points = 2;
@@ -157,11 +120,7 @@ function renderPlayerCell(player: AdminPlayer): string {
 
   return `
     <div class="admin-versus-player ${statusClass}">
-      <button
-        class="admin-player-trigger"
-        type="button"
-        disabled
-      >
+      <button class="admin-player-trigger" type="button" disabled>
         <strong>${player.username}</strong>
         <span>${player.role} · ${player.points} pts · ${player.status}</span>
       </button>
@@ -187,12 +146,7 @@ function renderVersusBoard(): string {
         </div>
 
         <strong class="admin-versus-emblem" aria-label="Versus">
-          <img
-            class="admin-versus-emblem__img"
-            src="${versusIcon}"
-            alt=""
-            aria-hidden="true"
-          />
+          <img class="admin-versus-emblem__img" src="${versusIcon}" alt="" aria-hidden="true" />
         </strong>
 
         <div class="admin-versus-team admin-versus-team--pulse">
@@ -205,7 +159,6 @@ function renderVersusBoard(): string {
         ${novaPlayers
           .map((novaPlayer, index) => {
             const pulsePlayer = pulsePlayers[index];
-
             if (!pulsePlayer) return "";
 
             return `
@@ -262,15 +215,11 @@ function renderLivePanel(): void {
         </div>
       </section>
 
-      <p class="organizer-summary">
-        ${step.message}
-      </p>
+      <p class="organizer-summary">${step.message}</p>
 
       <div class="replay-controls">
         <button
-          class="replay-control-btn admin-live-play-btn ${
-            isLivePlaying ? "is-active" : ""
-          }"
+          class="replay-control-btn admin-live-play-btn ${isLivePlaying ? "is-active" : ""}"
           type="button"
           aria-label="Lire le live"
         >
@@ -278,9 +227,7 @@ function renderLivePanel(): void {
         </button>
 
         <button
-          class="replay-control-btn admin-live-pause-btn ${
-            !isLivePlaying ? "is-active" : ""
-          }"
+          class="replay-control-btn admin-live-pause-btn ${!isLivePlaying ? "is-active" : ""}"
           type="button"
           aria-label="Mettre le live en pause"
         >
@@ -297,53 +244,61 @@ function renderLivePanel(): void {
       </div>
     </article>
   `;
+}
 
-  bindReplayControls();
+function advanceLiveStep(): void {
+  if (currentStep >= liveSteps.length - 1) {
+    stopLiveTimer();
+    isLivePlaying = false;
+    renderLivePanel();
+    return;
+  }
+
+  currentStep++;
+  renderLivePanel();
+}
+
+function playLive(): void {
+  if (liveTimer !== null) return;
+
+  isLivePlaying = true;
+  renderLivePanel();
+
+  liveTimer = window.setInterval(advanceLiveStep, 1800);
+}
+
+function pauseLive(): void {
+  stopLiveTimer();
+  isLivePlaying = false;
+  renderLivePanel();
+}
+
+function restartLive(): void {
+  stopLiveTimer();
+  isLivePlaying = false;
+  currentStep = 0;
+  renderLivePanel();
 }
 
 function bindReplayControls(): void {
-  const playButton = document.querySelector<HTMLElement>(
-    ".admin-live-play-btn"
-  );
+  document.addEventListener("click", (event) => {
+    const target = event.target;
 
-  const pauseButton = document.querySelector<HTMLElement>(
-    ".admin-live-pause-btn"
-  );
+    if (!(target instanceof HTMLElement)) return;
 
-  const restartButton = document.querySelector<HTMLElement>(
-    ".admin-live-restart-btn"
-  );
+    if (target.closest(".admin-live-play-btn")) {
+      playLive();
+      return;
+    }
 
-  playButton?.addEventListener("click", () => {
-    if (liveTimer !== null) return;
+    if (target.closest(".admin-live-pause-btn")) {
+      pauseLive();
+      return;
+    }
 
-    isLivePlaying = true;
-    renderLivePanel();
-
-    liveTimer = window.setInterval(() => {
-      if (currentStep >= liveSteps.length - 1) {
-        stopLiveTimer();
-        isLivePlaying = false;
-        renderLivePanel();
-        return;
-      }
-
-      currentStep++;
-      renderLivePanel();
-    }, 1800);
-  });
-
-  pauseButton?.addEventListener("click", () => {
-    stopLiveTimer();
-    isLivePlaying = false;
-    renderLivePanel();
-  });
-
-  restartButton?.addEventListener("click", () => {
-    stopLiveTimer();
-    isLivePlaying = false;
-    currentStep = 0;
-    renderLivePanel();
+    if (target.closest(".admin-live-restart-btn")) {
+      restartLive();
+    }
   });
 }
 
@@ -356,5 +311,6 @@ function protectPage(): void {
 
 protectPage();
 renderLivePanel();
+bindReplayControls();
 
 document.body.classList.add("is-ready");
