@@ -61,6 +61,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.35rem;
 
   min-height: 46px;
   padding: 0.7rem;
@@ -86,6 +87,16 @@
     transform 0.18s ease,
     border-color 0.18s ease,
     filter 0.18s ease;
+}
+
+.admin-page .mobile-view-tab span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-page .mobile-view-tab span:first-child {
+  display: none;
 }
 
 .admin-page .mobile-view-tab:hover {
@@ -478,18 +489,21 @@
   border: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
-  font-size: 0 !important;
+
+  color: #ffd28a !important;
+  font-size: 0.72rem !important;
+  font-weight: 1000 !important;
+  line-height: 1 !important;
+  text-shadow: none !important;
+}
+
+.admin-versus-emblem::before,
+.admin-versus-emblem::after {
+  content: none !important;
 }
 
 .admin-versus-emblem__img {
-  display: block;
-
-  width: 42px;
-  height: 42px;
-
-  object-fit: contain;
-  image-rendering: pixelated;
-  pointer-events: none;
+  display: none !important;
 }
 
 .admin-versus-list {
@@ -935,11 +949,16 @@
     font-size: 0.58rem;
   }
 
-  .admin-versus-emblem,
-  .admin-versus-emblem__img {
+  .admin-versus-emblem {
     width: 38px !important;
     height: 38px !important;
     min-width: 38px !important;
+
+    font-size: 0.68rem !important;
+  }
+
+  .admin-versus-emblem__img {
+    display: none !important;
   }
 
   .admin-versus-row {

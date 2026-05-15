@@ -6,7 +6,6 @@ import { hasRole, isAuthenticated } from "../session";
 const playIcon = new URL("../../UI/Play.png", import.meta.url).href;
 const pauseIcon = new URL("../../UI/Pause.png", import.meta.url).href;
 const replayIcon = new URL("../../UI/Replay.png", import.meta.url).href;
-const versusIcon = new URL("../../UI/vs.png", import.meta.url).href;
 
 const novaTeamLogo = new URL("../../LogoTeams/CardNovaSquad.png", import.meta.url).href;
 const pulseTeamLogo = new URL("../../LogoTeams/RedPulseCard.png", import.meta.url).href;
@@ -243,9 +242,7 @@ function renderVersusBoard(): string {
           <span>Nova Squad</span>
         </div>
 
-        <strong class="admin-versus-emblem" aria-label="Versus">
-          <img class="admin-versus-emblem__img" src="${versusIcon}" alt="" aria-hidden="true" />
-        </strong>
+        <strong class="admin-versus-emblem" aria-label="Versus">VS</strong>
 
         <div class="admin-versus-team admin-versus-team--pulse">
           <img src="${pulseTeamLogo}" alt="" aria-hidden="true" />
