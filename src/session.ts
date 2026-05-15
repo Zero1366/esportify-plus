@@ -9,11 +9,13 @@ export interface SessionUser {
 const STORAGE_KEY = "esportify-session";
 
 export function saveSession(user: SessionUser): void {
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
 }
 
 export function getSession(): SessionUser | null {
-  const storedSession = sessionStorage.getItem(STORAGE_KEY);
+  const storedSession =
+    localStorage.getItem(STORAGE_KEY) ??
+    sessionStorage.getItem(STORAGE_KEY);
 
   if (!storedSession) {
     return null;
@@ -28,8 +30,8 @@ export function getSession(): SessionUser | null {
 }
 
 export function clearSession(): void {
-  sessionStorage.removeItem(STORAGE_KEY);
   localStorage.removeItem(STORAGE_KEY);
+  sessionStorage.removeItem(STORAGE_KEY);
 }
 
 export function isAuthenticated(): boolean {

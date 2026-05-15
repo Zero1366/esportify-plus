@@ -1,22 +1,36 @@
 import "../scss/index.scss";
 import "../navigation";
 
+import { loginAdminWithFallback } from "../apiClient";
 import { saveSession, type UserRole } from "../session";
 
-const API_URL = "http://localhost:3000/api/auth/login";
-
-interface LoginResponse {
-  message: string;
-  user: {
-    id: number;
-    username: string;
-    role: UserRole;
-  };
+interface DemoUser {
+  id: number;
+  username: string;
+  role: UserRole;
 }
 
 const loginForm = document.querySelector<HTMLFormElement>("#loginForm");
 const usernameInput = document.querySelector<HTMLInputElement>("#usernameInput");
 const passwordInput = document.querySelector<HTMLInputElement>("#passwordInput");
+
+const demoUsers: DemoUser[] = [
+  {
+    id: 1,
+    username: "user",
+    role: "user"
+  },
+  {
+    id: 2,
+    username: "organizer",
+    role: "organizer"
+  },
+  {
+    id: 3,
+    username: "organisateur",
+    role: "organizer"
+  }
+];
 
 function getRedirectUrl(role: UserRole): string {
   if (role === "organizer") {
@@ -34,6 +48,28 @@ function showMessage(message: string): void {
   alert(message);
 }
 
+function loginDemoUser(username: string, password: string): DemoUser | null {
+  const cleanUsername = username.trim().toLowerCase();
+  const cleanPassword = password.trim().toLowerCase();
+
+  const user = demoUsers.find((item) => item.username === cleanUsername);
+
+  if (!user) {
+    return null;
+  }
+
+  const validPassword =
+    cleanPassword === cleanUsername ||
+    cleanPassword === "demo" ||
+    cleanPassword === "test";
+
+  if (!validPassword) {
+    return null;
+  }
+
+  return user;
+}
+
 loginForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -45,31 +81,39 @@ loginForm?.addEventListener("submit", async (event) => {
     return;
   }
 
-  try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username,
-        password
-      })
-    });
+  const isAdminLogin = username.toLowerCase() === "admin";
 
-    const data = (await response.json()) as LoginResponse;
+  if (isAdminLogin) {
+    const result = await loginAdminWithFallback(username, password);
 
-    if (!response.ok) {
-      showMessage(data.message || "Connexion impossible.");
+    if (!result.success) {
+      showMessage(result.message);
       return;
     }
 
-    saveSession(data.user);
+    saveSession({
+      id: 99,
+      username: result.username,
+      role: result.role
+    });
 
-    window.location.href = getRedirectUrl(data.user.role);
-  } catch {
-    showMessage("Impossible de contacter le serveur.");
+    showMessage(result.message);
+    window.location.href = getRedirectUrl(result.role);
+    return;
   }
+
+  const demoUser = loginDemoUser(username, password);
+
+  if (!demoUser) {
+    showMessage(
+      "Compte introuvable. Essayez user/user, organizer/organizer ou admin/admin."
+    );
+    return;
+  }
+
+  saveSession(demoUser);
+
+  window.location.href = getRedirectUrl(demoUser.role);
 });
 
 document.body.classList.add("is-ready");
