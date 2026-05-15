@@ -387,15 +387,15 @@ function renderLivePanel(): void {
 
       <div class="replay-controls">
         <button class="replay-control-btn admin-live-play-btn ${isLivePlaying ? "is-active" : ""}" type="button" aria-label="Lire le live">
-          <img src="/UI/play.png" alt="" aria-hidden="true" />
+          <img src="/UI/Play.png" alt="" aria-hidden="true" />
         </button>
 
         <button class="replay-control-btn admin-live-pause-btn ${!isLivePlaying ? "is-active" : ""}" type="button" aria-label="Mettre le live en pause">
-          <img src="/UI/pause.png" alt="" aria-hidden="true" />
+          <img src="/UI/Pause.png" alt="" aria-hidden="true" />
         </button>
 
         <button class="replay-control-btn admin-live-restart-btn" type="button" aria-label="Réinitialiser le live">
-          <img src="/UI/replay.png" alt="" aria-hidden="true" />
+          <img src="/UI/Replay.png" alt="" aria-hidden="true" />
         </button>
       </div>
 
