@@ -57,21 +57,28 @@
         </p>
       </section>
 
-      <div class="mobile-view-tabs" aria-label="Navigation mobile administrateur">
+      <div
+        class="mobile-view-tabs mobile-view-tabs--compact"
+        aria-label="Navigation mobile administrateur"
+      >
         <button
           class="mobile-view-tab is-active"
           type="button"
           data-mobile-view-button="summary"
+          aria-label="Résumé administrateur"
         >
-          Résumé
+          <span aria-hidden="true">📋</span>
+          <span>Résumé</span>
         </button>
 
         <button
           class="mobile-view-tab"
           type="button"
           data-mobile-view-button="live"
+          aria-label="Supervision du live"
         >
-          Live
+          <span aria-hidden="true">🔴</span>
+          <span>Live</span>
         </button>
       </div>
 
@@ -106,25 +113,33 @@
             <section class="organizer-stats" aria-label="Résumé administrateur">
               <article class="organizer-stat">
                 <span class="organizer-stat__icon" aria-hidden="true">📩</span>
+
                 <strong id="adminRequestsCount">0</strong>
+
                 <span>Demandes</span>
               </article>
 
               <article class="organizer-stat">
                 <span class="organizer-stat__icon" aria-hidden="true">🚩</span>
+
                 <strong id="adminReportsCount">0</strong>
+
                 <span>Signalements</span>
               </article>
 
               <article class="organizer-stat">
                 <span class="organizer-stat__icon" aria-hidden="true">👥</span>
+
                 <strong id="adminPlayersCount">0</strong>
+
                 <span>Joueurs suivis</span>
               </article>
 
               <article class="organizer-stat">
                 <span class="organizer-stat__icon" aria-hidden="true">✅</span>
+
                 <strong id="adminResolvedCount">0</strong>
+
                 <span>Actions traitées</span>
               </article>
             </section>
