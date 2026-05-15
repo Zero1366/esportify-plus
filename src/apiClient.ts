@@ -28,6 +28,7 @@ export async function loginAdminWithFallback(
   password: string
 ): Promise<AdminLoginResult> {
   const cleanUsername = username.trim();
+  const cleanPassword = password.trim();
 
   if (canUseBackend()) {
     try {
@@ -38,7 +39,7 @@ export async function loginAdminWithFallback(
         },
         body: JSON.stringify({
           username: cleanUsername,
-          password
+          password: cleanPassword
         })
       });
 
@@ -60,20 +61,23 @@ export async function loginAdminWithFallback(
 
       throw new Error("Identifiants administrateur refusés.");
     } catch {
-      return loginAdminFallback(cleanUsername, password);
+      return loginAdminFallback(cleanUsername, cleanPassword);
     }
   }
 
-  return loginAdminFallback(cleanUsername, password);
+  return loginAdminFallback(cleanUsername, cleanPassword);
 }
 
 function loginAdminFallback(
   username: string,
   password: string
 ): AdminLoginResult {
+  const cleanUsername = username.trim().toLowerCase();
+  const cleanPassword = password.trim().toLowerCase();
+
   const isAdmin =
-    username.toLowerCase() === "admin" &&
-    password.toLowerCase() === "admin";
+    cleanUsername === "admin" &&
+    (cleanPassword === "admin123" || cleanPassword === "admin");
 
   if (!isAdmin) {
     return {
