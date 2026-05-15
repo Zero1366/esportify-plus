@@ -36,6 +36,12 @@ interface LiveStep {
 const adminLivePanel = document.querySelector<HTMLElement>("#adminLivePanel");
 const adminLastAction = document.querySelector<HTMLElement>("#adminLastAction");
 
+const adminRequestsCount = document.querySelector<HTMLElement>("#adminRequestsCount");
+const adminReportsCount = document.querySelector<HTMLElement>("#adminReportsCount");
+const adminPlayersCount = document.querySelector<HTMLElement>("#adminPlayersCount");
+const adminResolvedCount = document.querySelector<HTMLElement>("#adminResolvedCount");
+const adminRequestsList = document.querySelector<HTMLElement>("#adminRequestsList");
+
 let currentStep = 0;
 let isLivePlaying = false;
 let liveTimer: number | null = null;
@@ -65,6 +71,13 @@ const adminPlayers: AdminPlayer[] = [
   { id: 9, username: "Kairo", team: "Red Pulse", role: "Joueur", points: 0, risk: "safe", status: "active" },
   { id: 10, username: "Blaze", team: "Red Pulse", role: "Joueur", points: 0, risk: "safe", status: "active" }
 ];
+
+function protectPage(): void {
+  if (!isAuthenticated() || !hasRole("admin")) {
+    alert("Accès réservé aux administrateurs.");
+    window.location.href = "/inscription.html";
+  }
+}
 
 function setLastAction(message: string): void {
   if (adminLastAction) {
@@ -138,6 +151,44 @@ function syncPlayersWithLiveStep(): void {
   }
 }
 
+function renderStats(): void {
+  const pendingRequests = 1;
+  const pendingReports = 2;
+  const resolvedActions = adminPlayers.filter((player) => player.status !== "active").length;
+
+  if (adminRequestsCount) adminRequestsCount.textContent = String(pendingRequests);
+  if (adminReportsCount) adminReportsCount.textContent = String(pendingReports);
+  if (adminPlayersCount) adminPlayersCount.textContent = String(adminPlayers.length);
+  if (adminResolvedCount) adminResolvedCount.textContent = String(resolvedActions);
+}
+
+function renderRequestsList(): void {
+  if (!adminRequestsList) return;
+
+  adminRequestsList.innerHTML = `
+    <article class="list-item admin-queue-item">
+      <p class="eyebrow">Événement</p>
+      <h3>Rocket League Cup</h3>
+      <p>Rocket League · 2026-06-18</p>
+      <span class="event-status event-status--pending">En attente</span>
+    </article>
+
+    <article class="list-item admin-queue-item">
+      <p class="eyebrow">Signalement</p>
+      <h3>Pseudo incorrect</h3>
+      <p>Un joueur utilise un pseudo non conforme.</p>
+      <span class="event-status event-status--pending">À vérifier</span>
+    </article>
+
+    <article class="list-item admin-queue-item">
+      <p class="eyebrow">Signalement</p>
+      <h3>Problème d'inscription</h3>
+      <p>Une inscription semble bloquée sur un événement.</p>
+      <span class="event-status event-status--pending">À vérifier</span>
+    </article>
+  `;
+}
+
 function renderPlayerActions(player: AdminPlayer): string {
   if (openedPlayerActionsId !== player.id || player.status === "banned") {
     return "";
@@ -156,7 +207,12 @@ function renderPlayerActions(player: AdminPlayer): string {
 function renderPlayerCell(player: AdminPlayer): string {
   const canOpenActions = player.risk !== "safe" && player.status === "active";
   const selectedClass = openedPlayerActionsId === player.id ? "is-selected" : "";
-  const riskClass = player.risk === "high" ? "is-danger" : player.risk === "medium" ? "is-warning" : "";
+  const riskClass =
+    player.risk === "high"
+      ? "is-danger"
+      : player.risk === "medium"
+        ? "is-warning"
+        : "";
 
   return `
     <div class="admin-versus-player ${riskClass} ${selectedClass} ${canOpenActions ? "is-clickable" : ""}">
@@ -200,6 +256,7 @@ function renderVersusBoard(): string {
       <div class="admin-versus-list">
         ${novaPlayers.map((novaPlayer, index) => {
           const pulsePlayer = pulsePlayers[index];
+
           if (!pulsePlayer) return "";
 
           return `
@@ -291,6 +348,7 @@ function playLive(): void {
   if (liveTimer !== null) return;
 
   isLivePlaying = true;
+  setLastAction("Live démarré.");
   renderLivePanel();
 
   liveTimer = window.setInterval(advanceLiveStep, 1800);
@@ -318,11 +376,13 @@ function restartLive(): void {
   });
 
   setLastAction("Live réinitialisé.");
+  renderStats();
   renderLivePanel();
 }
 
 function updatePlayerStatus(id: number, status: PlayerStatus): void {
   const player = adminPlayers.find((item) => item.id === id);
+
   if (!player) return;
 
   player.status = status;
@@ -342,7 +402,33 @@ function updatePlayerStatus(id: number, status: PlayerStatus): void {
   }
 
   setLastAction(`${player.username} : ${getStatusLabel(status)}.`);
+  renderStats();
   renderLivePanel();
+}
+
+function initMobileTabs(): void {
+  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-mobile-view-button]");
+  const panels = document.querySelectorAll<HTMLElement>("[data-mobile-view-panel]");
+
+  if (buttons.length === 0 || panels.length === 0) return;
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const targetView = button.dataset.mobileViewButton;
+
+      buttons.forEach((item) => {
+        item.classList.toggle("is-active", item.dataset.mobileViewButton === targetView);
+      });
+
+      panels.forEach((panel) => {
+        panel.classList.toggle("is-active", panel.dataset.mobileViewPanel === targetView);
+      });
+
+      if (targetView === "live") {
+        renderLivePanel();
+      }
+    });
+  });
 }
 
 function bindAdminActions(): void {
@@ -376,39 +462,39 @@ function bindAdminActions(): void {
     }
 
     const ignoreButton = target.closest(".admin-player-ignore-btn");
+
     if (ignoreButton instanceof HTMLElement) {
       updatePlayerStatus(Number(ignoreButton.dataset.id), "active");
       return;
     }
 
     const warnButton = target.closest(".admin-player-warn-btn");
+
     if (warnButton instanceof HTMLElement) {
       updatePlayerStatus(Number(warnButton.dataset.id), "warned");
       return;
     }
 
     const suspendButton = target.closest(".admin-player-suspend-btn");
+
     if (suspendButton instanceof HTMLElement) {
       updatePlayerStatus(Number(suspendButton.dataset.id), "suspended");
       return;
     }
 
     const banButton = target.closest(".admin-player-ban-btn");
+
     if (banButton instanceof HTMLElement) {
       updatePlayerStatus(Number(banButton.dataset.id), "banned");
     }
   });
 }
 
-function protectPage(): void {
-  if (!isAuthenticated() || !hasRole("admin")) {
-    alert("Accès réservé aux administrateurs.");
-    window.location.href = "/inscription.html";
-  }
-}
-
 protectPage();
+renderStats();
+renderRequestsList();
 renderLivePanel();
+initMobileTabs();
 bindAdminActions();
 
 document.body.classList.add("is-ready");
