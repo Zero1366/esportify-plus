@@ -30,7 +30,9 @@ L’objectif principal du projet était de développer une plateforme moderne in
 - la simulation de sessions,
 - le déploiement web,
 - la documentation technique,
-- la conteneurisation Docker.
+- la conteneurisation Docker,
+- l’organisation backend en couches,
+- la professionnalisation d’un workflow de développement.
 
 ---
 
@@ -48,7 +50,7 @@ L’objectif principal du projet était de développer une plateforme moderne in
 
 Le projet intègre plusieurs rôles :
 
-- Visiteur
+- Utilisateur non connecté
 - Joueur
 - Organisateur
 - Administrateur
@@ -111,12 +113,34 @@ Le back-end utilise :
 - Node.js
 - Express
 
-Architecture pensée pour séparer :
+Architecture backend organisée en couches :
 
 - routes,
-- logique métier,
-- accès aux données,
-- modèles applicatifs.
+- controllers,
+- services,
+- repositories,
+- entities,
+- accès aux données.
+
+Cette architecture permet :
+
+- une meilleure maintenabilité,
+- une séparation des responsabilités,
+- une évolution simplifiée du backend,
+- une organisation proche des architectures professionnelles.
+
+Architecture backend :
+
+```txt
+backend/src/
+├── controllers/
+├── services/
+├── repositories/
+├── entities/
+├── routes/
+├── data/
+└── server.ts
+```
 
 ---
 
@@ -228,9 +252,28 @@ doc/database/
 - deployment.md
 - git-workflow.md
 - mcd.md
+- poo.md
+- business-rules.md
+- use-case.md
+- sequence-login.md
+- class-diagram.md
 - schema.sql
 - seed.sql
 - security.md
+
+---
+
+# Diagrammes UML
+
+Le projet contient plusieurs diagrammes UML et documents de conception :
+
+- diagramme de cas d’utilisation,
+- diagramme de séquence,
+- diagramme de classes,
+- règles métier,
+- documentation POO.
+
+Ces documents permettent de représenter l’architecture fonctionnelle et technique du projet.
 
 ---
 
@@ -275,7 +318,12 @@ Plusieurs améliorations peuvent être ajoutées :
 - système tournoi avancé,
 - statistiques joueurs,
 - chat temps réel,
-- système matchmaking.
+- système matchmaking,
+- gestion complète des inscriptions,
+- système de notifications,
+- authentification JWT,
+- sécurisation bcrypt,
+- dashboard analytics.
 
 ---
 
