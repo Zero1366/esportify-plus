@@ -1,0 +1,67 @@
+-- Esportify+ - Script de création de la base de données
+
+CREATE TABLE roles (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username VARCHAR(80) NOT NULL,
+  email VARCHAR(120) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role_id INTEGER NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+CREATE TABLE events (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title VARCHAR(120) NOT NULL,
+  description TEXT,
+  game VARCHAR(80) NOT NULL,
+  event_date DATETIME NOT NULL,
+  status VARCHAR(50) NOT NULL DEFAULT 'pending',
+  organizer_id INTEGER NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (organizer_id) REFERENCES users(id)
+);
+
+CREATE TABLE tournaments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(120) NOT NULL,
+  event_id INTEGER NOT NULL,
+  max_players INTEGER NOT NULL,
+  visibility VARCHAR(50) NOT NULL DEFAULT 'public',
+  FOREIGN KEY (event_id) REFERENCES events(id)
+);
+
+CREATE TABLE replays (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title VARCHAR(120) NOT NULL,
+  video_url TEXT,
+  event_id INTEGER NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (event_id) REFERENCES events(id)
+);
+
+CREATE TABLE messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  sender_id INTEGER NOT NULL,
+  receiver_id INTEGER,
+  content TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (sender_id) REFERENCES users(id),
+  FOREIGN KEY (receiver_id) REFERENCES users(id)
+);
+
+CREATE TABLE registrations (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  event_id INTEGER NOT NULL,
+  status VARCHAR(50) NOT NULL DEFAULT 'pending',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (event_id) REFERENCES events(id),
+  UNIQUE (user_id, event_id)
+);
