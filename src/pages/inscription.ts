@@ -1,7 +1,7 @@
 import "../scss/index.scss";
 import "../navigation";
 
-import { loginWithApi, type UserRole } from "../session";
+import { loginWithAPI, saveSession, type UserRole } from "../session";
 
 const loginForm = document.querySelector<HTMLFormElement>("#loginForm");
 const usernameInput = document.querySelector<HTMLInputElement>("#usernameInput");
@@ -10,20 +10,18 @@ const submitButton = loginForm?.querySelector<HTMLButtonElement>(
   "button[type='submit']"
 );
 
+const loginMessage = document.createElement("p");
+loginMessage.className = "form-message";
+loginForm?.appendChild(loginMessage);
+
 function getRedirectUrl(role: UserRole): string {
-  if (role === "organizer") {
-    return "/organisateur.html";
-  }
-
-  if (role === "admin") {
-    return "/admin.html";
-  }
-
+  if (role === "organizer") return "/organisateur.html";
+  if (role === "admin") return "/admin.html";
   return "/events.html";
 }
 
 function showMessage(message: string): void {
-  alert(message);
+  loginMessage.textContent = message;
 }
 
 function setLoading(isLoading: boolean): void {
@@ -58,18 +56,30 @@ loginForm?.addEventListener("submit", async (event) => {
   const username = usernameInput?.value.trim() ?? "";
   const password = passwordInput?.value.trim() ?? "";
 
-  if (!validateInputs(username, password)) {
-    return;
-  }
+  if (!validateInputs(username, password)) return;
 
   try {
     setLoading(true);
 
-    const user = await loginWithApi(username, password);
+    const user = await loginWithAPI(username, password);
+
+    saveSession({
+      id: user.id,
+      username: user.username,
+      role: user.role
+    });
+
+    const redirectUrl = getRedirectUrl(user.role);
+
+    console.log("Utilisateur connecté :", user);
+    console.log("Session enregistrée :", localStorage.getItem("esportify-session"));
+    console.log("Redirection vers :", redirectUrl);
 
     showMessage(`Connexion réussie. Bienvenue ${user.username}.`);
 
-    window.location.href = getRedirectUrl(user.role);
+    setTimeout(() => {
+      window.location.href = redirectUrl;
+    }, 800);
   } catch (error) {
     const message =
       error instanceof Error
@@ -77,7 +87,6 @@ loginForm?.addEventListener("submit", async (event) => {
         : "Une erreur est survenue lors de la connexion.";
 
     showMessage(message);
-  } finally {
     setLoading(false);
   }
 });

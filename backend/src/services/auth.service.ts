@@ -31,7 +31,7 @@ export function loginUser(username: string, password: string): LoginResult {
 
   return {
     success: true,
-    message: "Connexion réussie",
+    message: `Connexion réussie. Bienvenue ${safeUser.username}.`,
     user: safeUser
   };
 }

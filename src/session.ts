@@ -6,6 +6,12 @@ export interface SessionUser {
   role: UserRole;
 }
 
+interface ApiLoginResponse {
+  success: boolean;
+  message: string;
+  user?: SessionUser;
+}
+
 const STORAGE_KEY = "esportify-session";
 
 export function saveSession(user: SessionUser): void {
@@ -59,6 +65,40 @@ export function changeRole(role: UserRole): void {
     ...session,
     role
   });
+}
+
+export async function loginWithAPI(
+  username: string,
+  password: string
+): Promise<SessionUser> {
+  const response = await fetch("http://localhost:3000/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username,
+      password
+    })
+  });
+
+  const data = (await response.json()) as ApiLoginResponse;
+
+  if (!response.ok || !data.success || !data.user) {
+    throw new Error(data.message || "Erreur de connexion");
+  }
+
+  const sessionUser: SessionUser = {
+    id: data.user.id,
+    username: data.user.username,
+    role: data.user.role
+  };
+
+  saveSession(sessionUser);
+
+  console.log("Session sauvegardée :", sessionUser);
+
+  return sessionUser;
 }
 
 export function canAccessRole(requiredRole: UserRole): boolean {
