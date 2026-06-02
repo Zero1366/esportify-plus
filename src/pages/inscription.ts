@@ -1,34 +1,14 @@
 import "../scss/index.scss";
 import "../navigation";
 
-import { loginAdminWithFallback } from "../apiClient";
-import { saveSession, type UserRole } from "../session";
-
-interface DemoUser {
-  id: number;
-  username: string;
-  password: string;
-  role: UserRole;
-}
+import { loginWithApi, type UserRole } from "../session";
 
 const loginForm = document.querySelector<HTMLFormElement>("#loginForm");
 const usernameInput = document.querySelector<HTMLInputElement>("#usernameInput");
 const passwordInput = document.querySelector<HTMLInputElement>("#passwordInput");
-
-const demoUsers: DemoUser[] = [
-  {
-    id: 1,
-    username: "player",
-    password: "player123",
-    role: "user"
-  },
-  {
-    id: 2,
-    username: "organizer",
-    password: "orga123",
-    role: "organizer"
-  }
-];
+const submitButton = loginForm?.querySelector<HTMLButtonElement>(
+  "button[type='submit']"
+);
 
 function getRedirectUrl(role: UserRole): string {
   if (role === "organizer") {
@@ -46,17 +26,30 @@ function showMessage(message: string): void {
   alert(message);
 }
 
-function findDemoUser(username: string, password: string): DemoUser | null {
-  const cleanUsername = username.trim().toLowerCase();
-  const cleanPassword = password.trim();
+function setLoading(isLoading: boolean): void {
+  if (!submitButton) return;
 
-  return (
-    demoUsers.find(
-      (user) =>
-        user.username.toLowerCase() === cleanUsername &&
-        user.password === cleanPassword
-    ) ?? null
-  );
+  submitButton.disabled = isLoading;
+  submitButton.textContent = isLoading ? "Connexion..." : "Se connecter";
+}
+
+function validateInputs(username: string, password: string): boolean {
+  if (!username || !password) {
+    showMessage("Veuillez saisir un pseudo et un mot de passe.");
+    return false;
+  }
+
+  if (username.length < 3) {
+    showMessage("Le pseudo doit contenir au moins 3 caractères.");
+    return false;
+  }
+
+  if (password.length < 6) {
+    showMessage("Le mot de passe doit contenir au moins 6 caractères.");
+    return false;
+  }
+
+  return true;
 }
 
 loginForm?.addEventListener("submit", async (event) => {
@@ -65,45 +58,28 @@ loginForm?.addEventListener("submit", async (event) => {
   const username = usernameInput?.value.trim() ?? "";
   const password = passwordInput?.value.trim() ?? "";
 
-  if (!username || !password) {
-    showMessage("Veuillez saisir un pseudo et un mot de passe.");
+  if (!validateInputs(username, password)) {
     return;
   }
 
-  if (username.toLowerCase() === "admin") {
-    const result = await loginAdminWithFallback(username, password);
+  try {
+    setLoading(true);
 
-    if (!result.success) {
-      showMessage(result.message);
-      return;
-    }
+    const user = await loginWithApi(username, password);
 
-    saveSession({
-      id: 99,
-      username: result.username,
-      role: result.role
-    });
+    showMessage(`Connexion réussie. Bienvenue ${user.username}.`);
 
-    window.location.href = getRedirectUrl(result.role);
-    return;
+    window.location.href = getRedirectUrl(user.role);
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Une erreur est survenue lors de la connexion.";
+
+    showMessage(message);
+  } finally {
+    setLoading(false);
   }
-
-  const demoUser = findDemoUser(username, password);
-
-  if (!demoUser) {
-    showMessage(
-      "Compte introuvable. Essayez admin/admin123, organizer/orga123 ou player/player123."
-    );
-    return;
-  }
-
-  saveSession({
-    id: demoUser.id,
-    username: demoUser.username,
-    role: demoUser.role
-  });
-
-  window.location.href = getRedirectUrl(demoUser.role);
 });
 
 document.body.classList.add("is-ready");

@@ -21,4 +21,14 @@ sequenceDiagram
   Service-->>Controller: Succès ou erreur
   Controller-->>Front: Réponse JSON
   Front-->>User: Affiche connexion réussie ou erreur
-```
+
+# Explication du fonctionnement
+1. L'utilisateur saisit ses identifiants dans l'interface.
+2. Le front-end envoie une requête POST vers L'API D'authentification.
+3. La route transmet la requête au contrôleur.
+4. Le contrôleur appelle le service d'authentification.
+5. Le service interroge le dépôt de données.
+6. Le dépôt consulte le fichier user.json
+7. Si l'utilisateur  existe que les informations sont validés, une réponses positive est renvoyée.
+8. Le contrôleur retourrne une réponse JSON au front-end
+9.Le front end affiche le résultat à l'utilisateur
