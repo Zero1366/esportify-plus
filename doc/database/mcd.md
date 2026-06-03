@@ -10,101 +10,104 @@ Le projet Esportify+ est une plateforme de gestion d’événements e-sport perm
 
 ## User
 
-| Champ | Type | Description |
-|---|---|---|
-| id | INT | Identifiant utilisateur |
-| username | VARCHAR | Nom utilisateur |
-| email | VARCHAR | Adresse email |
-| password | VARCHAR | Mot de passe hashé |
-| role_id | INT | Rôle associé |
-| created_at | DATETIME | Date de création |
+| Champ      | Type     | Description             |
+| ---------- | -------- | ----------------------- |
+| id         | INT      | Identifiant utilisateur |
+| username   | VARCHAR  | Nom utilisateur         |
+| email      | VARCHAR  | Adresse email           |
+| password   | VARCHAR  | Mot de passe hashé      |
+| role_id    | INT      | Rôle associé            |
+| created_at | DATETIME | Date de création        |
 
 ---
 
 ## Role
 
-| Champ | Type | Description |
-|---|---|---|
-| id | INT | Identifiant rôle |
-| name | VARCHAR | Nom du rôle |
+| Champ | Type    | Description      |
+| ----- | ------- | ---------------- |
+| id    | INT     | Identifiant rôle |
+| name  | VARCHAR | Nom du rôle      |
 
 Exemples :
-- admin
-- organizer
-- user
+
+* admin
+* organizer
+* user
 
 ---
 
 ## Event
 
-| Champ | Type | Description |
-|---|---|---|
-| id | INT | Identifiant événement |
-| title | VARCHAR | Nom de l’événement |
-| description | TEXT | Description |
-| game | VARCHAR | Jeu concerné |
-| date | DATETIME | Date événement |
-| status | VARCHAR | Statut |
-| organizer_id | INT | Organisateur |
+| Champ        | Type     | Description           |
+| ------------ | -------- | --------------------- |
+| id           | INT      | Identifiant événement |
+| title        | VARCHAR  | Nom de l’événement    |
+| description  | TEXT     | Description           |
+| game         | VARCHAR  | Jeu concerné          |
+| event_date   | DATETIME | Date événement        |
+| status       | VARCHAR  | Statut                |
+| organizer_id | INT      | Organisateur          |
 
 ---
 
 ## Tournament
 
-| Champ | Type | Description |
-|---|---|---|
-| id | INT | Identifiant tournoi |
-| name | VARCHAR | Nom tournoi |
-| event_id | INT | Événement lié |
-| max_players | INT | Nombre max joueurs |
-| visibility | VARCHAR | Public ou privé |
+| Champ       | Type    | Description               |
+| ----------- | ------- | ------------------------- |
+| id          | INT     | Identifiant tournoi       |
+| name        | VARCHAR | Nom tournoi               |
+| event_id    | INT     | Événement lié             |
+| max_players | INT     | Nombre maximum de joueurs |
+| visibility  | VARCHAR | Public ou privé           |
 
 ---
 
 ## Replay
 
-| Champ | Type | Description |
-|---|---|---|
-| id | INT | Identifiant replay |
-| title | VARCHAR | Titre replay |
-| video_url | TEXT | Lien vidéo |
-| event_id | INT | Événement associé |
+| Champ      | Type     | Description        |
+| ---------- | -------- | ------------------ |
+| id         | INT      | Identifiant replay |
+| title      | VARCHAR  | Titre replay       |
+| video_url  | TEXT     | Lien vidéo         |
+| event_id   | INT      | Événement associé  |
+| created_at | DATETIME | Date de création   |
 
 ---
 
 ## Message
 
-| Champ | Type | Description |
-|---|---|---|
-| id | INT | Identifiant message |
-| sender_id | INT | Expéditeur |
-| receiver_id | INT | Destinataire |
-| content | TEXT | Contenu |
-| created_at | DATETIME | Date création |
+| Champ       | Type     | Description         |
+| ----------- | -------- | ------------------- |
+| id          | INT      | Identifiant message |
+| sender_id   | INT      | Expéditeur          |
+| receiver_id | INT      | Destinataire        |
+| content     | TEXT     | Contenu             |
+| created_at  | DATETIME | Date de création    |
 
 ---
 
 ## Registration
 
-| Champ | Type | Description |
-|---|---|---|
-| id | INT | Identifiant inscription |
-| user_id | INT | Utilisateur |
-| event_id | INT | Événement |
-| status | VARCHAR | Statut inscription |
+| Champ      | Type     | Description             |
+| ---------- | -------- | ----------------------- |
+| id         | INT      | Identifiant inscription |
+| user_id    | INT      | Utilisateur             |
+| event_id   | INT      | Événement               |
+| status     | VARCHAR  | Statut inscription      |
+| created_at | DATETIME | Date de création        |
 
 ---
 
 # Relations
 
-- Un utilisateur possède un rôle
-- Un organisateur peut créer plusieurs événements
-- Un événement peut contenir plusieurs tournois
-- Un événement peut posséder plusieurs replays
-- Un utilisateur peut envoyer plusieurs messages
-- Un utilisateur peut recevoir plusieurs messages
-- Un utilisateur peut participer à plusieurs événements
-- Une inscription relie un utilisateur à un événement
+* Un utilisateur possède un rôle.
+* Un organisateur peut créer plusieurs événements.
+* Un événement peut contenir plusieurs tournois.
+* Un événement peut posséder plusieurs replays.
+* Un utilisateur peut envoyer plusieurs messages.
+* Un utilisateur peut recevoir plusieurs messages.
+* Un utilisateur peut participer à plusieurs événements.
+* Une inscription relie un utilisateur à un événement.
 
 ---
 
@@ -180,15 +183,15 @@ Une inscription concerne un seul utilisateur et un seul événement.
 
 # Règles de gestion
 
-- Un utilisateur possède obligatoirement un rôle.
-- Un événement est obligatoirement lié à un organisateur.
-- Un tournoi est obligatoirement lié à un événement.
-- Un replay est obligatoirement lié à un événement.
-- Une inscription est obligatoirement liée à un utilisateur et à un événement.
-- Un message est obligatoirement lié à un expéditeur et à un destinataire.
-- Un administrateur peut gérer les utilisateurs, les événements et les contenus.
-- Un organisateur peut créer et gérer ses propres événements.
-- Un utilisateur classique peut consulter les événements et s’inscrire.
+* Un utilisateur possède obligatoirement un rôle.
+* Un événement est obligatoirement lié à un organisateur.
+* Un tournoi est obligatoirement lié à un événement.
+* Un replay est obligatoirement lié à un événement.
+* Une inscription est obligatoirement liée à un utilisateur et à un événement.
+* Un message est obligatoirement lié à un expéditeur et à un destinataire.
+* Un administrateur peut gérer les utilisateurs, les événements et les contenus.
+* Un organisateur peut créer et gérer ses propres événements.
+* Un utilisateur classique peut consulter les événements et s’inscrire.
 
 ---
 
@@ -199,3 +202,5 @@ Ce MCD permet d’identifier les principales entités du projet Esportify+ ainsi
 Il sert de base à la création du schéma SQL relationnel, notamment avec les clés primaires, les clés étrangères et les relations entre les tables.
 
 Il permet également de justifier la structure des données utilisée dans le projet et de préparer une future évolution vers une base de données complète.
+
+Ce modèle conceptuel est directement utilisé pour construire le schéma SQL du projet.

@@ -1,78 +1,118 @@
-# Diagramme de classes - Esportify+
+# Diagramme de cas d'utilisation - Esportify+
 
 ## Description
 
-Ce diagramme de classes présente les principales entités utilisées dans le projet Esportify+.  
-Il permet de visualiser la structure logique des données ainsi que les relations entre les utilisateurs, les rôles, les événements, les tournois, les replays, les messages et les inscriptions.
+Ce document présente les principaux cas d'utilisation du projet Esportify+.
+
+Il permet d'identifier les différents acteurs de la plateforme ainsi que les fonctionnalités auxquelles ils peuvent accéder.
+
+---
+
+## Acteurs
+
+Le projet distingue plusieurs types d'acteurs :
+
+* visiteur ;
+* utilisateur connecté ;
+* organisateur ;
+* administrateur.
 
 ---
 
 ## Diagramme Mermaid
 
 ```mermaid
-classDiagram
-  class Role {
-    +number id
-    +string name
-  }
+flowchart LR
+  Visiteur[Visiteur]
+  Utilisateur[Utilisateur connecté]
+  Organisateur[Organisateur]
+  Administrateur[Administrateur]
 
-  class User {
-    +number id
-    +string username
-    +string email
-    +string password
-    +number roleId
-    +Date createdAt
-  }
+  UC1((Consulter la page d'accueil))
+  UC2((Consulter les événements))
+  UC3((Consulter les replays))
+  UC4((Se connecter))
+  UC5((Gérer sa session))
+  UC6((S'inscrire à un événement))
+  UC7((Accéder à l'espace organisateur))
+  UC8((Créer un événement))
+  UC9((Gérer les inscriptions))
+  UC10((Accéder à l'espace administrateur))
+  UC11((Valider ou refuser une demande))
+  UC12((Superviser la plateforme))
 
-  class Event {
-    +number id
-    +string title
-    +string description
-    +string game
-    +Date eventDate
-    +string status
-    +number organizerId
-    +Date createdAt
-  }
+  Visiteur --> UC1
+  Visiteur --> UC2
+  Visiteur --> UC3
+  Visiteur --> UC4
 
-  class Tournament {
-    +number id
-    +string name
-    +number eventId
-    +number maxPlayers
-    +string visibility
-  }
+  Utilisateur --> UC2
+  Utilisateur --> UC3
+  Utilisateur --> UC5
+  Utilisateur --> UC6
 
-  class Replay {
-    +number id
-    +string title
-    +string videoUrl
-    +number eventId
-    +Date createdAt
-  }
+  Organisateur --> UC7
+  Organisateur --> UC8
+  Organisateur --> UC9
 
-  class Registration {
-    +number id
-    +number userId
-    +number eventId
-    +string status
-    +Date createdAt
-  }
+  Administrateur --> UC10
+  Administrateur --> UC11
+  Administrateur --> UC12
+```
 
-  class Message {
-    +number id
-    +number senderId
-    +number receiverId
-    +string content
-    +Date createdAt
-  }
+---
 
-  Role "1" --> "*" User : attribue
-  User "1" --> "*" Event : organise
-  Event "1" --> "*" Tournament : contient
-  Event "1" --> "*" Replay : possede
-  User "1" --> "*" Registration : effectue
-  Event "1" --> "*" Registration : recoit
-  User "1" --> "*" Message : envoie
-  User "1" --> "*" Message : recoit
+## Détail des cas d'utilisation
+
+### Visiteur
+
+Un visiteur peut :
+
+* consulter la page d'accueil ;
+* consulter les événements disponibles ;
+* consulter les replays ;
+* accéder à la page de connexion.
+
+### Utilisateur connecté
+
+Un utilisateur connecté peut :
+
+* consulter les événements ;
+* consulter les replays ;
+* gérer sa session ;
+* s'inscrire à un événement.
+
+### Organisateur
+
+Un organisateur peut :
+
+* accéder à son espace organisateur ;
+* créer un événement ;
+* gérer les inscriptions liées à ses événements.
+
+### Administrateur
+
+Un administrateur peut :
+
+* accéder à l'espace administrateur ;
+* valider ou refuser des demandes ;
+* superviser la plateforme.
+
+---
+
+## Règles d'accès
+
+Les accès sont limités selon le rôle de l'utilisateur.
+
+* un visiteur accède uniquement aux pages publiques ;
+* un utilisateur connecté accède aux fonctionnalités joueur ;
+* un organisateur accède à l'espace organisateur ;
+* un administrateur accède à l'espace d'administration.
+
+---
+
+## Objectif du diagramme
+
+Ce diagramme permet de visualiser les interactions principales entre les acteurs et les fonctionnalités du projet.
+
+Il sert à clarifier les responsabilités de chaque rôle et complète la logique de gestion des rôles utilisée dans l'application.

@@ -1,25 +1,90 @@
-# Diagramme de cas d’utilisation - Esportify+
+# Diagramme de classes - Esportify+
+
+## Description
+
+Ce diagramme de classes présente les principales entités utilisées dans le projet Esportify+.
+
+Il permet de visualiser la structure logique des données ainsi que les relations entre les utilisateurs, les rôles, les événements, les tournois, les replays, les messages et les inscriptions.
+
+---
+
+## Diagramme Mermaid
 
 ```mermaid
-flowchart LR
-  Public[Utilisateur non connecté]
-  User[Utilisateur connecté]
-  Organizer[Organisateur]
-  Admin[Administrateur]
+classDiagram
+  class Role {
+    +number id
+    +string name
+  }
 
-  Public --> UC1[Consulter les événements publics]
-  Public --> UC2[Consulter la page replay]
-  Public --> UC3[Accéder à la connexion]
+  class User {
+    +number id
+    +string username
+    +string email
+    +string password
+    +number roleId
+    +Date createdAt
+  }
 
-  User --> UC4[Consulter les événements]
-  User --> UC5[Consulter les replays]
-  User --> UC6[S'inscrire à un événement]
+  class Event {
+    +number id
+    +string title
+    +string description
+    +string game
+    +Date eventDate
+    +string status
+    +number organizerId
+    +Date createdAt
+  }
 
-  Organizer --> UC7[Créer un événement]
-  Organizer --> UC8[Gérer ses compétitions]
-  Organizer --> UC9[Consulter les inscriptions]
+  class Tournament {
+    +number id
+    +string name
+    +number eventId
+    +number maxPlayers
+    +string visibility
+  }
 
-  Admin --> UC10[Valider ou refuser un événement]
-  Admin --> UC11[Gérer les utilisateurs]
-  Admin --> UC12[Superviser la plateforme]
+  class Replay {
+    +number id
+    +string title
+    +string videoUrl
+    +number eventId
+    +Date createdAt
+  }
+
+  class Registration {
+    +number id
+    +number userId
+    +number eventId
+    +string status
+    +Date createdAt
+  }
+
+  class Message {
+    +number id
+    +number senderId
+    +number receiverId
+    +string content
+    +Date createdAt
+  }
+
+  Role "1" --> "*" User : attribue
+  User "1" --> "*" Event : organise
+  Event "1" --> "*" Tournament : contient
+  Event "1" --> "*" Replay : possède
+  User "1" --> "*" Registration : effectue
+  Event "1" --> "*" Registration : reçoit
+  User "1" --> "*" Message : envoie
+  User "1" --> "*" Message : reçoit
 ```
+
+---
+
+## Objectif du diagramme
+
+Ce diagramme permet de représenter les principales classes métiers du projet Esportify+.
+
+Il montre les relations entre les utilisateurs, les rôles, les événements, les tournois, les replays, les inscriptions et les messages.
+
+Il sert de support à la compréhension de la structure logique du projet et complète le MCD ainsi que le schéma SQL.
