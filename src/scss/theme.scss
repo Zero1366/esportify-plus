@@ -1,40 +1,59 @@
 :root {
+  /* Fonds */
   --color-bg: #2b1d4f;
   --color-bg-dark: #21163e;
 
-  --color-header: #d17928;
-  --color-header-dark: #b85f1d;
+  /* Header / footer */
+  --color-header: #ff9f3a;
+  --color-header-dark: #d66b1f;
 
+  /* Surface */
   --color-surface: #39285f;
-  --color-surface-soft: #463271;
+  --color-surface-soft: #4b3480;
+  --color-surface-card: #ffffff;
   --color-surface-light: #f7f2ff;
 
+  /* Texte */
   --color-text: #fffaf0;
+  --color-text-dark: #21163e;
   --color-muted: #d8cde8;
+  --color-muted-dark: #5d5270;
 
+  /* Actions */
   --color-primary: #6f45f5;
   --color-primary-dark: #5531d6;
 
   --color-accent: #f39a32;
   --color-accent-soft: #ffbd6f;
 
-  --color-danger: #e15858;
-  --color-success: #5fc47b;
+  /* États */
+  --color-danger: #ff1f1f;
+  --color-warning: #e4a820;
+  --color-success:  #008d35;
+  --color-info: #4650bf;
 
-  --border-accent: rgba(243, 154, 50, 0.9);
+  /* Bordures */
+  --border-accent: #ff9f1c;
   --border-soft: rgba(255, 255, 255, 0.14);
+  --border-dark: #1b102f;
 
-  --shadow-card: 0 16px 34px rgba(18, 9, 35, 0.28);
-  --shadow-soft: 0 10px 24px rgba(18, 9, 35, 0.2);
+  /* Ombres */
+  --shadow-card: 0 10px 22px rgba(18, 9, 35, 0.28);
+  --shadow-soft: 0 6px 14px rgba(18, 9, 35, 0.2);
 
+  /* Radius */
+  --radius-xs: 6px;
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 22px;
 
+  /* Layout */
   --container-width: 1120px;
   --container-padding-mobile: 1rem;
 
-  --header-height: 72px;
+  --header-height: 64px;
+  --footer-height: 42px;
 
+  /* Typographie */
   --font-main: "Inter", "Segoe UI", Arial, sans-serif;
 }

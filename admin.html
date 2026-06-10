@@ -25,10 +25,7 @@
       href="/index.html"
       aria-label="Retour à l'accueil Esportify+"
     >
-      <img
-        src="/Logo/logo.png"
-        alt="Logo Esportify+"
-      />
+      <img src="/Logo/logo.png" alt="Logo Esportify+" />
     </a>
 
     <nav class="site-nav" aria-label="Navigation principale">
@@ -47,7 +44,7 @@
     </div>
 
     <section class="card organizer-panel organizer-dashboard">
-      <section class="hero">
+      <header class="hero">
         <p class="eyebrow">Espace administrateur</p>
 
         <h1>Supervision de la plateforme</h1>
@@ -55,7 +52,7 @@
         <p class="hero-subtitle">
           Suivez le live, contrôlez les incidents et gérez les demandes.
         </p>
-      </section>
+      </header>
 
       <div
         class="mobile-view-tabs mobile-view-tabs--compact"
@@ -65,7 +62,7 @@
           class="mobile-view-tab is-active"
           type="button"
           data-mobile-view-button="summary"
-          aria-label="Résumé administrateur"
+          aria-label="Afficher le résumé administrateur"
         >
           <span aria-hidden="true">📋</span>
           <span>Résumé</span>
@@ -75,7 +72,7 @@
           class="mobile-view-tab"
           type="button"
           data-mobile-view-button="live"
-          aria-label="Supervision du live"
+          aria-label="Afficher la supervision du live"
         >
           <span aria-hidden="true">🔴</span>
           <span>Live</span>
@@ -110,55 +107,45 @@
               </p>
             </header>
 
-            <section class="organizer-stats" aria-label="Résumé administrateur">
+            <section class="organizer-stats" aria-label="Statistiques administrateur">
               <article class="organizer-stat">
                 <span class="organizer-stat__icon" aria-hidden="true">📩</span>
-
                 <strong id="adminRequestsCount">0</strong>
-
                 <span>Demandes</span>
               </article>
 
               <article class="organizer-stat">
                 <span class="organizer-stat__icon" aria-hidden="true">🚩</span>
-
                 <strong id="adminReportsCount">0</strong>
-
                 <span>Signalements</span>
               </article>
 
               <article class="organizer-stat">
                 <span class="organizer-stat__icon" aria-hidden="true">👥</span>
-
                 <strong id="adminPlayersCount">0</strong>
-
                 <span>Joueurs suivis</span>
               </article>
 
               <article class="organizer-stat">
                 <span class="organizer-stat__icon" aria-hidden="true">✅</span>
-
                 <strong id="adminResolvedCount">0</strong>
-
                 <span>Actions traitées</span>
               </article>
             </section>
 
-            <section class="admin-alerts-zone">
-              <details class="admin-alerts-panel" open>
-                <summary>
-                  <span>Suivi admin</span>
-                  <strong>À vérifier</strong>
-                  <em>Demandes et signalements en attente</em>
-                </summary>
+            <details class="admin-alerts-panel" open>
+              <summary>
+                <span>Suivi admin</span>
+                <strong>À vérifier</strong>
+                <em>Demandes et signalements en attente</em>
+              </summary>
 
-                <div
-                  id="adminRequestsList"
-                  class="list admin-alerts-list"
-                  aria-live="polite"
-                ></div>
-              </details>
-            </section>
+              <div
+                id="adminRequestsList"
+                class="list admin-alerts-list"
+                aria-live="polite"
+              ></div>
+            </details>
           </div>
         </details>
       </section>
@@ -167,26 +154,30 @@
         class="organizer-subsection admin-supervision-grid"
         data-mobile-view-panel="live"
       >
-        <section class="admin-live-section">
-          <details class="admin-live-details" open>
-            <summary>
-              <span>Supervision du match</span>
-              <strong>Live admin</strong>
-              <em>Match surveillé en direct</em>
-            </summary>
+        <details class="admin-live-details" open>
+          <summary>
+            <span>Supervision du match</span>
+            <strong>Live admin</strong>
+            <em>Match surveillé en direct</em>
+          </summary>
 
-            <div class="admin-live-content">
-              <div
-                id="adminLivePanel"
-                class="admin-live-wrapper"
-                aria-live="polite"
-              ></div>
-            </div>
-          </details>
-        </section>
+          <div class="admin-live-content">
+            <div
+              id="adminLivePanel"
+              class="admin-live-wrapper"
+              aria-live="polite"
+            ></div>
+          </div>
+        </details>
       </section>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <p>
+      Esportify+ · Espace administrateur · Supervision, modération et suivi du live
+    </p>
+  </footer>
 
   <div
     id="toastContainer"

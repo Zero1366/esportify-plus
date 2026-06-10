@@ -6,7 +6,7 @@ export function initDatabase(): void {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT NOT NULL UNIQUE,
       password TEXT NOT NULL,
-      role TEXT NOT NULL
+      role TEXT NOT NULL CHECK (role IN ('player', 'organizer', 'admin'))
     )
   `).run();
 
@@ -22,7 +22,7 @@ export function initDatabase(): void {
 
     insert.run("admin", "admin123", "admin");
     insert.run("organizer", "orga123", "organizer");
-    insert.run("player", "player123", "user");
+    insert.run("player", "player123", "player");
 
     console.log("Utilisateurs SQLite créés");
   }

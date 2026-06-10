@@ -2,28 +2,78 @@
    REPLAY
 ========================= */
 
+$replay-text: #ffffff;
+$replay-status: var(--color-accent-soft);
+$replay-border: var(--border-accent);
+$replay-border-soft: rgba(255, 159, 58, 0.28);
+$replay-panel: var(--color-replay-panel);
+$replay-panel-dark: var(--color-replay-panel-dark);
+
+@mixin replay-text-wrap {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 .replay-page {
   .replay-card,
   .replay-actions-card {
     overflow: hidden;
+
+    border: 2px solid $replay-border;
+    border-radius: var(--radius-md);
+
+    background:
+      linear-gradient(
+        135deg,
+        rgba(86, 81, 189, 0.98),
+        rgba(75, 47, 131, 0.98)
+      );
+
+    color: $replay-text;
+
+    box-shadow: var(--shadow-card);
   }
 
+  .replay-card h2,
+  .replay-actions-card h2 {
+    color: $replay-text;
+  }
+
+  .replay-card p,
+  .replay-actions-card p {
+    color: $replay-text;
+  }
+
+  .replay-actions-card {
+    margin-top: 1rem;
+  }
+}
+
+/* =========================
+   SCOREBOARD
+========================= */
+
+.replay-page {
   .replay-score {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: center;
-    gap: 1.2rem;
+    justify-items: center;
+    gap: clamp(3rem, 8vw, 6rem);
 
-    margin: 1.5rem 0;
+    max-width: 720px;
+    margin: 1.5rem auto;
   }
 
   .team {
     display: grid;
     place-items: center;
+    align-content: center;
     gap: 0.65rem;
 
     min-width: 0;
-    padding: 0.5rem;
+    min-height: 260px;
+    padding: 0.8rem;
 
     border: 0;
     background: transparent;
@@ -40,75 +90,73 @@
   }
 
   .team img {
-    width: min(380px, 96%);
+    width: min(260px, 92%);
     height: auto;
-    max-height: 200px;
+    max-height: 165px;
 
     object-fit: contain;
-    image-rendering: pixelated;
+    image-rendering: auto;
 
-    filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.42));
+    filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.45));
+  }
+
+  .team:last-child img {
+    width: min(310px, 95%);
+    max-height: 195px;
+
+    transform: translateY(0px);
   }
 
   .team strong {
     display: block;
 
-    margin-top: -0.2rem;
+    margin-top: 0.35rem;
 
-    color: #fffaf0;
+    color: $replay-text;
 
-    font-size: 3.4rem;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
     font-weight: 1000;
     line-height: 1;
 
     text-shadow:
-      0 3px 0 rgba(0, 0, 0, 0.4),
+      0 3px 0 rgba(0, 0, 0, 0.42),
       0 0 16px rgba(0, 0, 0, 0.28);
   }
 
   .versus {
-    display: grid;
-    place-items: center;
-
-    width: 72px;
-    height: 72px;
-    min-width: 72px;
-
-    margin-top: -3.5rem;
-
-    background: transparent;
+    display: none;
   }
 
   .versus img {
-    display: block;
-
-    width: 72px;
-    height: 72px;
-
-    object-fit: contain;
-    image-rendering: pixelated;
-
-    transform: translateY(-2px);
+    display: none;
   }
 
   .replay-status {
-    margin: 1rem 0 0.85rem;
+    margin: 0.85rem 0 0.75rem;
 
-    color: #ffcf8b;
+    color: $replay-status;
 
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 900;
     text-align: center;
-  }
 
+    overflow-wrap: anywhere;
+  }
+}
+
+/* =========================
+   CONTROLS
+========================= */
+
+.replay-page {
   .replay-controls {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
+    gap: 0.65rem;
 
-    margin-top: 1rem;
+    margin-top: 0.85rem;
   }
 
   .replay-control-btn {
@@ -118,27 +166,27 @@
     align-items: center;
     justify-content: center;
 
-    width: 62px;
-    height: 62px;
+    width: 56px;
+    height: 56px;
     padding: 0;
 
-    border: 1px solid rgba(255, 191, 102, 0.28);
+    border: 2px solid rgba(255, 159, 58, 0.55);
     border-bottom: 4px solid rgba(10, 6, 22, 0.95);
-    border-radius: 18px;
+    border-radius: var(--radius-md);
 
     background:
       linear-gradient(
         180deg,
-        rgba(100, 68, 160, 0.98),
-        rgba(42, 25, 76, 0.98)
+        rgba(92, 59, 219, 0.98),
+        rgba(58, 37, 153, 0.98)
       );
 
     cursor: pointer;
     overflow: hidden;
 
     box-shadow:
-      0 9px 0 rgba(18, 10, 32, 0.95),
-      0 18px 26px rgba(0, 0, 0, 0.36);
+      0 7px 0 rgba(18, 10, 32, 0.95),
+      0 14px 22px rgba(0, 0, 0, 0.34);
 
     transition:
       transform 0.12s ease,
@@ -148,7 +196,26 @@
       border-bottom-width 0.12s ease;
   }
 
+  .replay-control-btn::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.15),
+        transparent 45%
+      );
+
+    pointer-events: none;
+  }
+
   .replay-control-btn img {
+    position: relative;
+    z-index: 1;
+
     display: block;
 
     width: 62%;
@@ -156,6 +223,10 @@
 
     object-fit: contain;
     pointer-events: none;
+
+    filter:
+      drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45))
+      brightness(1.05);
   }
 
   .replay-control-btn:hover:not(:disabled):not(.is-active) {
@@ -165,9 +236,9 @@
 
   .replay-control-btn:active:not(:disabled),
   .replay-control-btn.is-active {
-    transform: translateY(7px);
+    transform: translateY(6px);
 
-    border-color: rgba(255, 191, 102, 0.58);
+    border-color: rgba(255, 159, 58, 0.85);
     border-bottom-width: 1px;
 
     background:
@@ -188,16 +259,18 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+}
 
-  .replay-actions-card {
-    margin-top: 1.2rem;
-  }
+/* =========================
+   FEED
+========================= */
 
+.replay-page {
   .replay-feed {
     display: grid;
-    gap: 0.65rem;
+    gap: 0.6rem;
 
-    max-height: 340px;
+    max-height: 310px;
     margin: 0;
     padding: 0 0.35rem 0 0;
 
@@ -207,26 +280,30 @@
 
   .replay-feed li,
   .replay-feed__item {
-    padding: 0.75rem 0.85rem;
+    padding: 0.7rem 0.8rem;
 
-    border: 1px solid rgba(255, 191, 102, 0.12);
-    border-radius: 14px;
+    border: 1px solid $replay-border-soft;
+    border-radius: var(--radius-sm);
 
     background:
       linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.055),
-        rgba(255, 255, 255, 0.025)
+        rgba(255, 255, 255, 0.085),
+        rgba(255, 255, 255, 0.035)
       );
 
-    color: #fffaf0;
+    color: $replay-text;
 
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-weight: 750;
     line-height: 1.45;
 
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    @include replay-text-wrap;
+  }
+
+  .replay-feed li:first-child,
+  .replay-feed__item:first-child {
+    border-color: rgba(255, 159, 58, 0.52);
   }
 }
 
@@ -238,58 +315,61 @@
   .replay-page {
     .replay-score {
       grid-template-columns: 1fr;
-      gap: 0.9rem;
+      gap: 0.8rem;
     }
 
     .team img {
-      width: min(290px, 92%);
-      max-height: 145px;
+      width: min(260px, 92%);
+      max-height: 135px;
     }
 
-    .team strong {
-      font-size: 2.4rem;
-    }
-
-    .versus {
-      width: 100%;
-      height: 48px;
-      min-height: 48px;
-
-      margin-top: 0;
-
-      border-radius: var(--radius-sm);
-    }
-
-    .versus img {
-      width: 48px;
-      height: 48px;
+    .team:last-child img {
+      width: min(260, 96%);
+      max-height: 150px;
 
       transform: none;
     }
 
+    .team strong {
+      font-size: 2.25rem;
+    }
+
+    .versus,
+    .versus img {
+      display: none;
+    }
+
     .replay-control-btn {
-      width: 52px;
-      height: 52px;
+      width: 50px;
+      height: 50px;
     }
   }
 }
 
 @media (max-width: 560px) {
   .replay-page {
+    .replay-score {
+      margin: 0.9rem 0;
+    }
+
+    .replay-controls {
+      gap: 0.55rem;
+    }
+
+    .replay-status {
+      font-size: 0.86rem;
+    }
+
     .replay-feed {
-      max-height: 260px;
+      max-height: 245px;
     }
 
     .replay-feed li,
     .replay-feed__item {
-      padding: 0.7rem 0.8rem;
+      padding: 0.65rem 0.75rem;
 
       font-size: 0.82rem;
       line-height: 1.45;
-    }
-
-    .replay-status {
-      font-size: 0.88rem;
     }
   }
 }
@@ -297,74 +377,22 @@
 @media (max-width: 420px) {
   .replay-page {
     .team img {
-      width: min(240px, 90%);
-      max-height: 115px;
+      width: min(225px, 90%);
+      max-height: 105px;
+    }
+
+    .team:last-child img {
+      width: min(255px, 94%);
+      max-height: 135px;
     }
 
     .team strong {
-      font-size: 1.9rem;
+      font-size: 1.8rem;
     }
 
     .replay-control-btn {
-      width: 48px;
-      height: 48px;
-    }
-  }
-}
-
-/* =========================
-   REPLAY FINAL POLISH
-========================= */
-
-.replay-page {
-  .replay-card,
-  .replay-actions-card {
-    border-color: rgba(255, 191, 102, 0.24);
-  }
-
-  .replay-status {
-    overflow-wrap: anywhere;
-  }
-
-  .replay-control-btn::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background:
-      linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.14),
-        transparent 45%
-      );
-
-    pointer-events: none;
-  }
-
-  .replay-control-btn img {
-    position: relative;
-    z-index: 1;
-
-    filter:
-      drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45))
-      brightness(1.05);
-  }
-
-  .replay-feed li:first-child,
-  .replay-feed__item:first-child {
-    border-color: rgba(255, 191, 102, 0.28);
-  }
-}
-
-@media (max-width: 560px) {
-  .replay-page {
-    .replay-controls {
-      gap: 0.6rem;
-    }
-
-    .replay-score {
-      margin: 1rem 0;
+      width: 46px;
+      height: 46px;
     }
   }
 }

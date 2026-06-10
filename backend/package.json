@@ -1,10 +1,10 @@
 {
   "name": "esportify-backend",
   "version": "1.0.0",
-  "description": "Backend minimal Esportify+",
+  "description": "Backend Esportify+ avec Express, TypeScript, SQLite et authentification de démonstration",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev": "npm run build && node dist/server.js",
     "build": "tsc",
     "start": "node dist/server.js"
   },
@@ -19,6 +19,8 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.0",
+    "concurrently": "^10.0.3",
+    "nodemon": "^3.1.14",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   }

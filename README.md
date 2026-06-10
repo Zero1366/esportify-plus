@@ -1,6 +1,8 @@
 # Esportify+
 
-Projet ECF DWWM - Plateforme e-sport développée avec Vite, TypeScript, SCSS et Express.
+Plateforme e-sport développée avec Vite, TypeScript, SCSS, Express et SQLite.
+
+Projet réalisé dans le cadre de l'ECF du titre professionnel Développeur Web et Web Mobile (DWWM).
 
 ---
 
@@ -8,27 +10,9 @@ Projet ECF DWWM - Plateforme e-sport développée avec Vite, TypeScript, SCSS et
 
 Esportify+ est une plateforme web de démonstration dédiée à l'univers de l'e-sport.
 
-Le projet permet de consulter des événements compétitifs, suivre des matchs, gérer différents rôles utilisateurs et simuler un environnement proche d'une plateforme e-sport professionnelle.
+L'application permet de consulter des compétitions, suivre des matchs, visualiser des replays et gérer différents espaces selon le rôle de l'utilisateur connecté.
 
-Ce projet a été réalisé dans le cadre de l'ECF du titre professionnel Développeur Web et Web Mobile.
-
----
-
-# Objectifs du projet
-
-L'objectif du projet était de concevoir une application web moderne tout en mettant en pratique :
-
-* le développement front-end avec TypeScript ;
-* l'organisation SCSS modulaire ;
-* le responsive design ;
-* la gestion de rôles utilisateurs ;
-* les requêtes asynchrones avec Fetch ;
-* le développement d'une API REST avec Express ;
-* la validation des données avec Zod ;
-* l'organisation backend en couches ;
-* la documentation technique ;
-* la conteneurisation avec Docker ;
-* le versionnement avec Git et GitHub.
+Le projet a progressivement évolué d'une démonstration front-end vers une architecture complète intégrant une API Express, une base SQLite, une validation des données avec Zod ainsi qu'une documentation technique complète.
 
 ---
 
@@ -36,49 +20,39 @@ L'objectif du projet était de concevoir une application web moderne tout en met
 
 ## Interface utilisateur
 
-* navigation responsive ;
-* sidebar dynamique ;
-* header interactif ;
-* interface moderne développée en SCSS ;
-* compatibilité desktop et mobile.
+* interface responsive ;
+* navigation dynamique ;
+* système de session ;
+* gestion des rôles ;
+* affichage des événements ;
+* système de replay simulé.
 
 ## Gestion des rôles
 
-Le projet intègre plusieurs profils :
+Le projet intègre trois rôles :
 
-* visiteur ;
-* joueur ;
-* organisateur ;
-* administrateur.
+* player ;
+* organizer ;
+* admin.
 
-Chaque rôle dispose d'accès spécifiques selon ses permissions.
-
-## Système Replay / Live
-
-Simulation d'un système de suivi e-sport :
-
-* affichage des matchs ;
-* score dynamique ;
-* contrôle du replay ;
-* gestion des équipes ;
-* affichage des événements.
+Chaque rôle dispose d'un accès spécifique aux fonctionnalités de la plateforme.
 
 ## Administration
 
 * gestion des événements ;
-* gestion des utilisateurs ;
 * gestion des statuts ;
-* tableau d'administration.
+* supervision de la plateforme ;
+* contrôle des accès.
 
 ## Organisation
 
-* création d'événements ;
-* gestion des tournois ;
-* espace organisateur.
+* gestion des événements ;
+* gestion des compétitions ;
+* suivi des inscriptions.
 
 ---
 
-# Architecture du projet
+# Architecture technique
 
 ## Front-end
 
@@ -89,142 +63,72 @@ Technologies utilisées :
 * TypeScript ;
 * Vite.
 
-Architecture :
-
-```txt
-src/
-├── pages/
-├── scss/
-├── ui/
-├── data.ts
-├── session.ts
-├── navigation.ts
-└── apiClient.ts
-```
-
 ## Back-end
 
 Technologies utilisées :
 
 * Node.js ;
 * Express ;
+* TypeScript ;
 * Zod ;
-* Fetch API.
+* SQLite ;
+* Better-SQLite3.
 
-Architecture en couches :
+Architecture :
 
 ```txt
-backend/src/
-├── controllers/
-├── services/
-├── repositories/
-├── entities/
-├── routes/
-├── data/
-└── server.ts
+Frontend
+    │
+    ▼
+Fetch API
+    │
+    ▼
+Routes
+    │
+    ▼
+Services
+    │
+    ▼
+Repositories
+    │
+    ▼
+Entities
+    │
+    ▼
+SQLite
 ```
-
-Cette organisation permet :
-
-* une séparation claire des responsabilités ;
-* une meilleure maintenabilité ;
-* une évolution simplifiée du projet ;
-* une architecture proche des standards professionnels.
-
----
-
-# Fonctionnalités Backend
-
-## API REST
-
-Le backend expose plusieurs routes permettant :
-
-* l'authentification ;
-* la gestion des utilisateurs ;
-* la communication avec le front-end via Fetch.
-
-## Validation des données
-
-Les données reçues par l'API sont validées avec Zod avant traitement.
-
-Cette validation permet :
-
-* de contrôler les données entrantes ;
-* d'éviter les erreurs de format ;
-* d'améliorer la robustesse de l'application.
-
-## Middleware
-
-Un middleware global de gestion des erreurs a été mis en place afin de :
-
-* centraliser le traitement des erreurs ;
-* améliorer le débogage ;
-* garantir des réponses cohérentes à l'utilisateur.
 
 ---
 
 # Base de données
 
-## SQL
+Le projet utilise SQLite pour la gestion des utilisateurs et de l'authentification.
 
-Le projet contient :
+Tables principales :
 
-* un schéma SQL complet ;
-* les scripts de création ;
-* les données de démonstration ;
-* la modélisation relationnelle.
-
-## NoSQL
-
-Une étude d'architecture NoSQL est également présente afin de préparer les futures évolutions du projet.
-
-Les collections étudiées concernent :
-
+* roles ;
 * users ;
 * events ;
+* tournaments ;
+* replays ;
 * registrations ;
-* replays.
+* messages.
+
+Le schéma SQL complet est disponible dans :
+
+```txt
+doc/database/schema.sql
+```
 
 ---
 
-# Technologies utilisées
-
-## Front-end
-
-* HTML5
-* SCSS
-* TypeScript
-* Vite
-
-## Back-end
-
-* Node.js
-* Express
-* Zod
-* Fetch API
-
-## Base de données
-
-* SQLite
-* SQL
-* Architecture NoSQL documentée
-
-## Outils
-
-* Git
-* GitHub
-* Docker
-* Docker Compose
-* Netlify
-
----
-
-# Installation du projet
+# Installation
 
 ## Cloner le projet
 
 ```bash
 git clone https://github.com/Zero1366/esportify-plus.git
+cd esportify-plus
 ```
 
 ## Installer les dépendances
@@ -238,30 +142,33 @@ npm install
 Backend :
 
 ```bash
+cd backend
 npm install
-```
-
-## Lancer le frontend
-
-```bash
-npm run dev
-```
-
-## Lancer le backend
-
-```bash
-npm run dev
 ```
 
 ---
 
-# Lancement avec Docker
+# Lancement du projet
+
+## Backend
 
 ```bash
-docker compose up --build
+npm run dev
 ```
 
-Application disponible sur :
+API :
+
+```txt
+http://localhost:3000
+```
+
+## Frontend
+
+```bash
+npm run dev
+```
+
+Application :
 
 ```txt
 http://localhost:5173
@@ -273,125 +180,81 @@ http://localhost:5173
 
 ## Administrateur
 
-* login : admin
-* mot de passe : admin123
+```txt
+Login : admin
+Mot de passe : admin123
+```
 
 ## Organisateur
 
-* login : organizer
-* mot de passe : orga123
+```txt
+Login : organizer
+Mot de passe : orga123
+```
 
 ## Joueur
 
-* login : player
-* mot de passe : player123
+```txt
+Login : player
+Mot de passe : player123
+```
+
+---
+
+# Docker
+
+Le projet peut être exécuté avec Docker :
+
+```bash
+docker compose up --build
+```
 
 ---
 
 # Déploiement
 
-Le projet est déployé avec Netlify.
+Le frontend est déployé avec Netlify.
 
-Le code source est versionné avec GitHub et le déploiement est automatisé.
+Le code source est hébergé sur GitHub.
 
 ---
 
-# Documentation technique
+# Documentation
 
-Le projet contient :
+Documentation disponible dans le dossier :
+
+```txt
+doc/database/
+```
+
+Principaux documents :
 
 * architecture.md ;
 * deployment.md ;
 * security.md ;
-* mcd.md ;
-* use-case.md ;
-* sequence-login.md ;
-* class-diagram.md ;
-* schema.sql ;
 * business-rules.md ;
+* workflow-git.md ;
 * poo.md ;
-* nosql.md.
+* mcd.md ;
+* schema.sql ;
+* class-diagram.md ;
+* sequence-login.md ;
+* use-case.md ;
+* nosql.md ;
+* Patch_Note.md.
 
 ---
 
-# Diagrammes UML
+# Évolutions futures
 
-Le projet contient :
-
-* diagramme de cas d'utilisation ;
-* diagramme de séquence ;
-* diagramme de classes ;
-* règles métier ;
-* documentation POO.
-
----
-
-# Conteneurisation
-
-Docker est utilisé afin de :
-
-* standardiser l'environnement de développement ;
-* simplifier le déploiement ;
-* améliorer la reproductibilité ;
-* professionnaliser l'architecture du projet.
-
-Fichiers utilisés :
-
-* Dockerfile ;
-* docker-compose.yml.
-
----
-
-# Workflow Git
-
-Git et GitHub sont utilisés pour :
-
-* le suivi des versions ;
-* la gestion des modifications ;
-* la sauvegarde du projet ;
-* le déploiement continu ;
-* la documentation technique.
-
----
-
-# Perspectives d'évolution
-
-## Évolutions techniques
-
-* intégration de MongoDB ;
-* utilisation de Mongoose ;
 * authentification JWT ;
 * chiffrement bcrypt ;
 * variables d'environnement ;
-* amélioration du système de logs ;
-* amélioration de l'architecture backend.
-
-## Évolutions fonctionnelles
-
-* gestion avancée des tournois ;
+* MongoDB ;
+* Mongoose ;
 * système de notifications ;
-* historique des matchs ;
-* statistiques détaillées ;
-* dashboard analytics ;
-* gestion avancée des inscriptions.
-
-## Évolutions graphiques et UX/UI
-
-* refonte graphique complète ;
-* intégration définitive des logos Nova Squad et Red Pulse ;
-* amélioration de la barre de navigation ;
-* amélioration des cartes événements ;
-* nouvelles animations ;
-* amélioration du responsive mobile ;
-* harmonisation de l'identité visuelle ;
-* amélioration de l'accessibilité.
-
-## Évolutions e-sport
-
-* système de live en direct ;
-* scores en temps réel ;
-* suivi avancé des compétitions ;
-* statistiques de match ;
+* statistiques avancées ;
+* gestion complète des compétitions ;
 * amélioration du système de replay.
 
 ---
@@ -404,6 +267,6 @@ Graduate Développeur Web et Web Mobile
 
 ---
 
-# Statut du projet
+# Statut
 
-Projet ECF en cours d'amélioration et de professionnalisation.
+Projet ECF finalisé et poursuivi dans une démarche d'amélioration continue.

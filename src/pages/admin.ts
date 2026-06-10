@@ -7,8 +7,8 @@ const playIcon = new URL("../../UI/Play.png", import.meta.url).href;
 const pauseIcon = new URL("../../UI/Pause.png", import.meta.url).href;
 const replayIcon = new URL("../../UI/Replay.png", import.meta.url).href;
 
-const novaTeamLogo = new URL("../../LogoTeams/CardNovaSquad.png", import.meta.url).href;
-const pulseTeamLogo = new URL("../../LogoTeams/RedPulseCard.png", import.meta.url).href;
+const novaTeamLogo = new URL("../../LogoTeams/NovaSquad.png", import.meta.url).href;
+const pulseTeamLogo = new URL("../../LogoTeams/RedPulse.png", import.meta.url).href;
 
 type PlayerStatus = "active" | "warned" | "suspended" | "banned";
 type RiskLevel = "safe" | "medium" | "high";
@@ -72,10 +72,9 @@ const adminPlayers: AdminPlayer[] = [
 ];
 
 function protectPage(): void {
-  if (!isAuthenticated() || !hasRole("admin")) {
-    alert("Accès réservé aux administrateurs.");
-    window.location.href = "/inscription.html";
-  }
+  if (isAuthenticated() && hasRole("admin")) return;
+
+  window.location.href = "/inscription.html";
 }
 
 function setLastAction(message: string): void {
@@ -274,7 +273,7 @@ function renderLivePanel(): void {
 
   syncPlayersWithLiveStep();
 
-  const step = liveSteps[currentStep];
+  const step = liveSteps[currentStep] ?? liveSteps[0];
 
   adminLivePanel.innerHTML = `
     <article class="admin-live-card admin-live-card--scoreboard">
@@ -438,6 +437,9 @@ function bindAdminActions(): void {
 
     if (playerTrigger instanceof HTMLElement) {
       const playerId = Number(playerTrigger.dataset.id);
+
+      if (Number.isNaN(playerId)) return;
+
       openedPlayerActionsId = openedPlayerActionsId === playerId ? null : playerId;
       renderLivePanel();
       return;
@@ -461,29 +463,48 @@ function bindAdminActions(): void {
     const ignoreButton = target.closest(".admin-player-ignore-btn");
 
     if (ignoreButton instanceof HTMLElement) {
-      updatePlayerStatus(Number(ignoreButton.dataset.id), "active");
+      const playerId = Number(ignoreButton.dataset.id);
+
+      if (Number.isNaN(playerId)) return;
+
+      updatePlayerStatus(playerId, "active");
       return;
     }
 
     const warnButton = target.closest(".admin-player-warn-btn");
 
     if (warnButton instanceof HTMLElement) {
-      updatePlayerStatus(Number(warnButton.dataset.id), "warned");
+      const playerId = Number(warnButton.dataset.id);
+
+      if (Number.isNaN(playerId)) return;
+
+      updatePlayerStatus(playerId, "warned");
       return;
     }
+
 
     const suspendButton = target.closest(".admin-player-suspend-btn");
 
     if (suspendButton instanceof HTMLElement) {
-      updatePlayerStatus(Number(suspendButton.dataset.id), "suspended");
+      const playerId = Number(suspendButton.dataset.id);
+
+      if (Number.isNaN(playerId)) return;
+
+      updatePlayerStatus(playerId, "suspended");
       return;
     }
 
     const banButton = target.closest(".admin-player-ban-btn");
 
     if (banButton instanceof HTMLElement) {
-      updatePlayerStatus(Number(banButton.dataset.id), "banned");
+      const playerId = Number(banButton.dataset.id); 
+
+      if (Number.isNaN(playerId)) return;
+
+      updatePlayerStatus(playerId, "banned");
+      return;
     }
+    
   });
 }
 

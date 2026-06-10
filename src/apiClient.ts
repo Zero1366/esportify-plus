@@ -1,15 +1,20 @@
+import { demoUsers, type UserRole } from "./data";
+
 type ApiLoginResponse = {
   success: boolean;
-  username: string;
-  role: "admin";
   message?: string;
+  user?: {
+    id: number;
+    username: string;
+    role: UserRole;
+  };
 };
 
-export type AdminLoginResult = {
+export type LoginResult = {
   success: boolean;
   source: "backend" | "fallback";
   username: string;
-  role: "admin";
+  role: UserRole;
   message: string;
 };
 
@@ -20,19 +25,69 @@ const API_URL =
     : "";
 
 function canUseBackend(): boolean {
-  return API_URL !== "";
+  return API_URL.trim() !== "";
 }
 
-export async function loginAdminWithFallback(
+async function fetchWithTimeout(
+  url: string,
+  options: RequestInit,
+  timeout = 3000
+): Promise<Response> {
+  const controller = new AbortController();
+
+  const timeoutId = window.setTimeout(() => {
+    controller.abort();
+  }, timeout);
+
+  try {
+    return await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
+}
+
+function loginFallback(username: string, password: string): LoginResult {
+  const cleanUsername = username.trim().toLowerCase();
+  const cleanPassword = password.trim();
+
+  const demoUser = demoUsers.find(
+    (user) =>
+      user.username === cleanUsername &&
+      user.password === cleanPassword
+  );
+
+  if (!demoUser) {
+    return {
+      success: false,
+      source: "fallback",
+      username,
+      role: "player",
+      message: "Identifiants invalides."
+    };
+  }
+
+  return {
+    success: true,
+    source: "fallback",
+    username: demoUser.username,
+    role: demoUser.role,
+    message: "Connexion en mode démonstration."
+  };
+}
+
+export async function loginWithFallback(
   username: string,
   password: string
-): Promise<AdminLoginResult> {
+): Promise<LoginResult> {
   const cleanUsername = username.trim();
   const cleanPassword = password.trim();
 
   if (canUseBackend()) {
     try {
-      const response = await fetch(`${API_URL}/api/auth/login`, {
+      const response = await fetchWithTimeout(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -43,57 +98,42 @@ export async function loginAdminWithFallback(
         })
       });
 
-      if (!response.ok) {
-        throw new Error("Réponse serveur invalide.");
+      if (response.ok) {
+        const data = (await response.json()) as ApiLoginResponse;
+
+        if (data.success && data.user) {
+          return {
+            success: true,
+            source: "backend",
+            username: data.user.username,
+            role: data.user.role,
+            message: data.message ?? "Connexion réussie via le backend."
+          };
+        }
       }
-
-      const data = (await response.json()) as ApiLoginResponse;
-
-      if (data.success && data.role === "admin") {
-        return {
-          success: true,
-          source: "backend",
-          username: data.username,
-          role: "admin",
-          message: data.message ?? "Connexion administrateur via backend."
-        };
-      }
-
-      throw new Error("Identifiants administrateur refusés.");
     } catch {
-      return loginAdminFallback(cleanUsername, cleanPassword);
+      return loginFallback(cleanUsername, cleanPassword);
     }
   }
 
-  return loginAdminFallback(cleanUsername, cleanPassword);
+  return loginFallback(cleanUsername, cleanPassword);
 }
 
-function loginAdminFallback(
+export async function loginAdminWithFallback(
   username: string,
   password: string
-): AdminLoginResult {
-  const cleanUsername = username.trim().toLowerCase();
-  const cleanPassword = password.trim().toLowerCase();
+): Promise<LoginResult> {
+  const result = await loginWithFallback(username, password);
 
-  const isAdmin =
-    cleanUsername === "admin" &&
-    (cleanPassword === "admin123" || cleanPassword === "admin");
-
-  if (!isAdmin) {
+  if (!result.success || result.role !== "admin") {
     return {
       success: false,
-      source: "fallback",
+      source: result.source,
       username,
       role: "admin",
-      message: "Identifiants administrateur invalides."
+      message: "Accès administrateur refusé."
     };
   }
 
-  return {
-    success: true,
-    source: "fallback",
-    username: "admin",
-    role: "admin",
-    message: "Connexion administrateur en mode démo sécurisé."
-  };
+  return result;
 }

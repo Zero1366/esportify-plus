@@ -15,6 +15,6 @@
         "id": 3,
         "username": "player",
         "password": "player123",
-        "role": "user"
+        "role": "player"
     }
 ]

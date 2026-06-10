@@ -1,7 +1,7 @@
 .eyebrow {
   color: var(--color-accent-soft);
 
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -9,29 +9,26 @@
 
 .card {
   width: 100%;
-  padding: clamp(1rem, 2vw, 1.5rem);
+  padding: clamp(0.9rem, 1.8vw, 1.35rem);
 
   border: 2px solid var(--border-accent);
   border-radius: var(--radius-md);
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(70, 50, 113, 0.98),
-      rgba(55, 38, 95, 0.98)
-    );
+  background: var(--color-surface-card);
+  color: var(--color-text-dark);
 
   box-shadow: var(--shadow-card);
 }
 
-.card h2 {
-  margin-bottom: 0.75rem;
+.card h2,
+.card h3 {
+  margin-bottom: 0.65rem;
 
-  color: var(--color-text);
+  color: var(--color-text-dark);
 }
 
 .card p {
-  color: var(--color-muted);
+  color: var(--color-muted-dark);
 }
 
 .btn {
@@ -41,11 +38,14 @@
   gap: 0.35rem;
 
   width: fit-content;
-  min-height: 44px;
-  padding: 0.75rem 1.1rem;
+  min-height: 40px;
+  padding: 0.65rem 1rem;
 
-  border: 1px solid transparent;
+  border: 2px solid var(--border-accent);
   border-radius: var(--radius-sm);
+
+  background: var(--color-primary);
+  color: #ffffff;
 
   font-weight: 900;
   line-height: 1.1;
@@ -53,6 +53,8 @@
   text-decoration: none;
 
   cursor: pointer;
+
+  box-shadow: 0 6px 12px rgba(18, 9, 35, 0.25);
 
   transition:
     transform 0.2s ease,
@@ -84,65 +86,64 @@ select:focus-visible,
 textarea:focus-visible,
 button:focus-visible,
 a:focus-visible {
-  outline: 3px solid rgba(255, 191, 102, 0.55);
+  outline: 3px solid rgba(255, 159, 58, 0.55);
   outline-offset: 3px;
 }
 
 .btn--primary {
-  background:
-    linear-gradient(
-      180deg,
-      var(--color-primary) 0%,
-      var(--color-primary-dark) 100%
-    );
-
-  color: white;
-
-  box-shadow: 0 10px 20px rgba(111, 69, 245, 0.25);
+  background: var(--color-primary);
+  color: #ffffff;
 }
 
 .btn--ghost {
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-color: var(--border-dark);
 
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--color-text);
+  background: #050505;
+  color: #ffffff;
 }
 
 .btn--ghost:hover {
-  border-color: rgba(255, 191, 102, 0.32);
+  border-color: var(--border-accent);
 
-  background: rgba(255, 191, 102, 0.1);
+  background: #101010;
+  color: #ffffff;
 }
 
-.form,
-.form-grid {
-  label {
-    display: grid;
-    gap: 0.45rem;
+.btn--small {
+  min-height: 34px;
+  padding: 0.45rem 0.75rem;
 
-    color: var(--color-text);
+  font-size: 0.82rem;
+}
 
-    font-weight: 800;
-  }
+.form label,
+.form-grid label {
+  display: grid;
+  gap: 0.4rem;
+
+  color: var(--color-text);
+
+  font-size: 0.9rem;
+  font-weight: 800;
 }
 
 .form {
   display: grid;
-  gap: 1rem;
+  gap: 0.9rem;
 }
 
 input,
 select,
 textarea {
   width: 100%;
-  min-height: 44px;
-  padding: 0.75rem 0.9rem;
+  min-height: 40px;
+  padding: 0.65rem 0.8rem;
 
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 2px solid var(--border-dark);
   border-radius: var(--radius-sm);
 
-  background: rgba(255, 255, 255, 0.94);
-  color: #24163f;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--color-text-dark);
 
   font: inherit;
 }
@@ -169,20 +170,48 @@ textarea {
 
 .list-item {
   min-width: 0;
-  padding: 1rem;
+  padding: 0.9rem;
 
-  border: 1px solid rgba(255, 191, 102, 0.14);
+  border: 2px solid var(--border-dark);
   border-radius: var(--radius-sm);
 
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--color-surface-card);
+  color: var(--color-text-dark);
 }
 
 .list-item h3 {
   margin-bottom: 0.35rem;
+
+  color: var(--color-text-dark);
 }
 
 .list-item p {
+  color: var(--color-muted-dark);
+
   overflow-wrap: anywhere;
+}
+
+.role-card {
+  min-height: 132px;
+
+  color: #ffffff;
+}
+
+.role-card h2,
+.role-card p {
+  color: #ffffff;
+}
+
+.role-card--player {
+  background: var(--color-role-player);
+}
+
+.role-card--organizer {
+  background: var(--color-role-organizer);
+}
+
+.role-card--admin {
+  background: var(--color-role-admin);
 }
 
 .toast-root {
@@ -199,9 +228,13 @@ textarea {
 
 @media (max-width: 640px) {
   .card {
-    padding: 1rem;
+    padding: 0.95rem;
 
     border-radius: var(--radius-sm);
+  }
+
+  .role-card {
+    min-height: 104px;
   }
 
   .actions {
@@ -235,17 +268,17 @@ textarea {
 
 @media (max-width: 420px) {
   .card {
-    padding: 0.9rem;
+    padding: 0.85rem;
   }
 
   .btn {
-    min-height: 42px;
-    padding: 0.65rem 0.9rem;
+    min-height: 38px;
+    padding: 0.6rem 0.85rem;
 
-    font-size: 0.92rem;
+    font-size: 0.9rem;
   }
 
   .list-item {
-    padding: 0.85rem;
+    padding: 0.8rem;
   }
 }

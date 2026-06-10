@@ -1,7 +1,8 @@
 import "../scss/index.scss";
 import "../navigation";
 
-import { loginWithAPI, saveSession, type UserRole } from "../session";
+import { loginWithFallback } from "../apiClient";
+import { saveSession, type UserRole } from "../session";
 
 const loginForm = document.querySelector<HTMLFormElement>("#loginForm");
 const usernameInput = document.querySelector<HTMLInputElement>("#usernameInput");
@@ -17,6 +18,7 @@ loginForm?.appendChild(loginMessage);
 function getRedirectUrl(role: UserRole): string {
   if (role === "organizer") return "/organisateur.html";
   if (role === "admin") return "/admin.html";
+
   return "/events.html";
 }
 
@@ -58,37 +60,32 @@ loginForm?.addEventListener("submit", async (event) => {
 
   if (!validateInputs(username, password)) return;
 
-  try {
-    setLoading(true);
+  setLoading(true);
+  showMessage("Connexion en cours...");
 
-    const user = await loginWithAPI(username, password);
+  const result = await loginWithFallback(username, password);
 
-    saveSession({
-      id: user.id,
-      username: user.username,
-      role: user.role
-    });
-
-    const redirectUrl = getRedirectUrl(user.role);
-
-    console.log("Utilisateur connecté :", user);
-    console.log("Session enregistrée :", localStorage.getItem("esportify-session"));
-    console.log("Redirection vers :", redirectUrl);
-
-    showMessage(`Connexion réussie. Bienvenue ${user.username}.`);
-
-    setTimeout(() => {
-      window.location.href = redirectUrl;
-    }, 800);
-  } catch (error) {
-    const message =
-      error instanceof Error
-        ? error.message
-        : "Une erreur est survenue lors de la connexion.";
-
-    showMessage(message);
+  if (!result.success) {
+    showMessage(result.message);
     setLoading(false);
+    return;
   }
+
+  saveSession({
+    id: Date.now(),
+    username: result.username,
+    role: result.role
+  });
+
+  const redirectUrl = getRedirectUrl(result.role);
+  const sourceLabel =
+    result.source === "backend" ? "serveur" : "mode démonstration";
+
+  showMessage(`Connexion réussie via ${sourceLabel}. Bienvenue ${result.username}.`);
+
+  window.setTimeout(() => {
+    window.location.href = redirectUrl;
+  }, 800);
 });
 
 document.body.classList.add("is-ready");

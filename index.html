@@ -20,12 +20,10 @@
       class="site-logo"
       href="/index.html"
       aria-label="Retour à l'accueil Esportify+"
-    >
-      <img src="/Logo/logo.png" alt="Logo Esportify+" />
-    </a>
+    ></a>
 
     <nav class="site-nav" aria-label="Navigation principale">
-      <a href="/index.html">Accueil</a>
+      <a href="/index.html" aria-current="page">Accueil</a>
       <a href="/events.html">Événements</a>
       <a href="/replay.html">Replay</a>
       <a href="/contact.html">Contact</a>
@@ -61,8 +59,8 @@
       </div>
     </section>
 
-    <section class="grid-3">
-      <article class="card">
+    <section class="grid-3" aria-label="Rôles disponibles">
+      <article class="card role-card role-card--player">
         <h2>Utilisateur</h2>
 
         <p>
@@ -71,7 +69,7 @@
         </p>
       </article>
 
-      <article class="card">
+      <article class="card role-card role-card--organizer">
         <h2>Organisateur</h2>
 
         <p>
@@ -79,7 +77,7 @@
         </p>
       </article>
 
-      <article class="card">
+      <article class="card role-card role-card--admin">
         <h2>Administrateur</h2>
 
         <p>
@@ -89,6 +87,12 @@
       </article>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <p>
+      Esportify+ · Projet ECF · TypeScript · Express · SQLite
+    </p>
+  </footer>
 
   <div
     id="toastContainer"

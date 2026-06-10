@@ -2,7 +2,11 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>Replay - Esportify+</title>
 
@@ -46,15 +50,18 @@
       </p>
     </section>
 
-    <section class="card replay-card">
+    <section
+      class="card replay-card"
+      aria-labelledby="replayMatchTitle"
+    >
       <header class="section-title">
         <p class="eyebrow">Match terminé</p>
-        <h2>Nova Squad vs Red Pulse</h2>
+        <h2 id="replayMatchTitle">Nova Squad vs Red Pulse</h2>
       </header>
 
       <div class="replay-score" aria-label="Score du match">
         <div class="team team--nova">
-          <img src="/LogoTeams/CardNovaSquad.png" alt="Nova Squad" />
+          <img src="/LogoTeams/NovaSquad.png" alt="Nova Squad" />
           <strong id="replayScoreA">0</strong>
         </div>
 
@@ -63,7 +70,7 @@
         </span>
 
         <div class="team team--pulse">
-          <img src="/LogoTeams/RedPulseCard.png" alt="Red Pulse" />
+          <img src="/LogoTeams/RedPulse.png" alt="Red Pulse" />
           <strong id="replayScoreB">0</strong>
         </div>
       </div>
@@ -102,14 +109,23 @@
       </div>
     </section>
 
-    <section class="card replay-actions-card">
-      <h2>Actions du match</h2>
+    <section
+      class="card replay-actions-card"
+      aria-labelledby="replayActionsTitle"
+    >
+      <h2 id="replayActionsTitle">Actions du match</h2>
 
       <ul id="replayFeed" class="replay-feed">
         <li>00:00 · Le replay est prêt. Score : 0 - 0.</li>
       </ul>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <p>
+      Esportify+ · Replay simulé · Nova Squad vs Red Pulse
+    </p>
+  </footer>
 
   <div
     id="toastContainer"

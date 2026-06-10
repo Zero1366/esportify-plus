@@ -7,9 +7,11 @@ const router = express.Router();
 const loginSchema = z.object({
   username: z
     .string()
+    .trim()
     .min(3, "Le pseudo doit contenir au moins 3 caractères."),
   password: z
     .string()
+    .trim()
     .min(6, "Le mot de passe doit contenir au moins 6 caractères.")
 });
 
@@ -24,14 +26,20 @@ router.post("/login", (req, res) => {
   }
 
   const { username, password } = validation.data;
-
   const result = loginUser(username, password);
 
   if (!result.success) {
-    return res.status(401).json(result);
+    return res.status(401).json({
+      success: false,
+      message: result.message
+    });
   }
 
-  return res.status(200).json(result);
+  return res.status(200).json({
+    success: true,
+    message: result.message,
+    user: result.user
+  });
 });
 
 export default router;

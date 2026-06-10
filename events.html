@@ -2,7 +2,11 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>Événements - Esportify+</title>
 
@@ -35,6 +39,17 @@
   </header>
 
   <main class="page events-page">
+    <section class="hero">
+      <p class="eyebrow">Compétition</p>
+
+      <h1>Événements et tournois</h1>
+
+      <p>
+        Consultez les compétitions disponibles, les événements en attente
+        et les activités annulées sur Esportify+.
+      </p>
+    </section>
+
     <div
       class="mobile-view-tabs"
       aria-label="Filtres rapides des événements"
@@ -63,17 +78,6 @@
         Annulés
       </button>
     </div>
-
-    <section class="hero">
-      <p class="eyebrow">Compétition</p>
-
-      <h1>Événements et tournois</h1>
-
-      <p>
-        Retrouvez les compétitions disponibles sur Esportify+,
-        consultez les événements en attente et vérifiez les activités annulées.
-      </p>
-    </section>
 
     <section
       class="card events-filters"
@@ -125,7 +129,9 @@
       </div>
     </section>
 
-    <section>
+    <section aria-labelledby="eventsListTitle">
+      <h2 id="eventsListTitle" class="sr-only">Liste des événements</h2>
+
       <p id="eventsCount" class="events-count">
         Chargement des événements...
       </p>
@@ -133,11 +139,16 @@
       <div
         id="eventsGrid"
         class="events-grid"
-        aria-label="Liste des événements"
         aria-live="polite"
       ></div>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <p>
+      Esportify+ · Événements publics, tournois et compétitions simulées
+    </p>
+  </footer>
 
   <div
     id="toastContainer"

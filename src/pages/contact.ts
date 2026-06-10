@@ -6,7 +6,7 @@ const toastContainer = document.querySelector<HTMLElement>("#toastContainer");
 
 function showToast(message: string): void {
   if (!toastContainer) {
-    alert(message);
+    window.alert(message);
     return;
   }
 
@@ -23,6 +23,11 @@ function showToast(message: string): void {
 
 contactForm?.addEventListener("submit", (event) => {
   event.preventDefault();
+
+  if (!contactForm.checkValidity()) {
+    showToast("Veuillez remplir correctement le formulaire.");
+    return;
+  }
 
   showToast("Message envoyé. Ceci est une démonstration.");
 

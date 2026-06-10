@@ -9,20 +9,37 @@ import { initDatabase } from "./database/initDatabase";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const API_VERSION = "1.0.0";
+
+app.disable("x-powered-by");
 
 app.use(cors());
 app.use(express.json());
 
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({
-    message: "Backend Esportify+ actif"
+    success: true,
+    message: "Backend Esportify+ actif",
+    service: "Esportify+ API",
+    version: API_VERSION
   });
 });
 
 app.get("/health", (_req: Request, res: Response) => {
   res.status(200).json({
+    success: true,
     status: "ok",
-    service: "Esportify+ API"
+    service: "Esportify+ API",
+    database: "connected",
+    version: API_VERSION
+  });
+});
+
+app.get("/version", (_req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    name: "Esportify+ API",
+    version: API_VERSION
   });
 });
 
@@ -49,5 +66,5 @@ app.use(errorHandler);
 initDatabase();
 
 app.listen(PORT, () => {
-  console.log(`Serveur lancé sur http://localhost:${PORT}`);
+  console.log(`Esportify+ API lancée sur http://localhost:${PORT}`);
 });

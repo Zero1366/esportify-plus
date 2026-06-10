@@ -1,5 +1,6 @@
 export type EventType = "tournament" | "event";
 export type EventStatus = "validated" | "pending" | "cancelled";
+export type UserRole = "admin" | "organizer" | "player";
 
 export interface EventItem {
   id: number;
@@ -27,6 +28,30 @@ export interface ReportItem {
   message: string;
   status: "open" | "closed";
 }
+
+export interface DemoUser {
+  username: string;
+  password: string;
+  role: UserRole;
+}
+
+export const demoUsers: DemoUser[] = [
+  {
+    username: "admin",
+    password: "admin123",
+    role: "admin"
+  },
+  {
+    username: "organizer",
+    password: "orga123",
+    role: "organizer"
+  },
+  {
+    username: "player",
+    password: "player123",
+    role: "player"
+  }
+];
 
 export const eventsData: EventItem[] = [
   {

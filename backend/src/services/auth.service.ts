@@ -1,8 +1,8 @@
-import { SafeUser } from "../entities/user.entity";
+import type { SafeUser } from "../entities/user.entity.js";
 import {
   findAllSafeUsers,
   findUserByCredentials
-} from "../repositories/user.repository";
+} from "../repositories/user.repository.js";
 
 interface LoginResult {
   success: boolean;
@@ -10,24 +10,31 @@ interface LoginResult {
   user?: SafeUser;
 }
 
-export function loginUser(username: string, password: string): LoginResult {
-  if (!username || !password) {
+export function loginUser(
+  username: string,
+  password: string
+): LoginResult {
+  const cleanUsername = username?.trim();
+  const cleanPassword = password?.trim();
+
+  if (!cleanUsername || !cleanPassword) {
     return {
       success: false,
       message: "Nom d'utilisateur et mot de passe requis."
     };
   }
 
-  const foundUser = findUserByCredentials(username, password);
+  const safeUser = findUserByCredentials(
+    cleanUsername,
+    cleanPassword
+  );
 
-  if (!foundUser) {
+  if (!safeUser) {
     return {
       success: false,
       message: "Identifiants incorrects."
     };
   }
-
-  const { password: _password, ...safeUser } = foundUser;
 
   return {
     success: true,

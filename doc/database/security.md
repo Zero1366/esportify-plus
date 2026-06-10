@@ -2,41 +2,42 @@
 
 ## Objectif
 
-Ce document présente les principales mesures de sécurité prévues ou appliquées dans le projet Esportify+.
+Ce document présente les principales mesures de sécurité mises en place ainsi que les évolutions envisagées dans le projet Esportify+.
 
 ---
 
 ## Gestion des rôles
 
-L’application utilise une logique de rôles afin de limiter l’accès à certaines pages et fonctionnalités.
+L’application utilise une logique de rôles afin de limiter l’accès aux fonctionnalités selon le profil connecté.
 
-Rôles prévus :
+Rôles utilisés :
 
-* visiteur ;
-* utilisateur ;
-* organisateur ;
-* administrateur.
+* player ;
+* organizer ;
+* admin.
 
 Exemples :
 
-* un visiteur peut consulter les pages publiques ;
-* un utilisateur peut consulter les événements et les replays ;
+* un joueur peut consulter les événements et les replays ;
 * un organisateur peut gérer ses événements ;
 * un administrateur peut superviser la plateforme.
+
+Cette séparation permet de limiter l’accès aux fonctionnalités sensibles.
 
 ---
 
 ## Protection des accès
 
-Certaines pages sont protégées selon le rôle de l’utilisateur.
+Certaines pages et fonctionnalités sont protégées selon le rôle de l’utilisateur.
 
 Exemples :
 
 * page administrateur réservée au rôle admin ;
 * page organisateur réservée au rôle organizer ;
-* actions de validation réservées à l’administrateur.
+* gestion des événements réservée aux organisateurs ;
+* actions d’administration réservées au rôle admin.
 
-Cette séparation permet de limiter l’accès aux fonctionnalités sensibles.
+Cette approche permet d'appliquer un contrôle d'accès cohérent dans l'ensemble de l'application.
 
 ---
 
@@ -52,19 +53,53 @@ Les données stockées comprennent :
 * nom d’utilisateur ;
 * rôle.
 
+Aucun mot de passe n'est conservé dans les données de session.
+
 ---
 
 ## Validation des données avec Zod
 
-Le backend utilise la bibliothèque Zod afin de valider les données reçues par l’API.
+Le backend utilise la bibliothèque Zod afin de valider les données reçues par l’API avant leur traitement.
 
-Exemple :
+Exemples :
 
 * vérification du pseudo ;
 * vérification du mot de passe ;
-* contrôle du format des données.
+* contrôle du format des données ;
+* validation des données de connexion.
 
 Cette validation permet de limiter les erreurs et les données invalides envoyées au serveur.
+
+---
+
+## Protection des données sensibles
+
+Le backend utilise le type SafeUser afin d’éviter l’exposition des informations sensibles.
+
+Les réponses envoyées au frontend ne contiennent jamais le mot de passe de l’utilisateur.
+
+Exemples de données renvoyées :
+
+* identifiant utilisateur ;
+* nom utilisateur ;
+* rôle.
+
+Cette approche permet de limiter les risques de fuite d’informations sensibles.
+
+---
+
+## Encapsulation avec UserEntity
+
+Le projet utilise une entité UserEntity développée selon les principes de la programmation orientée objet.
+
+Cette entité permet :
+
+* d’encapsuler les données utilisateur ;
+* de contrôler l’accès aux propriétés ;
+* de centraliser certaines règles métier ;
+* de générer une version sécurisée de l’utilisateur grâce à SafeUser.
+
+Cette approche améliore la lisibilité, la maintenance et la sécurité du code.
 
 ---
 
@@ -126,33 +161,63 @@ Cette configuration permet :
 
 ## Protection contre les injections SQL
 
-Dans une version connectée à une base de données, les requêtes devront utiliser des requêtes préparées afin d’éviter les injections SQL.
+Le backend utilise SQLite via la bibliothèque Better-SQLite3.
 
-Exemple de bonne pratique :
+Les accès aux données reposent sur des requêtes préparées (Prepared Statements) permettant de séparer les données des instructions SQL.
+
+Exemple :
 
 ```sql
-SELECT * FROM users WHERE email = ?;
+SELECT * FROM users WHERE username = ?;
 ```
 
-Cette approche permet d’éviter l’exécution de code SQL malveillant.
+Cette approche permet de limiter les risques d’injection SQL.
+
+---
+
+## Sécurisation de SQLite
+
+La configuration SQLite utilise plusieurs mécanismes complémentaires :
+
+* activation des clés étrangères avec `PRAGMA foreign_keys = ON` ;
+* mode WAL (Write-Ahead Logging) ;
+* délai d’attente en cas de verrouillage de la base ;
+* contraintes SQL (CHECK, UNIQUE, FOREIGN KEY).
+
+Ces mécanismes améliorent la fiabilité, la cohérence et l’intégrité des données.
+
+---
+
+## Sécurisation du serveur Express
+
+Plusieurs mesures de protection ont été mises en place dans le serveur Express :
+
+* désactivation de l’en-tête `X-Powered-By` ;
+* gestion centralisée des erreurs ;
+* validation systématique des données ;
+* contrôle des routes disponibles.
+
+Ces mécanismes réduisent l’exposition d’informations techniques et améliorent la robustesse de l’API.
 
 ---
 
 ## Évolutions futures
 
-Plusieurs améliorations de sécurité sont prévues :
+Plusieurs améliorations de sécurité sont envisagées :
 
 * authentification JWT ;
 * chiffrement des mots de passe avec bcrypt ;
 * variables d’environnement ;
 * sécurisation avancée des sessions ;
 * amélioration des contrôles d’accès ;
-* système de logs de sécurité.
+* système de logs de sécurité ;
+* limitation du nombre de tentatives de connexion ;
+* journalisation des actions administratives.
 
 ---
 
 ## Conclusion
 
-La sécurité d’Esportify+ repose actuellement sur une gestion des rôles, une validation des données avec Zod, une gestion des sessions, une communication API structurée et un middleware de gestion des erreurs.
+La sécurité d’Esportify+ repose actuellement sur une gestion des rôles, une validation des données avec Zod, une architecture en couches, l’utilisation de SafeUser, l’encapsulation des données avec UserEntity, l’utilisation de requêtes préparées ainsi qu’une configuration sécurisée de SQLite et d’Express.
 
-Ces éléments constituent une première base de sécurité qui pourra être renforcée lors des futures évolutions du projet.
+Ces mécanismes constituent une première base de sécurité cohérente avec les besoins actuels du projet et pourront être renforcés lors des futures évolutions de la plateforme.

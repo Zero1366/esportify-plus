@@ -3,20 +3,7 @@ import "../navigation";
 
 import { getSession, type UserRole } from "../session";
 
-const sessionLink = document.querySelector<HTMLAnchorElement>("#sessionLink");
 const roleTestLink = document.querySelector<HTMLAnchorElement>("#roleTestLink");
-
-function getRoleLabel(role: UserRole): string {
-  if (role === "admin") {
-    return "Administrateur";
-  }
-
-  if (role === "organizer") {
-    return "Organisateur";
-  }
-
-  return "Utilisateur";
-}
 
 function getRoleUrl(role: UserRole): string {
   if (role === "admin") {
@@ -30,37 +17,21 @@ function getRoleUrl(role: UserRole): string {
   return "/events.html";
 }
 
-function updateSessionDisplay(): void {
+function updateRoleTestLink(): void {
+  if (!roleTestLink) return;
+
   const session = getSession();
 
   if (!session) {
-    if (sessionLink) {
-      sessionLink.textContent = "Connexion";
-      sessionLink.href = "/inscription.html";
-    }
-
-    if (roleTestLink) {
-      roleTestLink.textContent = "Se connecter";
-      roleTestLink.href = "/inscription.html";
-    }
-
+    roleTestLink.textContent = "Connexion";
+    roleTestLink.href = "/inscription.html";
     return;
   }
 
-  const roleLabel = getRoleLabel(session.role);
-  const roleUrl = getRoleUrl(session.role);
-
-  if (sessionLink) {
-    sessionLink.textContent = roleLabel;
-    sessionLink.href = roleUrl;
-  }
-
-  if (roleTestLink) {
-    roleTestLink.textContent = `Connecté : ${session.username}`;
-    roleTestLink.href = roleUrl;
-  }
+  roleTestLink.textContent = `Connecté : ${session.username}`;
+  roleTestLink.href = getRoleUrl(session.role);
 }
 
-updateSessionDisplay();
+updateRoleTestLink();
 
 document.body.classList.add("is-ready");

@@ -49,19 +49,23 @@
       <h1>Gestion des compétitions</h1>
 
       <p>
-        Suivez la compétition disponible et proposez une nouvelle activité.
+        Suivez les activités disponibles et proposez un nouveau match,
+        tournoi ou événement.
       </p>
     </section>
 
-    <section class="card organizer-panel organizer-dashboard">
-      <section class="organizer-mobile-group">
+    <section
+      class="card organizer-panel organizer-dashboard"
+      aria-label="Tableau de bord organisateur"
+    >
+      <section class="organizer-mobile-group" aria-labelledby="organizerSummaryTitle">
         <header class="section-title">
           <p class="eyebrow">Tableau organisateur</p>
 
-          <h2>Résumé</h2>
+          <h2 id="organizerSummaryTitle">Résumé</h2>
 
           <p class="organizer-summary">
-            Vue simplifiée pour l’organisateur avec accès rapide au replay.
+            Vue simplifiée avec accès rapide aux activités disponibles.
           </p>
         </header>
 
@@ -86,12 +90,14 @@
         </section>
       </section>
 
-      <section class="organizer-mobile-group">
+      <section class="organizer-mobile-group" aria-labelledby="activityRequestTitle">
         <section class="organizer-subsection organizer-request-block">
           <header class="section-title">
             <p class="eyebrow">Organisation</p>
 
-            <h2>Proposer un match, événement ou compétition</h2>
+            <h2 id="activityRequestTitle">
+              Proposer une activité
+            </h2>
           </header>
 
           <form
@@ -182,6 +188,12 @@
       </section>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <p>
+      Esportify+ · Espace organisateur · Proposition et suivi des compétitions
+    </p>
+  </footer>
 
   <div
     id="toastContainer"

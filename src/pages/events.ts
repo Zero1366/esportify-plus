@@ -8,13 +8,23 @@ import {
   type EventType
 } from "../data";
 
-const valorantImageUrl = new URL("../../Image/arena-live.png", import.meta.url).href;
+const valorantImageUrl = new URL("../../Image/arena-live.png", import.meta.url)
+  .href;
 
 const eventSearch = document.querySelector<HTMLInputElement>("#eventSearch");
 const eventType = document.querySelector<HTMLSelectElement>("#eventType");
 const eventStatus = document.querySelector<HTMLSelectElement>("#eventStatus");
 const eventsGrid = document.querySelector<HTMLElement>("#eventsGrid");
 const eventsCount = document.querySelector<HTMLElement>("#eventsCount");
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
 function getTypeIcon(type: EventType): string {
   return type === "tournament" ? "🏆" : "📅";
@@ -71,6 +81,14 @@ function getEventAction(event: EventItem): string {
 }
 
 function renderEventCard(event: EventItem): string {
+  const title = escapeHtml(event.title);
+  const game = escapeHtml(event.game);
+  const date = escapeHtml(event.date);
+  const description = escapeHtml(event.description);
+  const statusReason = event.statusReason
+    ? escapeHtml(event.statusReason)
+    : "";
+
   return `
     <article class="card event-card ${getStatusClass(event.status)}">
       ${getEventImage(event)}
@@ -85,19 +103,19 @@ function renderEventCard(event: EventItem): string {
         </span>
       </div>
 
-      <h3>${event.title}</h3>
+      <h3>${title}</h3>
 
-      <p>${event.description}</p>
+      <p>${description}</p>
 
       <div class="event-meta">
-        <p><strong>Jeu :</strong> ${event.game}</p>
-        <p><strong>Date :</strong> ${event.date}</p>
+        <p><strong>Jeu :</strong> ${game}</p>
+        <p><strong>Date :</strong> ${date}</p>
         <p><strong>Joueurs :</strong> ${event.players}/${event.maxPlayers}</p>
       </div>
 
       ${
-        event.statusReason
-          ? `<p class="event-reason"><strong>Détail :</strong> ${event.statusReason}</p>`
+        statusReason
+          ? `<p class="event-reason"><strong>Détail :</strong> ${statusReason}</p>`
           : ""
       }
 
@@ -106,16 +124,14 @@ function renderEventCard(event: EventItem): string {
   `;
 }
 
-function renderEvents(): void {
-  if (!eventSearch || !eventType || !eventStatus || !eventsGrid || !eventsCount) {
-    return;
-  }
+function getFilteredEvents(): EventItem[] {
+  if (!eventSearch || !eventType || !eventStatus) return [];
 
   const searchValue = eventSearch.value.toLowerCase().trim();
   const selectedType = eventType.value;
   const selectedStatus = eventStatus.value;
 
-  const filteredEvents = eventsData.filter((event) => {
+  return eventsData.filter((event) => {
     const matchesSearch =
       event.title.toLowerCase().includes(searchValue) ||
       event.game.toLowerCase().includes(searchValue);
@@ -128,7 +144,12 @@ function renderEvents(): void {
 
     return matchesSearch && matchesType && matchesStatus;
   });
+}
 
+function renderEvents(): void {
+  if (!eventsGrid || !eventsCount) return;
+
+  const filteredEvents = getFilteredEvents();
   const count = filteredEvents.length;
 
   eventsCount.textContent =
@@ -138,6 +159,20 @@ function renderEvents(): void {
     count === 0
       ? `<p class="empty-state">Aucun événement ne correspond à ce filtre.</p>`
       : filteredEvents.map(renderEventCard).join("");
+}
+
+function updateMobileTabs(): void {
+  if (!eventStatus) return;
+
+  const buttons =
+    document.querySelectorAll<HTMLButtonElement>("[data-status-filter]");
+
+  buttons.forEach((button) => {
+    button.classList.toggle(
+      "is-active",
+      button.dataset.statusFilter === eventStatus.value
+    );
+  });
 }
 
 function initMobileStatusTabs(): void {
@@ -153,11 +188,7 @@ function initMobileStatusTabs(): void {
       if (!selectedStatus) return;
 
       eventStatus.value = selectedStatus;
-
-      buttons.forEach((item) => {
-        item.classList.toggle("is-active", item === button);
-      });
-
+      updateMobileTabs();
       renderEvents();
     });
   });
@@ -167,16 +198,7 @@ eventSearch?.addEventListener("input", renderEvents);
 eventType?.addEventListener("change", renderEvents);
 
 eventStatus?.addEventListener("change", () => {
-  const buttons =
-    document.querySelectorAll<HTMLButtonElement>("[data-status-filter]");
-
-  buttons.forEach((button) => {
-    button.classList.toggle(
-      "is-active",
-      button.dataset.statusFilter === eventStatus.value
-    );
-  });
-
+  updateMobileTabs();
   renderEvents();
 });
 

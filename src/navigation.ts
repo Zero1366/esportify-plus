@@ -16,7 +16,7 @@ function getRoleLabel(role: UserRole): string {
   if (role === "admin") return "Admin";
   if (role === "organizer") return "Organisateur";
 
-  return "Player";
+  return "Utilisateur";
 }
 
 function protectCurrentPage(): void {
@@ -157,9 +157,15 @@ function initDropdown(): void {
       closeAllDropdowns();
     }
   });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeAllDropdowns();
+    }
+  });
 }
 
-function initProtectedLinksClick(): void {
+function initProtectedLinks(): void {
   const protectedLinks = document.querySelectorAll<HTMLElement>(
     "[data-protected-role]"
   );
@@ -181,7 +187,7 @@ function initProtectedLinksClick(): void {
       }
 
       event.preventDefault();
-      window.alert("Accès réservé à ce rôle.");
+      redirectToLogin();
     });
   });
 }
@@ -210,5 +216,5 @@ renderSessionNav();
 updateRoleBanner();
 protectCurrentPage();
 initDropdown();
-initProtectedLinksClick();
+initProtectedLinks();
 initSessionButtons();

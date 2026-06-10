@@ -1,4 +1,4 @@
-export type UserRole = "user" | "organizer" | "admin";
+export type UserRole = "player" | "organizer" | "admin";
 
 export interface SessionUser {
   id: number;
@@ -95,8 +95,6 @@ export async function loginWithAPI(
   };
 
   saveSession(sessionUser);
-
-  console.log("Session sauvegardée :", sessionUser);
 
   return sessionUser;
 }

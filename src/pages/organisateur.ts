@@ -1,7 +1,7 @@
 import "../scss/index.scss";
 import "../navigation";
 
-import { eventsData } from "../data";
+import { eventsData, type EventItem } from "../data";
 import { canAccessRole, isAuthenticated } from "../session";
 
 type ActivityStatus = "pending" | "validated" | "refused";
@@ -17,46 +17,38 @@ interface ActivityRequest {
   status: ActivityStatus;
 }
 
-const toastContainer =
-  document.querySelector<HTMLElement>("#toastContainer");
-
+const toastContainer = document.querySelector<HTMLElement>("#toastContainer");
 const activityRequestForm =
   document.querySelector<HTMLFormElement>("#activityRequestForm");
 
 const activityTypeInput =
   document.querySelector<HTMLSelectElement>("#activityTypeInput");
-
 const activityTitleInput =
   document.querySelector<HTMLInputElement>("#activityTitleInput");
-
 const activityFormatInput =
   document.querySelector<HTMLSelectElement>("#activityFormatInput");
-
 const activityGameInput =
   document.querySelector<HTMLSelectElement>("#activityGameInput");
-
 const activityDateInput =
   document.querySelector<HTMLInputElement>("#activityDateInput");
-
 const activityMaxPlayersInput =
   document.querySelector<HTMLSelectElement>("#activityMaxPlayersInput");
 
-const eventsStat =
-  document.querySelector<HTMLElement>("#eventsStat");
-
-const proposalStat =
-  document.querySelector<HTMLElement>("#validatedStat");
-
+const eventsStat = document.querySelector<HTMLElement>("#eventsStat");
+const proposalStat = document.querySelector<HTMLElement>("#validatedStat");
 const availableEventCard =
   document.querySelector<HTMLElement>("#availableEventCard");
 
 const activityRequests: ActivityRequest[] = [];
 
+function redirectToLogin(): void {
+  window.location.href = "/inscription.html";
+}
+
 function protectPage(): void {
   if (isAuthenticated() && canAccessRole("organizer")) return;
 
-  alert("Accès réservé aux organisateurs.");
-  window.location.href = "/inscription.html";
+  redirectToLogin();
 }
 
 function escapeHtml(value: string): string {
@@ -82,13 +74,15 @@ function showToast(message: string): void {
   }, 3000);
 }
 
-function getAvailableEvents() {
+function getAvailableEvents(): EventItem[] {
   return eventsData.filter((event) => event.status === "validated");
 }
 
 function renderStats(): void {
   const availableEventsCount = getAvailableEvents().length;
-  const pendingRequestsCount = activityRequests.length;
+  const pendingRequestsCount = activityRequests.filter(
+    (request) => request.status === "pending"
+  ).length;
 
   if (eventsStat) {
     eventsStat.textContent = String(availableEventsCount);
@@ -150,9 +144,8 @@ function resetActivityForm(): void {
   }
 }
 
-function initActivityRequestForm(): void {
+function createActivityRequest(): ActivityRequest | null {
   if (
-    !activityRequestForm ||
     !activityTypeInput ||
     !activityTitleInput ||
     !activityFormatInput ||
@@ -160,34 +153,44 @@ function initActivityRequestForm(): void {
     !activityDateInput ||
     !activityMaxPlayersInput
   ) {
-    return;
+    return null;
   }
+
+  const type = activityTypeInput.value;
+  const title = activityTitleInput.value.trim();
+  const format = activityFormatInput.value;
+  const game = activityGameInput.value;
+  const date = activityDateInput.value;
+  const maxPlayers = activityMaxPlayersInput.value;
+
+  if (!type || !title || !format || !game || !date || !maxPlayers) {
+    showToast("Veuillez remplir tous les champs.");
+    return null;
+  }
+
+  return {
+    id: Date.now(),
+    type,
+    title,
+    format,
+    game,
+    date,
+    maxPlayers,
+    status: "pending"
+  };
+}
+
+function initActivityRequestForm(): void {
+  if (!activityRequestForm) return;
 
   activityRequestForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const type = activityTypeInput.value;
-    const title = activityTitleInput.value.trim();
-    const format = activityFormatInput.value;
-    const game = activityGameInput.value;
-    const date = activityDateInput.value;
-    const maxPlayers = activityMaxPlayersInput.value;
+    const request = createActivityRequest();
 
-    if (!type || !title || !format || !game || !date || !maxPlayers) {
-      showToast("Veuillez remplir tous les champs.");
-      return;
-    }
+    if (!request) return;
 
-    activityRequests.unshift({
-      id: Date.now(),
-      type,
-      title,
-      format,
-      game,
-      date,
-      maxPlayers,
-      status: "pending"
-    });
+    activityRequests.unshift(request);
 
     resetActivityForm();
     renderStats();
@@ -197,7 +200,6 @@ function initActivityRequestForm(): void {
 }
 
 protectPage();
-
 renderStats();
 renderAvailableEventCard();
 initActivityRequestForm();
