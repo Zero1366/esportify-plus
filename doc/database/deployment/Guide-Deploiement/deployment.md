@@ -1,165 +1,106 @@
-# ⭐ Esportify+
+🚀 Esportify+ - Deployment Guide
 
-Application e-sport full-stack de démonstration simulant une plateforme complète avec gestion de rôles, backend fonctionnel et déploiement.
+Projet full-stack utilisant :
 
----
+Vite
+Express
+SQLite
+Docker
+Netlify
+📦 Build Production
+🔧 Build complet
 
-# ⭐ START HERE (POINT D’ENTRÉE)
+Commande :
 
-👉 Pour comprendre rapidement le projet :
+npm run build:full
 
-⭐ `doc/site-final/`
-→ rendu visuel complet du projet (Desktop / Mobile)
+Cette commande :
 
-📌 C’est la représentation réelle de l’application.
+compile le frontend ;
+compile le backend ;
+vérifie le projet TypeScript ;
+prépare le build de production.
+🚀 Développement local
 
----
+Commande :
 
-# ⭐ DÉMARRER L’EXPLORATION
+npm run dev:full
 
-## ⭐ 1. Résultat final (PRIORITÉ)
+Cette commande :
 
-📁 Ouvrir :
-`doc/site-final/`
+lance le frontend ;
+lance le backend ;
+initialise l'environnement de développement.
+🚀 Déploiement
 
-Contient :
-- version Desktop (1366x768)
-- version Mobile (360x800)
-- toutes les pages finales
+Commande :
 
-📌 Permet de comprendre immédiatement le produit fini.
+npm run deploy:full
 
----
+Cette commande :
 
-## ⭐ 2. Architecture globale du projet
+exécute le build de production ;
+prépare l'envoi vers GitHub ;
+déclenche le workflow de déploiement.
+🐳 Docker
 
-📁 Ouvrir :
-`doc/database/deployment/Guide-Deployment/`
+Lancement de l'environnement containerisé :
 
-Contient :
-- Docker
-- GitHub workflow
-- Netlify
-- architecture système
+docker compose up --build
 
-📌 Permet de comprendre l’infrastructure globale.
+Cette commande :
 
----
+construit les images Docker ;
+démarre les conteneurs ;
+isole le backend dans un environnement dédié.
+🌐 Netlify
 
-## ⭐ 3. Frontend (logique utilisateur)
+Le frontend est déployé automatiquement via Netlify.
 
-📁 Ouvrir :
-`src/pages/index.ts`
+Workflow :
 
-Puis :
-- `index.html`
-
-📌 Point d’entrée de l’application frontend.
-
----
-
-## ⭐ 4. Gestion des sessions et rôles
-
-📁 Ouvrir :
-`src/session.ts`
-
-Contient :
-- gestion utilisateur
-- rôles (admin / organizer / user)
-- logique de connexion simulée
-
----
-
-## ⭐ 5. Backend (API serveur)
-
-📁 Ouvrir :
-`backend/src/server.ts`
-
-Puis suivre :
-
-➡️ `routes/`
-➡️ `controllers/`
-➡️ `services/`
-➡️ `repositories/`
-
-📌 Architecture backend en couches.
-
----
-
-## ⭐ 6. Base de données
-
-📁 Ouvrir :
-`doc/database/schema.sql`
-
-Puis :
-`doc/database/seed.sql`
-
-📌 Structure + données de démonstration.
-
----
-
-# ⭐ NAVIGATION DU PROJET
-
-## ✔ FRONTEND
-
-1. `index.html`
-2. `src/pages/`
-3. `src/navigation.ts`
-4. `src/session.ts`
-
----
-
-## ✔ BACKEND
-
-1. `server.ts`
-2. `routes/`
-3. `controllers/`
-4. `services/`
-5. `repositories/`
-
----
-
-## ✔ DOCUMENTATION
-
-- `doc/site-final/` → rendu visuel du projet
-- `doc/database/deployment/` → infrastructure et déploiement
-- `doc/database/` → base de données et SQL
-
----
-
-# ⭐ PARCOURS RECOMMANDÉ (JURY / RECRUTEUR)
-
-👉 Lecture conseillée dans cet ordre :
-
-1. ⭐ `doc/site-final/`
-2. ⭐ `index.html`
-3. ⭐ `src/session.ts`
-4. ⭐ `backend/src/server.ts`
-5. ⭐ `doc/database/`
-
----
-
-# ⭐ IDÉE DU PROJET
-
-Esportify+ est une application démonstrative reproduisant une plateforme e-sport complète :
-
-- interface utilisateur responsive
-- système de rôles
-- replay simulé de match
-- backend structuré
-- base de données SQLite
-- déploiement Docker + Netlify
-- documentation modulaire
-
----
-
-# ⭐ ARCHITECTURE GLOBALE
-
-```text
+GitHub Push
+      ↓
+Netlify détecte le changement
+      ↓
+Build automatique
+      ↓
+Publication du site
+🔁 Workflow global
+Développement local
+      ↓
+Git Push
+      ↓
+GitHub
+      ↓
+Netlify (Frontend)
+      ↓
+Docker (Backend optionnel)
+      ↓
+Application déployée
+⚙️ Architecture
 Utilisateur
-   ↓
+      ↓
 Frontend (Vite)
-   ↓
+      ↓
 API Express
-   ↓
+      ↓
 SQLite Database
+📌 Notes
+Le backend peut être exécuté localement ou via Docker.
+Le frontend est déployé automatiquement via Netlify.
+SQLite est utilisé comme base de données légère pour la démonstration.
+Les scripts automatisés simplifient le workflow de développement et de déploiement.
+⭐ Conclusion
+
+Ce document présente le cycle de déploiement du projet Esportify+.
+
+Il permet de comprendre :
+
+le lancement local ;
+le build de production ;
+le déploiement du frontend ;
+l'utilisation de Docker ;
+le workflow GitHub et Netlify.
+
+L'objectif est de reproduire une architecture moderne, simple à maintenir et facilement reproductible.

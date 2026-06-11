@@ -1,285 +1,248 @@
-# Esportify+
+# ⭐ Esportify+
 
-Plateforme e-sport développée avec Vite, TypeScript, SCSS, Express et SQLite.
+Esportify+ est une application e-sport full-stack de démonstration.
 
-Projet réalisé dans le cadre de l'ECF du titre professionnel Développeur Web et Web Mobile (DWWM).
+Le projet simule une plateforme complète avec :
 
----
-
-# Présentation
-
-Esportify+ est une plateforme web de démonstration dédiée à l'univers de l'e-sport.
-
-L'application permet de consulter des compétitions, suivre des matchs, visualiser des replays et gérer différents espaces selon le rôle de l'utilisateur connecté.
-
-Le projet a progressivement évolué d'une démonstration front-end vers une architecture complète intégrant une API Express, une base SQLite, une validation des données avec Zod, une conteneurisation Docker ainsi qu'une documentation technique complète.
+* une interface utilisateur responsive ;
+* une gestion de rôles ;
+* un replay de match simulé ;
+* un backend fonctionnel ;
+* une base de données SQLite ;
+* un déploiement Docker et Netlify ;
+* une documentation organisée.
 
 ---
 
-# Fonctionnalités principales
+# ⭐ Point d’entrée recommandé
 
-## Interface utilisateur
+Pour comprendre rapidement le projet, commencer par :
 
-* Interface responsive ;
-* Navigation dynamique ;
-* Système de session ;
-* Gestion des rôles ;
-* Affichage des événements ;
-* Système de replay simulé ;
-* Protection des pages selon les rôles ;
-* Notifications utilisateur.
+```text
+doc/site-final/
+```
 
-## Gestion des rôles
+Ce dossier contient le rendu visuel final du projet en version Desktop et Mobile.
 
-Le projet intègre trois rôles :
+Il permet de voir directement le résultat attendu de l’application.
 
-* player ;
+---
+
+# ⭐ Parcours de lecture conseillé
+
+## 1. Résultat final
+
+```text
+doc/site-final/
+```
+
+Contenu :
+
+* captures Desktop ;
+* captures Mobile ;
+* pages finales de l’application.
+
+---
+
+## 2. Architecture globale et déploiement
+
+```text
+doc/database/deployment/Guide-Deployment/
+```
+
+Contenu :
+
+* Docker ;
+* GitHub workflow ;
+* Netlify ;
+* architecture système ;
+* stratégie de déploiement.
+
+---
+
+## 3. Frontend
+
+Point d’entrée principal :
+
+```text
+index.html
+src/pages/index.ts
+```
+
+Fichiers importants :
+
+```text
+src/pages/
+src/navigation.ts
+src/session.ts
+```
+
+Le frontend gère :
+
+* l’affichage des pages ;
+* la navigation ;
+* les états utilisateur ;
+* les rôles simulés ;
+* l’expérience responsive.
+
+---
+
+## 4. Gestion des sessions et des rôles
+
+```text
+src/session.ts
+```
+
+Ce fichier contient :
+
+* la gestion de l’utilisateur connecté ;
+* les rôles disponibles ;
+* la logique de connexion simulée ;
+* les protections d’accès côté interface.
+
+Rôles utilisés :
+
+* utilisateur ;
 * organizer ;
 * admin.
 
-Chaque rôle dispose d'un accès spécifique aux fonctionnalités de la plateforme.
-
-## Administration
-
-* Gestion des événements ;
-* Gestion des statuts ;
-* Supervision de la plateforme ;
-* Contrôle des accès.
-
-## Organisation
-
-* Gestion des événements ;
-* Gestion des compétitions ;
-* Suivi des inscriptions ;
-* Gestion des propositions d'activités.
-
 ---
 
-# Architecture technique
+## 5. Backend
 
-## Front-end
+Point d’entrée principal :
 
-Technologies utilisées :
-
-* HTML5 ;
-* SCSS ;
-* TypeScript ;
-* Vite.
-
-## Back-end
-
-Technologies utilisées :
-
-* Node.js ;
-* Express ;
-* TypeScript ;
-* Zod ;
-* SQLite ;
-* Better-SQLite3.
-
-Architecture :
-
-```txt
-Frontend
-    │
-    ▼
-Fetch API
-    │
-    ▼
-Routes
-    │
-    ▼
-Services
-    │
-    ▼
-Repositories
-    │
-    ▼
-Entities
-    │
-    ▼
-SQLite
+```text
+backend/src/server.ts
 ```
 
+Architecture backend :
+
+```text
+backend/src/routes/
+backend/src/controllers/
+backend/src/services/
+backend/src/repositories/
+```
+
+Le backend est organisé en couches afin de séparer :
+
+* les routes API ;
+* les contrôleurs ;
+* la logique métier ;
+* l’accès aux données.
+
 ---
 
-# Base de données
+## 6. Base de données
 
-Le projet utilise SQLite pour la gestion des utilisateurs et de l'authentification.
+Fichiers principaux :
 
-Tables principales :
-
-* roles ;
-* users ;
-* events ;
-* tournaments ;
-* replays ;
-* registrations ;
-* messages.
-
-Le schéma SQL complet est disponible dans :
-
-```txt
+```text
 doc/database/schema.sql
+doc/database/seed.sql
+```
+
+Ces fichiers contiennent :
+
+* la structure de la base de données ;
+* les tables principales ;
+* les données de démonstration.
+
+---
+
+# ⭐ Architecture globale
+
+```text
+Utilisateur
+   ↓
+Frontend Vite
+   ↓
+API Express
+   ↓
+SQLite Database
 ```
 
 ---
 
-# Installation
+# ⭐ Fonctionnalités principales
 
-## Cloner le projet
+Esportify+ propose :
 
-```bash
-git clone https://github.com/Zero1366/esportify-plus.git
-cd esportify-plus
-```
-
-## Installer les dépendances
-
-Frontend :
-
-```bash
-npm install
-```
-
-Backend :
-
-```bash
-cd backend
-npm install
-```
+* une page d’accueil responsive ;
+* une page événements ;
+* un système de rôles simulés ;
+* une interface organizer ;
+* une interface admin ;
+* un replay e-sport simulé ;
+* une API backend ;
+* une base de données documentée ;
+* une documentation de déploiement.
 
 ---
 
-# Lancement du projet
-
-## Backend
-
-```bash
-npm run dev
-```
-
-API :
-
-```txt
-http://localhost:3000
-```
+# ⭐ Navigation rapide du projet
 
 ## Frontend
 
-```bash
-npm run dev
+```text
+index.html
+src/pages/
+src/navigation.ts
+src/session.ts
 ```
 
-Application :
+## Backend
 
-```txt
-http://localhost:5173
+```text
+backend/src/server.ts
+backend/src/routes/
+backend/src/controllers/
+backend/src/services/
+backend/src/repositories/
 ```
 
-Un guide rapide de prise en main est disponible dans le fichier :
+## Documentation
 
-```txt
-QUICK_GUIDE.md
-```
-
----
-
-# Comptes de démonstration
-
-## Administrateur
-
-```txt
-Login : admin
-Mot de passe : admin123
-```
-
-## Organisateur
-
-```txt
-Login : organizer
-Mot de passe : orga123
-```
-
-## Joueur
-
-```txt
-Login : player
-Mot de passe : player123
-```
-
----
-
-# Docker
-
-Le projet peut être exécuté avec Docker :
-
-```bash
-docker compose up --build
-```
-
----
-
-# Déploiement
-
-Le frontend est déployé avec Netlify.
-
-Le code source est hébergé sur GitHub.
-
-Le projet dispose également d'un workflow automatisé documenté dans le fichier QUICK_GUIDE.md.
-
----
-
-# Documentation
-
-Documentation disponible dans les dossiers :
-
-```txt
-doc/
+```text
+doc/site-final/
 doc/database/
+doc/database/deployment/
 ```
 
-Principaux documents :
+---
 
-* architecture.md ;
-* deployment.md ;
-* security.md ;
-* business-rules.md ;
-* workflow-git.md ;
-* poo.md ;
-* mcd.md ;
-* schema.sql ;
-* class-diagram.md ;
-* sequence-login.md ;
-* use-case.md ;
-* nosql.md ;
-* Patch_Note.md ;
-* QUICK_GUIDE.md.
+# ⭐ Lecture recommandée pour un jury ou un recruteur
+
+Ordre conseillé :
+
+1. `doc/site-final/`
+2. `index.html`
+3. `src/session.ts`
+4. `backend/src/server.ts`
+5. `doc/database/`
+6. `doc/database/deployment/Guide-Deployment/`
 
 ---
 
-# Évolutions futures
+# ⭐ Objectif du projet
 
-* authentification JWT ;
-* chiffrement bcrypt ;
-* variables d'environnement ;
-* MongoDB ;
-* Mongoose ;
-* système de notifications ;
-* statistiques avancées ;
-* gestion complète des compétitions ;
-* amélioration du système de replay.
+L’objectif d’Esportify+ est de démontrer la capacité à construire une application web complète, structurée et documentée.
 
----
+Le projet met en avant :
 
-# Auteur
-
-Cyril Denaes
-
-Graduate Développeur Web et Web Mobile
+* la construction d’une interface moderne ;
+* l’organisation d’un frontend Vite / TypeScript ;
+* la mise en place d’un backend Express ;
+* la séparation des responsabilités dans le code ;
+* la gestion de rôles ;
+* la documentation technique ;
+* la préparation au déploiement.
 
 ---
 
-# Statut
+# ⭐ Conclusion
 
-Projet ECF finalisé, documenté et maintenu dans une démarche d'amélioration continue.
+Esportify+ est un projet de démonstration complet permettant de présenter une application e-sport fonctionnelle, structurée et documentée.
+
+Il montre à la fois le résultat visuel, la logique frontend, l’architecture backend, la base de données et les choix de déploiement.
