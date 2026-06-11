@@ -2,11 +2,13 @@
 
 ## Objectif
 
-Ce document explique comment installer, lancer et déployer le projet Esportify+.
+Ce document présente les différentes méthodes permettant d'installer, exécuter et déployer le projet Esportify+.
+
+Il décrit également l'architecture de déploiement, les technologies utilisées ainsi que les outils mis en place afin de simplifier le développement et la maintenance du projet.
 
 ---
 
-## Prérequis
+# Prérequis
 
 Avant de lancer le projet, les outils suivants doivent être installés :
 
@@ -18,7 +20,9 @@ Avant de lancer le projet, les outils suivants doivent être installés :
 
 ---
 
-## Récupération du projet
+# Récupération du projet
+
+Cloner le dépôt GitHub :
 
 ```bash
 git clone https://github.com/Zero1366/esportify-plus.git
@@ -27,15 +31,15 @@ cd esportify-plus
 
 ---
 
-## Installation des dépendances
+# Installation des dépendances
 
-### Front-end
+## Front-end
 
 ```bash
 npm install
 ```
 
-### Back-end
+## Back-end
 
 ```bash
 cd backend
@@ -44,9 +48,64 @@ npm install
 
 ---
 
-## Lancement du projet
+# Workflow automatisé
 
-### Lancer le backend
+Lors des dernières phases du développement, plusieurs opérations récurrentes ont été automatisées afin de simplifier le cycle de développement, de vérification et de déploiement.
+
+Cette évolution a été mise en place lorsque le projet a atteint un niveau de stabilité suffisant pour permettre l'automatisation d'une partie du workflow.
+
+## Développement complet
+
+```bash
+npm run dev:full
+```
+
+Cette commande lance simultanément :
+
+* le frontend Vite ;
+* le backend Express ;
+* la connexion à la base SQLite.
+
+---
+
+## Vérification complète
+
+```bash
+npm run build:full
+```
+
+Cette commande :
+
+* compile le frontend ;
+* compile le backend ;
+* vérifie l'ensemble du projet TypeScript.
+
+---
+
+## Déploiement
+
+```bash
+npm run deploy:full
+```
+
+Cette commande permet d'automatiser le processus de déploiement défini pour le projet.
+
+---
+
+## Bénéfices obtenus
+
+* réduction des manipulations manuelles ;
+* gain de temps lors des phases de test ;
+* vérification centralisée ;
+* simplification du déploiement ;
+* amélioration de la cohérence du workflow ;
+* réduction des risques d'erreurs.
+
+---
+
+# Lancement manuel du projet
+
+## Lancer le backend
 
 Depuis le dossier backend :
 
@@ -60,7 +119,9 @@ Le serveur démarre sur :
 http://localhost:3000
 ```
 
-### Lancer le frontend
+---
+
+## Lancer le frontend
 
 Depuis la racine du projet :
 
@@ -76,9 +137,9 @@ http://localhost:5173
 
 ---
 
-## Vérification du backend
+# Vérification du backend
 
-### Route principale
+## Route principale
 
 ```txt
 http://localhost:3000
@@ -95,7 +156,9 @@ Réponse attendue :
 }
 ```
 
-### Route de santé
+---
+
+## Route de santé
 
 ```txt
 http://localhost:3000/health
@@ -113,7 +176,9 @@ Réponse attendue :
 }
 ```
 
-### Route de version
+---
+
+## Route de version
 
 ```txt
 http://localhost:3000/version
@@ -121,7 +186,7 @@ http://localhost:3000/version
 
 ---
 
-## Technologies backend utilisées
+# Technologies backend utilisées
 
 Le backend repose sur :
 
@@ -134,7 +199,7 @@ Le backend repose sur :
 * UserEntity ;
 * SafeUser.
 
-L'architecture est organisée en couches :
+Architecture utilisée :
 
 ```txt
 Routes
@@ -152,15 +217,23 @@ Entities
 SQLite
 ```
 
+Cette organisation favorise :
+
+* la maintenabilité ;
+* la lisibilité ;
+* l'évolutivité ;
+* la séparation des responsabilités.
+
 ---
 
-## Base de données SQLite
+# Base de données SQLite
 
 Au démarrage du serveur :
 
 * la base SQLite est automatiquement initialisée ;
-* les tables sont créées si elles n'existent pas ;
-* les données de démonstration sont ajoutées si nécessaire.
+* les tables sont créées si nécessaire ;
+* les données de démonstration sont ajoutées automatiquement ;
+* les contraintes de sécurité sont appliquées.
 
 Base utilisée :
 
@@ -168,7 +241,7 @@ Base utilisée :
 database/esportify.db
 ```
 
-Les principales tables sont :
+Principales tables :
 
 * roles ;
 * users ;
@@ -180,9 +253,9 @@ Les principales tables sont :
 
 ---
 
-## Déploiement avec Docker
+# Déploiement avec Docker
 
-Le projet peut être lancé à l'aide de Docker et Docker Compose.
+Le projet peut être exécuté dans un environnement conteneurisé grâce à Docker et Docker Compose.
 
 Construction et lancement :
 
@@ -190,7 +263,7 @@ Construction et lancement :
 docker compose up --build
 ```
 
-Le projet devient accessible sur :
+Application accessible sur :
 
 ```txt
 http://localhost:5173
@@ -198,37 +271,35 @@ http://localhost:5173
 
 ---
 
-## Fichiers Docker utilisés
+# Fichiers Docker utilisés
 
-### Dockerfile
+## Dockerfile
 
-Le projet utilise un Dockerfile afin de construire automatiquement une image contenant l'application Node.js ainsi que l'ensemble de ses dépendances.
+Le Dockerfile permet :
 
-Le Dockerfile permet notamment :
-
-* d'installer les dépendances ;
-* de copier les fichiers du projet ;
-* de définir le répertoire de travail ;
-* de lancer automatiquement l'application.
+* l'installation automatique des dépendances ;
+* la copie des fichiers du projet ;
+* la définition de l'environnement d'exécution ;
+* le lancement automatisé de l'application.
 
 Une capture du Dockerfile est disponible dans le dossier Images/deployment.
 
-### docker-compose.yml
+---
 
-Le projet utilise également Docker Compose afin d'automatiser le lancement des différents services nécessaires au projet.
+## docker-compose.yml
 
 Le fichier docker-compose.yml permet :
 
-* de construire l'image Docker ;
-* de lancer automatiquement les conteneurs ;
-* de configurer les ports ;
-* de simplifier le déploiement.
+* la construction automatique des images ;
+* le lancement des conteneurs ;
+* la configuration des ports ;
+* la simplification du déploiement.
 
 Une capture du fichier docker-compose.yml est disponible dans le dossier Images/deployment.
 
 ---
 
-## Déploiement GitHub
+# Déploiement GitHub
 
 Le code source est hébergé sur GitHub.
 
@@ -237,8 +308,8 @@ Git permet :
 * le suivi des versions ;
 * la sauvegarde du projet ;
 * la gestion des modifications ;
-* la collaboration ;
-* l'historique des développements.
+* l'historisation du développement ;
+* la préparation aux évolutions futures.
 
 Commandes principales :
 
@@ -250,11 +321,11 @@ git push
 
 ---
 
-## Déploiement Netlify
+# Déploiement Netlify
 
 Le frontend est déployé avec Netlify.
 
-Le déploiement est connecté au dépôt GitHub.
+Le déploiement est directement connecté au dépôt GitHub.
 
 Processus :
 
@@ -271,11 +342,11 @@ Push GitHub
 Déploiement Netlify
 ```
 
-Cette approche permet une mise à jour rapide du site.
+Cette approche permet une mise à jour rapide et centralisée du site.
 
 ---
 
-## Architecture de déploiement
+# Architecture de déploiement
 
 ```txt
 Utilisateur
@@ -296,23 +367,26 @@ SQLite
 
 ---
 
-## Avantages du déploiement
+# Avantages du déploiement
 
-Cette stratégie de déploiement permet :
+Cette stratégie apporte :
 
-* une installation rapide du projet ;
-* une meilleure reproductibilité de l'environnement ;
+* une installation rapide ;
+* une meilleure reproductibilité ;
 * une gestion simplifiée des dépendances ;
-* une automatisation du déploiement ;
+* une automatisation partielle du workflow ;
 * une maintenance facilitée ;
-* une meilleure portabilité entre les différents environnements.
+* une meilleure portabilité entre environnements ;
+* une préparation aux évolutions futures.
 
 ---
 
-## Conclusion
+# Conclusion
 
 Le projet Esportify+ peut être exécuté localement via Node.js ou dans un environnement conteneurisé avec Docker.
 
 L'utilisation combinée de GitHub, Netlify, Docker, Docker Compose, Express, SQLite, Better-SQLite3 et Zod permet de professionnaliser le cycle de développement, de déploiement et de maintenance du projet.
 
-Cette architecture facilite les futures évolutions du backend tout en conservant une base technique cohérente et maintenable.
+Cette architecture facilite les futures évolutions du backend tout en conservant une base technique cohérente, maintenable et évolutive.
+
+Les dernières améliorations ont également permis d'automatiser une partie du workflow de développement et de déploiement afin de simplifier les opérations de maintenance, de compilation et de livraison du projet.

@@ -1,4 +1,4 @@
-import "../scss/index.scss";
+
 import "../navigation";
 
 import { hasRole, isAuthenticated } from "../session";

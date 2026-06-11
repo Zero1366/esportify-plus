@@ -4,7 +4,7 @@
 
 Ce document recense les principales améliorations apportées au projet Esportify+ après la première version du projet et suite aux retours d'évaluation.
 
-L'objectif de cette mise à jour est de professionnaliser l'architecture du projet, renforcer sa maintenabilité et améliorer la qualité globale de la documentation technique.
+L'objectif de cette mise à jour est de professionnaliser l'architecture du projet, renforcer sa maintenabilité, améliorer sa stabilité et enrichir sa documentation technique.
 
 ---
 
@@ -15,11 +15,12 @@ L'objectif de cette mise à jour est de professionnaliser l'architecture du proj
 Améliorations réalisées :
 
 * harmonisation de l'identité visuelle ;
-* amélioration des pages Replay ;
-* amélioration des espaces Admin et Organisateur ;
+* amélioration de la page Replay ;
+* amélioration des espaces Administrateur et Organisateur ;
 * optimisation du responsive design ;
 * amélioration de la navigation ;
-* amélioration des composants d'interface.
+* amélioration des composants d'interface ;
+* amélioration de la lisibilité générale.
 
 ---
 
@@ -286,7 +287,9 @@ Création ou mise à jour des documents :
 * poo.md ;
 * class-diagram.md ;
 * use-case.md ;
-* sequence-login.md.
+* sequence-login.md ;
+* QUICK_GUIDE.md ;
+* Patch_Note.md.
 
 ---
 
@@ -327,6 +330,82 @@ Amélioration du suivi de version :
 
 ---
 
+# Mise à jour complémentaire
+
+## Refonte visuelle de l'interface
+
+Améliorations réalisées :
+
+* harmonisation des cartes de rôles ;
+* correction des couleurs et des états visuels ;
+* amélioration des animations de survol ;
+* uniformisation des espaces Administrateur et Organisateur ;
+* amélioration de la lisibilité générale ;
+* optimisation de la cohérence graphique entre les différentes pages.
+
+---
+
+## Optimisation du Front-end
+
+Améliorations réalisées :
+
+* nettoyage de plusieurs fichiers TypeScript ;
+* simplification de certaines logiques de navigation ;
+* amélioration de la gestion des sessions ;
+* amélioration de la gestion des rôles ;
+* optimisation du chargement des pages ;
+* harmonisation du comportement des différentes interfaces ;
+* vérification complète du code avant livraison.
+
+---
+
+## Optimisation du Back-end
+
+Améliorations réalisées :
+
+* vérification complète de la compilation TypeScript ;
+* validation du fonctionnement des routes Express ;
+* contrôle de la connexion SQLite ;
+* amélioration de la cohérence entre le frontend et le backend ;
+* nettoyage général du code avant déploiement ;
+* validation complète du build final.
+
+---
+
+## Automatisation du workflow
+
+Ajout d'un système permettant d'automatiser plusieurs tâches répétitives du projet.
+
+Nouvelles commandes :
+
+```bash
+npm run dev:full
+npm run build:full
+npm run deploy:full
+```
+
+Fonctionnalités :
+
+* lancement simultané du frontend et du backend ;
+* vérification complète du projet ;
+* compilation automatisée ;
+* simplification du déploiement ;
+* réduction des manipulations manuelles ;
+* amélioration du workflow de développement.
+
+---
+
+## Nettoyage Git
+
+Améliorations réalisées :
+
+* suppression des fichiers générés inutiles ;
+* amélioration du suivi de version ;
+* nettoyage du dépôt avant livraison ;
+* préparation du projet pour les futures mises à jour.
+
+---
+
 # Évolutions prévues
 
 Fonctionnalités envisagées :
@@ -359,4 +438,9 @@ Le projet dispose désormais :
 * d'une entité UserEntity ;
 * d'un type SafeUser ;
 * d'une documentation technique complète ;
+* d'un workflow automatisé ;
+* d'une interface harmonisée ;
+* d'un processus de déploiement simplifié ;
 * d'une architecture proche des standards professionnels.
+
+Cette version constitue l'aboutissement des principales améliorations réalisées après l'évaluation initiale et servira de base aux futures évolutions du projet.

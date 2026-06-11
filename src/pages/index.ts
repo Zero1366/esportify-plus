@@ -1,4 +1,4 @@
-import "../scss/index.scss";
+
 import "../navigation";
 
 import { getSession, type UserRole } from "../session";

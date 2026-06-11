@@ -12,7 +12,7 @@ Esportify+ est une plateforme web de démonstration dédiée à l'univers de l'e
 
 L'application permet de consulter des compétitions, suivre des matchs, visualiser des replays et gérer différents espaces selon le rôle de l'utilisateur connecté.
 
-Le projet a progressivement évolué d'une démonstration front-end vers une architecture complète intégrant une API Express, une base SQLite, une validation des données avec Zod ainsi qu'une documentation technique complète.
+Le projet a progressivement évolué d'une démonstration front-end vers une architecture complète intégrant une API Express, une base SQLite, une validation des données avec Zod, une conteneurisation Docker ainsi qu'une documentation technique complète.
 
 ---
 
@@ -20,12 +20,14 @@ Le projet a progressivement évolué d'une démonstration front-end vers une arc
 
 ## Interface utilisateur
 
-* interface responsive ;
-* navigation dynamique ;
-* système de session ;
-* gestion des rôles ;
-* affichage des événements ;
-* système de replay simulé.
+* Interface responsive ;
+* Navigation dynamique ;
+* Système de session ;
+* Gestion des rôles ;
+* Affichage des événements ;
+* Système de replay simulé ;
+* Protection des pages selon les rôles ;
+* Notifications utilisateur.
 
 ## Gestion des rôles
 
@@ -39,16 +41,17 @@ Chaque rôle dispose d'un accès spécifique aux fonctionnalités de la platefor
 
 ## Administration
 
-* gestion des événements ;
-* gestion des statuts ;
-* supervision de la plateforme ;
-* contrôle des accès.
+* Gestion des événements ;
+* Gestion des statuts ;
+* Supervision de la plateforme ;
+* Contrôle des accès.
 
 ## Organisation
 
-* gestion des événements ;
-* gestion des compétitions ;
-* suivi des inscriptions.
+* Gestion des événements ;
+* Gestion des compétitions ;
+* Suivi des inscriptions ;
+* Gestion des propositions d'activités.
 
 ---
 
@@ -174,6 +177,12 @@ Application :
 http://localhost:5173
 ```
 
+Un guide rapide de prise en main est disponible dans le fichier :
+
+```txt
+QUICK_GUIDE.md
+```
+
 ---
 
 # Comptes de démonstration
@@ -217,13 +226,16 @@ Le frontend est déployé avec Netlify.
 
 Le code source est hébergé sur GitHub.
 
+Le projet dispose également d'un workflow automatisé documenté dans le fichier QUICK_GUIDE.md.
+
 ---
 
 # Documentation
 
-Documentation disponible dans le dossier :
+Documentation disponible dans les dossiers :
 
 ```txt
+doc/
 doc/database/
 ```
 
@@ -241,7 +253,8 @@ Principaux documents :
 * sequence-login.md ;
 * use-case.md ;
 * nosql.md ;
-* Patch_Note.md.
+* Patch_Note.md ;
+* QUICK_GUIDE.md.
 
 ---
 
@@ -269,4 +282,4 @@ Graduate Développeur Web et Web Mobile
 
 # Statut
 
-Projet ECF finalisé et poursuivi dans une démarche d'amélioration continue.
+Projet ECF finalisé, documenté et maintenu dans une démarche d'amélioration continue.

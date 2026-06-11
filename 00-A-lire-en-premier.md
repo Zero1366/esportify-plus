@@ -159,6 +159,33 @@ C'est également l'une des raisons qui rendent la documentation si importante.
 Elle permet de conserver des pistes de réflexion même lorsqu'elles ne sont pas retenues dans la version actuelle du projet.
 
 ---
+## Réflexions sur la conception du projet
+
+Au cours du développement d'Esportify+, plusieurs choix de conception ont été guidés par des réflexions que j'avais déjà rencontrées lors de projets précédents, notamment dans le développement de prototypes de jeux vidéo.
+
+Ces expériences m'ont appris qu'avant de développer une fonctionnalité, il est souvent nécessaire de réfléchir au rôle exact qu'elle doit remplir dans le projet.
+
+Par exemple, lors de la conception des différents espaces utilisateurs d'Esportify+, je me suis régulièrement posé des questions simples :
+
+* Quelles sont les responsabilités d'un administrateur ?
+* Un administrateur doit-il également gérer l'organisation des événements ?
+* Quelles fonctionnalités doivent appartenir à un organisateur plutôt qu'à un administrateur ?
+* Comment limiter les responsabilités de chaque rôle afin de conserver une structure cohérente ?
+
+Ces réflexions ont progressivement conduit à la séparation des rôles Player, Organizer et Admin.
+
+Avec le recul, j'ai compris que cette phase de réflexion était tout aussi importante que le développement lui-même. Elle m'a permis d'éviter certaines fonctionnalités inutiles et d'obtenir une organisation plus claire du projet.
+
+J'ai également constaté que beaucoup de problèmes techniques pouvaient être anticipés lorsque la réflexion sur les responsabilités et l'architecture était réalisée suffisamment tôt.
+
+### À propos des captures d'écran et des itérations
+
+Les différentes versions de l'interface, les maquettes, les captures d'écran ainsi que les principales itérations du projet ont déjà été intégrées au dossier projet et au support de présentation.
+
+J'ai volontairement choisi de ne pas reproduire ces éléments dans ce journal afin d'éviter les répétitions et de conserver un document davantage centré sur les réflexions, les choix de conception et les enseignements tirés du développement.
+
+Mon objectif n'était donc pas de présenter à nouveau les mêmes éléments visuels, mais plutôt d'expliquer les raisons qui ont conduit à certaines décisions au cours de la réalisation d'Esportify+.
+
 
 ## Comprendre le "Pourquoi"
 

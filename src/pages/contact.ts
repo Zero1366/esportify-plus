@@ -1,4 +1,4 @@
-import "../scss/index.scss";
+
 import "../navigation";
 
 const contactForm = document.querySelector<HTMLFormElement>("#contactForm");
