@@ -63,29 +63,36 @@ loginForm?.addEventListener("submit", async (event) => {
   setLoading(true);
   showMessage("Connexion en cours...");
 
-  const result = await loginWithFallback(username, password);
+  try {
+    const result = await loginWithFallback(username, password);
 
-  if (!result.success) {
-    showMessage(result.message);
+    if (!result.success) {
+      showMessage(result.message);
+      setLoading(false);
+      return;
+    }
+
+    saveSession({
+      id: Date.now(),
+      username: result.username,
+      role: result.role
+    });
+
+    const redirectUrl = getRedirectUrl(result.role);
+    const sourceLabel =
+      result.source === "backend" ? "serveur" : "mode démonstration";
+
+    showMessage(`Connexion réussie via ${sourceLabel}.`);
+
+    window.setTimeout(() => {
+      window.location.href = redirectUrl;
+    }, 500);
+  } catch {
+    showMessage("Erreur inattendue pendant la connexion.");
     setLoading(false);
-    return;
   }
-
-  saveSession({
-    id: Date.now(),
-    username: result.username,
-    role: result.role
-  });
-
-  const redirectUrl = getRedirectUrl(result.role);
-  const sourceLabel =
-    result.source === "backend" ? "serveur" : "mode démonstration";
-
-  showMessage(`Connexion réussie via ${sourceLabel}. Bienvenue ${result.username}.`);
-
-  window.setTimeout(() => {
-    window.location.href = redirectUrl;
-  }, 800);
 });
 
-document.body.classList.add("is-ready");
+requestAnimationFrame(() => {
+  document.body.classList.add("is-ready");
+});

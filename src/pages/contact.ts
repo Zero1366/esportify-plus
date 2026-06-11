@@ -34,4 +34,6 @@ contactForm?.addEventListener("submit", (event) => {
   contactForm.reset();
 });
 
-document.body.classList.add("is-ready");
+requestAnimationFrame(() => {
+  document.body.classList.add("is-ready");
+});

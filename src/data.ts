@@ -1,6 +1,6 @@
 export type EventType = "tournament" | "event";
 export type EventStatus = "validated" | "pending" | "cancelled";
-export type UserRole = "admin" | "organizer" | "player";
+export type UserRole = "player" | "organizer" | "admin";
 
 export interface EventItem {
   id: number;

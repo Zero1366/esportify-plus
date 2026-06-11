@@ -4,21 +4,27 @@
 
 $organizer-gold: var(--color-accent-soft);
 $organizer-text: #ffffff;
-$organizer-muted: rgba(255, 255, 255, 0.88);
-$organizer-border: var(--border-accent);
-$organizer-panel: var(--color-role-organizer);
-$organizer-panel-dark: #006b25;
+$organizer-muted: rgba(255, 255, 255, 0.84);
+$organizer-border: rgba(255, 159, 28, 0.72);
+
+$organizer-panel-a: rgba(43, 29, 79, 0.98);
+$organizer-panel-b: rgba(66, 52, 145, 0.96);
+$organizer-panel-c: rgba(90, 75, 178, 0.82);
 
 @mixin organizer-card {
-  border: 2px solid rgba(255, 159, 58, 0.55);
+  border: 2px solid rgba(255, 159, 28, 0.58);
   border-radius: var(--radius-md);
 
   background:
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.14),
-      rgba(255, 255, 255, 0.06)
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.04)
     );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 12px 24px rgba(0, 0, 0, 0.22);
 }
 
 @mixin organizer-wrap {
@@ -41,27 +47,148 @@ $organizer-panel-dark: #006b25;
 }
 
 /* =========================
+   PAGE HEADER
+========================= */
+
+.organizer-page {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.organizer-page .hero {
+  margin-top: -0.25rem;
+  margin-bottom: 0.65rem;
+
+  text-align: center;
+}
+
+.organizer-page .eyebrow {
+  display: none;
+}
+
+.organizer-page .hero h1 {
+  margin-top: 0;
+
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.organizer-page .hero p {
+  margin-top: 0.35rem;
+
+  color: rgba(255, 255, 255, 0.84);
+}
+
+/* =========================
+   CONNECTED ROLE BANNER
+========================= */
+
+.organizer-page .role-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  width: min(100%, 860px);
+  max-width: 860px;
+  margin: 0 auto 0.4rem;
+  padding: 0.85rem 1rem;
+
+  border: 2px solid rgba(255, 159, 28, 0.85);
+  border-radius: var(--radius-md);
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(255, 189, 111, 0.16),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(84, 68, 180, 0.98),
+      rgba(43, 29, 79, 0.98)
+    );
+
+  color: #ffffff;
+
+  font-weight: 900;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 14px 28px rgba(0, 0, 0, 0.28);
+}
+
+.organizer-page .role-banner span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  color: #ffffff;
+}
+
+.organizer-page .role-banner span::before {
+  content: "🎯";
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1.6rem;
+  height: 1.6rem;
+
+  border: 2px solid rgba(255, 159, 28, 0.85);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.96);
+  color: #101010;
+
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.organizer-page .role-banner .btn {
+  border: 2px solid rgba(255, 159, 28, 0.95);
+  background: #101010;
+  color: #ffffff;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 6px 14px rgba(0, 0, 0, 0.26);
+}
+
+/* =========================
    BASE
 ========================= */
 
 .organizer-dashboard {
   display: grid;
-  gap: 0.8rem;
+  gap: 0.9rem;
 }
 
 .organizer-panel {
   overflow: hidden;
 
   border: 2px solid $organizer-border;
+  border-radius: var(--radius-md);
 
   background:
+    radial-gradient(
+      circle at top left,
+      rgba(255, 189, 111, 0.14),
+      transparent 32%
+    ),
     linear-gradient(
-      180deg,
-      rgba(0, 133, 45, 0.98),
-      rgba(0, 107, 37, 0.98)
+      135deg,
+      $organizer-panel-a,
+      $organizer-panel-b 58%,
+      $organizer-panel-c
     );
 
   color: $organizer-text;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 18px 38px rgba(0, 0, 0, 0.28);
 }
 
 .organizer-panel h1,
@@ -71,10 +198,18 @@ $organizer-panel-dark: #006b25;
   color: $organizer-text;
 }
 
-.organizer-subsection {
-  padding-top: 0.75rem;
+.organizer-panel h2::before {
+  content: "📋 ";
+}
 
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
+.organizer-request-block h2::before {
+  content: "📝 ";
+}
+
+.organizer-subsection {
+  padding-top: 0.85rem;
+
+  border-top: 1px solid rgba(255, 159, 28, 0.28);
 }
 
 .organizer-summary {
@@ -96,7 +231,7 @@ $organizer-panel-dark: #006b25;
 .organizer-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.65rem;
+  gap: 0.75rem;
 }
 
 .organizer-stat {
@@ -104,12 +239,12 @@ $organizer-panel-dark: #006b25;
   @include organizer-hover;
 
   display: grid;
-  gap: 0.24rem;
+  gap: 0.28rem;
   align-content: center;
   justify-items: center;
 
-  min-height: 78px;
-  padding: 0.78rem;
+  min-height: 82px;
+  padding: 0.85rem;
 
   color: $organizer-text;
   text-align: center;
@@ -117,9 +252,11 @@ $organizer-panel-dark: #006b25;
   &:hover {
     transform: translateY(-2px);
 
-    border-color: rgba(255, 159, 58, 0.85);
+    border-color: rgba(255, 189, 111, 0.9);
 
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 14px 28px rgba(0, 0, 0, 0.28);
   }
 
   strong {
@@ -127,7 +264,7 @@ $organizer-panel-dark: #006b25;
 
     color: $organizer-gold;
 
-    font-size: 1.15rem;
+    font-size: 1.18rem;
     font-weight: 1000;
     line-height: 1;
   }
@@ -135,37 +272,52 @@ $organizer-panel-dark: #006b25;
   span:last-child {
     color: $organizer-muted;
 
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     font-weight: 900;
     line-height: 1.15;
   }
 }
 
 .organizer-stat--available {
-  border-color: rgba(255, 159, 58, 0.75);
+  border-color: rgba(0, 190, 85, 0.62);
 
   background:
     linear-gradient(
       135deg,
-      rgba(255, 159, 58, 0.22),
-      rgba(255, 255, 255, 0.08)
+      rgba(0, 133, 45, 0.24),
+      rgba(84, 68, 180, 0.78)
     );
 }
 
 .organizer-stat--proposal {
-  border-color: rgba(255, 207, 139, 0.75);
+  border-color: rgba(255, 159, 28, 0.72);
 
   background:
     linear-gradient(
       135deg,
-      rgba(255, 207, 139, 0.18),
-      rgba(255, 255, 255, 0.08)
+      rgba(243, 154, 50, 0.22),
+      rgba(84, 68, 180, 0.78)
     );
 }
 
 .organizer-stat__icon {
-  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1.65rem;
+  height: 1.65rem;
+
+  border: 2px solid rgba(255, 159, 28, 0.75);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.96);
+  color: #101010;
+
+  font-size: 0.86rem;
   line-height: 1;
+
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.24);
 }
 
 /* =========================
@@ -185,9 +337,11 @@ $organizer-panel-dark: #006b25;
   &:hover {
     transform: translateY(-2px);
 
-    border-color: rgba(255, 159, 58, 0.85);
+    border-color: rgba(255, 189, 111, 0.9);
 
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 14px 28px rgba(0, 0, 0, 0.28);
   }
 
   .event-status {
@@ -197,7 +351,7 @@ $organizer-panel-dark: #006b25;
 
 .available-event-card__content {
   display: grid;
-  gap: 0.28rem;
+  gap: 0.3rem;
 
   min-width: 0;
 }
@@ -205,11 +359,15 @@ $organizer-panel-dark: #006b25;
 .available-event-card__title {
   color: $organizer-gold;
 
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   font-weight: 1000;
   line-height: 1.15;
 
   @include organizer-wrap;
+}
+
+.available-event-card__title::before {
+  content: "🎮 ";
 }
 
 .available-event-card__meta {
@@ -227,49 +385,84 @@ $organizer-panel-dark: #006b25;
 ========================= */
 
 .organizer-request-block {
+  @include organizer-card;
   @include organizer-hover;
 
-  padding-top: 0.8rem;
-
-  border-color: rgba(255, 159, 58, 0.55);
+  padding: 0.9rem;
 
   background:
     linear-gradient(
       135deg,
-      rgba(255, 159, 58, 0.12),
-      rgba(255, 255, 255, 0.06)
+      rgba(243, 154, 50, 0.12),
+      rgba(84, 68, 180, 0.46),
+      rgba(43, 29, 79, 0.78)
     );
 }
 
 .organizer-request-form {
   display: grid;
-  gap: 0.55rem;
+  gap: 0.65rem;
 
   label {
     margin-top: 0.08rem;
 
     color: $organizer-text;
 
-    font-size: 0.76rem;
+    font-size: 0.78rem;
     font-weight: 900;
     line-height: 1.15;
+  }
+
+  label[for*="type"]::before {
+    content: "🎲 ";
+  }
+
+  label[for*="name"]::before,
+  label[for*="title"]::before {
+    content: "🏷️ ";
+  }
+
+  label[for*="format"]::before {
+    content: "⚙️ ";
+  }
+
+  label[for*="game"]::before {
+    content: "🎮 ";
+  }
+
+  label[for*="date"]::before {
+    content: "📅 ";
+  }
+
+  label[for*="players"]::before,
+  label[for*="max"]::before {
+    content: "👥 ";
   }
 
   input,
   select {
     width: 100%;
     min-width: 0;
-    min-height: 40px;
+    min-height: 42px;
     padding: 0 0.75rem;
 
-    border: 2px solid var(--border-dark);
+    border: 2px solid rgba(255, 159, 28, 0.78);
     border-radius: var(--radius-sm);
 
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.96);
     color: var(--color-text-dark);
 
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.75),
+      0 6px 14px rgba(0, 0, 0, 0.16);
+
     &:focus {
-      border-color: var(--color-accent);
+      border-color: var(--color-accent-soft);
+      outline: 3px solid rgba(255, 255, 255, 0.92);
+
+      box-shadow:
+        0 0 0 5px rgba(255, 159, 28, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
     }
   }
 
@@ -279,8 +472,12 @@ $organizer-panel-dark: #006b25;
 
   .btn {
     width: fit-content;
-    margin-top: 0.22rem;
+    margin-top: 0.35rem;
     padding-inline: 1rem;
+  }
+
+  .btn::before {
+    content: "🚀 ";
   }
 }
 
@@ -289,6 +486,10 @@ $organizer-panel-dark: #006b25;
 ========================= */
 
 @media (max-width: 900px) {
+  .organizer-page .role-banner {
+    width: min(100%, 680px);
+  }
+
   .organizer-stats,
   .available-event-card {
     grid-template-columns: 1fr;
@@ -301,16 +502,48 @@ $organizer-panel-dark: #006b25;
 }
 
 @media (max-width: 560px) {
+  .organizer-page {
+    gap: 0.65rem;
+  }
+
+  .organizer-page .role-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+
+    width: 100%;
+    padding: 0.8rem;
+
+    text-align: center;
+  }
+
+  .organizer-page .role-banner span {
+    justify-content: center;
+  }
+
+  .organizer-page .role-banner .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .organizer-page .hero {
+    margin-bottom: 0.5rem;
+  }
+
+  .organizer-page .hero h1 {
+    font-size: 1.75rem;
+  }
+
   .organizer-panel {
     padding: 0.9rem;
   }
 
   .organizer-dashboard {
-    gap: 0.8rem;
+    gap: 0.85rem;
   }
 
   .organizer-subsection {
-    padding-top: 0.6rem;
+    padding-top: 0.65rem;
   }
 
   .organizer-summary {
@@ -321,7 +554,7 @@ $organizer-panel-dark: #006b25;
     justify-items: start;
 
     min-height: auto;
-    padding: 0.75rem;
+    padding: 0.8rem;
 
     text-align: left;
 
@@ -350,8 +583,12 @@ $organizer-panel-dark: #006b25;
     font-size: 0.68rem;
   }
 
+  .organizer-request-block {
+    padding: 0.8rem;
+  }
+
   .organizer-request-form {
-    gap: 0.48rem;
+    gap: 0.55rem;
 
     label {
       font-size: 0.74rem;
@@ -359,7 +596,7 @@ $organizer-panel-dark: #006b25;
 
     input,
     select {
-      min-height: 40px;
+      min-height: 42px;
     }
 
     .btn {

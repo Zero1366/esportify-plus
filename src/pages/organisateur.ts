@@ -204,4 +204,6 @@ renderStats();
 renderAvailableEventCard();
 initActivityRequestForm();
 
-document.body.classList.add("is-ready");
+requestAnimationFrame(() => {
+  document.body.classList.add("is-ready");
+});

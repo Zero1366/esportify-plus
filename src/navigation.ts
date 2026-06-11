@@ -42,7 +42,7 @@ function updateRoleBanner(): void {
 
   roleBanner.innerHTML = `
     <span>
-      Connecté : ${session.username} (${getRoleLabel(session.role)})
+      Connecté : ${getRoleLabel(session.role)}
     </span>
 
     <button

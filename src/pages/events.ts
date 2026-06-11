@@ -205,4 +205,6 @@ eventStatus?.addEventListener("change", () => {
 renderEvents();
 initMobileStatusTabs();
 
-document.body.classList.add("is-ready");
+requestAnimationFrame(() => {
+  document.body.classList.add("is-ready");
+});

@@ -17,6 +17,18 @@ function getRoleUrl(role: UserRole): string {
   return "/events.html";
 }
 
+function getRoleLabel(role: UserRole): string {
+  if (role === "admin") {
+    return "Accès Admin";
+  }
+
+  if (role === "organizer") {
+    return "Accès Organisateur";
+  }
+
+  return "Accès Utilisateur";
+}
+
 function updateRoleTestLink(): void {
   if (!roleTestLink) return;
 
@@ -28,10 +40,12 @@ function updateRoleTestLink(): void {
     return;
   }
 
-  roleTestLink.textContent = `Connecté : ${session.username}`;
+  roleTestLink.textContent = getRoleLabel(session.role);
   roleTestLink.href = getRoleUrl(session.role);
 }
 
 updateRoleTestLink();
 
-document.body.classList.add("is-ready");
+requestAnimationFrame(() => {
+  document.body.classList.add("is-ready");
+});

@@ -134,6 +134,11 @@ document.addEventListener("DOMContentLoaded", () => {
   pauseButton.addEventListener("click", pauseReplay);
   restartButton.addEventListener("click", restartReplay);
 
+  window.addEventListener("beforeunload", stopTimer);
+
   updateButtons();
-  document.body.classList.add("is-ready");
+
+  requestAnimationFrame(() => {
+    document.body.classList.add("is-ready");
+  });
 });

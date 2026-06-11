@@ -1,3 +1,12 @@
 node_modules/
 dist/
 .env
+
+# Generated files
+dist/
+src/**/*.js
+src/**/*.css
+src/**/*.css.map
+*.db-wal
+*.db-shm
+

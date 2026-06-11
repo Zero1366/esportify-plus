@@ -29,30 +29,46 @@
   /* États */
   --color-danger: #ff1f1f;
   --color-warning: #e4a820;
-  --color-success:  #008d35;
+  --color-success: #008d35;
   --color-info: #4650bf;
+
+  /* Rôles */
+  --color-role-player: linear-gradient(135deg, #6f45f5, #4b3480);
+  --color-role-organizer: linear-gradient(135deg, #f39a32, #d66b1f);
+  --color-role-admin: linear-gradient(135deg, #21163e, #4650bf);
 
   /* Bordures */
   --border-accent: #ff9f1c;
   --border-soft: rgba(255, 255, 255, 0.14);
-  --border-dark: #1b102f;
+  --border-dark: #101010;
+  --border-purple-dark: #1b102f;
 
   /* Ombres */
-  --shadow-card: 0 10px 22px rgba(18, 9, 35, 0.28);
-  --shadow-soft: 0 6px 14px rgba(18, 9, 35, 0.2);
+  --shadow-card: 0 clamp(6px, 0.8vw, 10px) clamp(14px, 1.8vw, 22px) rgba(18, 9, 35, 0.24);
+  --shadow-soft: 0 clamp(4px, 0.7vw, 6px) clamp(10px, 1.4vw, 14px) rgba(18, 9, 35, 0.18);
+  --shadow-header: 0 clamp(4px, 0.7vw, 6px) clamp(10px, 1.4vw, 14px) rgba(18, 9, 35, 0.22);
+  --shadow-footer: 0 clamp(4px, 0.7vw, 6px) clamp(10px, 1.4vw, 14px) rgba(18, 9, 35, 0.22);
 
   /* Radius */
-  --radius-xs: 6px;
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 22px;
+  --radius-xs: clamp(4px, 0.5vw, 6px);
+  --radius-sm: clamp(6px, 0.7vw, 9px);
+  --radius-md: clamp(9px, 1vw, 13px);
+  --radius-lg: clamp(12px, 1.3vw, 18px);
 
   /* Layout */
   --container-width: 1120px;
   --container-padding-mobile: 1rem;
 
-  --header-height: 64px;
-  --footer-height: 42px;
+  --header-height: clamp(44px, 4vw, 58px);
+  --header-height-tablet: clamp(44px, 5vw, 56px);
+  --header-height-mobile: 44px;
+
+  --footer-height: clamp(34px, 3.4vw, 44px);
+  --footer-height-mobile: clamp(28px, 7vw, 34px);
+
+  --header-padding-x: clamp(0.75rem, 1.8vw, 1.4rem);
+  --header-gap: clamp(0.75rem, 1.8vw, 2rem);
+  --nav-gap: clamp(0.65rem, 2vw, 3.2rem);
 
   /* Typographie */
   --font-main: "Inter", "Segoe UI", Arial, sans-serif;

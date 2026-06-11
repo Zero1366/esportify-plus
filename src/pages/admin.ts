@@ -515,4 +515,8 @@ renderLivePanel();
 initMobileTabs();
 bindAdminActions();
 
-document.body.classList.add("is-ready");
+window.addEventListener("beforeunload", stopLiveTimer);
+
+requestAnimationFrame(() => {
+  document.body.classList.add("is-ready");
+});
