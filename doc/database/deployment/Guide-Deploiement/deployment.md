@@ -1,392 +1,165 @@
-# Documentation de déploiement - Esportify+
+# ⭐ Esportify+
 
-## Objectif
-
-Ce document présente les différentes méthodes permettant d'installer, exécuter et déployer le projet Esportify+.
-
-Il décrit également l'architecture de déploiement, les technologies utilisées ainsi que les outils mis en place afin de simplifier le développement et la maintenance du projet.
+Application e-sport full-stack de démonstration simulant une plateforme complète avec gestion de rôles, backend fonctionnel et déploiement.
 
 ---
 
-# Prérequis
+# ⭐ START HERE (POINT D’ENTRÉE)
 
-Avant de lancer le projet, les outils suivants doivent être installés :
+👉 Pour comprendre rapidement le projet :
 
-* Node.js ;
-* npm ;
-* Git ;
-* Docker (optionnel) ;
-* Docker Compose (optionnel).
+⭐ `doc/site-final/`
+→ rendu visuel complet du projet (Desktop / Mobile)
 
----
-
-# Récupération du projet
-
-Cloner le dépôt GitHub :
-
-```bash
-git clone https://github.com/Zero1366/esportify-plus.git
-cd esportify-plus
-```
+📌 C’est la représentation réelle de l’application.
 
 ---
 
-# Installation des dépendances
+# ⭐ DÉMARRER L’EXPLORATION
 
-## Front-end
+## ⭐ 1. Résultat final (PRIORITÉ)
 
-```bash
-npm install
-```
+📁 Ouvrir :
+`doc/site-final/`
 
-## Back-end
+Contient :
+- version Desktop (1366x768)
+- version Mobile (360x800)
+- toutes les pages finales
 
-```bash
-cd backend
-npm install
-```
-
----
-
-# Workflow automatisé
-
-Lors des dernières phases du développement, plusieurs opérations récurrentes ont été automatisées afin de simplifier le cycle de développement, de vérification et de déploiement.
-
-Cette évolution a été mise en place lorsque le projet a atteint un niveau de stabilité suffisant pour permettre l'automatisation d'une partie du workflow.
-
-## Développement complet
-
-```bash
-npm run dev:full
-```
-
-Cette commande lance simultanément :
-
-* le frontend Vite ;
-* le backend Express ;
-* la connexion à la base SQLite.
+📌 Permet de comprendre immédiatement le produit fini.
 
 ---
 
-## Vérification complète
+## ⭐ 2. Architecture globale du projet
 
-```bash
-npm run build:full
-```
+📁 Ouvrir :
+`doc/database/deployment/Guide-Deployment/`
 
-Cette commande :
+Contient :
+- Docker
+- GitHub workflow
+- Netlify
+- architecture système
 
-* compile le frontend ;
-* compile le backend ;
-* vérifie l'ensemble du projet TypeScript.
-
----
-
-## Déploiement
-
-```bash
-npm run deploy:full
-```
-
-Cette commande permet d'automatiser le processus de déploiement défini pour le projet.
+📌 Permet de comprendre l’infrastructure globale.
 
 ---
 
-## Bénéfices obtenus
+## ⭐ 3. Frontend (logique utilisateur)
 
-* réduction des manipulations manuelles ;
-* gain de temps lors des phases de test ;
-* vérification centralisée ;
-* simplification du déploiement ;
-* amélioration de la cohérence du workflow ;
-* réduction des risques d'erreurs.
+📁 Ouvrir :
+`src/pages/index.ts`
 
----
+Puis :
+- `index.html`
 
-# Lancement manuel du projet
-
-## Lancer le backend
-
-Depuis le dossier backend :
-
-```bash
-npm run dev
-```
-
-Le serveur démarre sur :
-
-```txt
-http://localhost:3000
-```
+📌 Point d’entrée de l’application frontend.
 
 ---
 
-## Lancer le frontend
+## ⭐ 4. Gestion des sessions et rôles
 
-Depuis la racine du projet :
+📁 Ouvrir :
+`src/session.ts`
 
-```bash
-npm run dev
-```
-
-Le frontend démarre sur :
-
-```txt
-http://localhost:5173
-```
+Contient :
+- gestion utilisateur
+- rôles (admin / organizer / user)
+- logique de connexion simulée
 
 ---
 
-# Vérification du backend
+## ⭐ 5. Backend (API serveur)
 
-## Route principale
+📁 Ouvrir :
+`backend/src/server.ts`
 
-```txt
-http://localhost:3000
-```
+Puis suivre :
 
-Réponse attendue :
+➡️ `routes/`
+➡️ `controllers/`
+➡️ `services/`
+➡️ `repositories/`
 
-```json
-{
-  "success": true,
-  "message": "Backend Esportify+ actif",
-  "service": "Esportify+ API",
-  "version": "1.0.0"
-}
-```
+📌 Architecture backend en couches.
 
 ---
 
-## Route de santé
+## ⭐ 6. Base de données
 
-```txt
-http://localhost:3000/health
-```
+📁 Ouvrir :
+`doc/database/schema.sql`
 
-Réponse attendue :
+Puis :
+`doc/database/seed.sql`
 
-```json
-{
-  "success": true,
-  "status": "ok",
-  "service": "Esportify+ API",
-  "database": "connected",
-  "version": "1.0.0"
-}
-```
+📌 Structure + données de démonstration.
 
 ---
 
-## Route de version
+# ⭐ NAVIGATION DU PROJET
 
-```txt
-http://localhost:3000/version
-```
+## ✔ FRONTEND
 
----
-
-# Technologies backend utilisées
-
-Le backend repose sur :
-
-* Node.js ;
-* Express ;
-* TypeScript ;
-* SQLite ;
-* Better-SQLite3 ;
-* Zod ;
-* UserEntity ;
-* SafeUser.
-
-Architecture utilisée :
-
-```txt
-Routes
-    │
-    ▼
-Services
-    │
-    ▼
-Repositories
-    │
-    ▼
-Entities
-    │
-    ▼
-SQLite
-```
-
-Cette organisation favorise :
-
-* la maintenabilité ;
-* la lisibilité ;
-* l'évolutivité ;
-* la séparation des responsabilités.
+1. `index.html`
+2. `src/pages/`
+3. `src/navigation.ts`
+4. `src/session.ts`
 
 ---
 
-# Base de données SQLite
+## ✔ BACKEND
 
-Au démarrage du serveur :
-
-* la base SQLite est automatiquement initialisée ;
-* les tables sont créées si nécessaire ;
-* les données de démonstration sont ajoutées automatiquement ;
-* les contraintes de sécurité sont appliquées.
-
-Base utilisée :
-
-```txt
-database/esportify.db
-```
-
-Principales tables :
-
-* roles ;
-* users ;
-* events ;
-* tournaments ;
-* replays ;
-* registrations ;
-* messages.
+1. `server.ts`
+2. `routes/`
+3. `controllers/`
+4. `services/`
+5. `repositories/`
 
 ---
 
-# Déploiement avec Docker
+## ✔ DOCUMENTATION
 
-Le projet peut être exécuté dans un environnement conteneurisé grâce à Docker et Docker Compose.
-
-Construction et lancement :
-
-```bash
-docker compose up --build
-```
-
-Application accessible sur :
-
-```txt
-http://localhost:5173
-```
+- `doc/site-final/` → rendu visuel du projet
+- `doc/database/deployment/` → infrastructure et déploiement
+- `doc/database/` → base de données et SQL
 
 ---
 
-# Fichiers Docker utilisés
+# ⭐ PARCOURS RECOMMANDÉ (JURY / RECRUTEUR)
 
-## Dockerfile
+👉 Lecture conseillée dans cet ordre :
 
-Le Dockerfile permet :
-
-* l'installation automatique des dépendances ;
-* la copie des fichiers du projet ;
-* la définition de l'environnement d'exécution ;
-* le lancement automatisé de l'application.
-
-Une capture du Dockerfile est disponible dans le dossier Images/deployment.
+1. ⭐ `doc/site-final/`
+2. ⭐ `index.html`
+3. ⭐ `src/session.ts`
+4. ⭐ `backend/src/server.ts`
+5. ⭐ `doc/database/`
 
 ---
 
-## docker-compose.yml
+# ⭐ IDÉE DU PROJET
 
-Le fichier docker-compose.yml permet :
+Esportify+ est une application démonstrative reproduisant une plateforme e-sport complète :
 
-* la construction automatique des images ;
-* le lancement des conteneurs ;
-* la configuration des ports ;
-* la simplification du déploiement.
-
-Une capture du fichier docker-compose.yml est disponible dans le dossier Images/deployment.
-
----
-
-# Déploiement GitHub
-
-Le code source est hébergé sur GitHub.
-
-Git permet :
-
-* le suivi des versions ;
-* la sauvegarde du projet ;
-* la gestion des modifications ;
-* l'historisation du développement ;
-* la préparation aux évolutions futures.
-
-Commandes principales :
-
-```bash
-git add .
-git commit -m "message"
-git push
-```
+- interface utilisateur responsive
+- système de rôles
+- replay simulé de match
+- backend structuré
+- base de données SQLite
+- déploiement Docker + Netlify
+- documentation modulaire
 
 ---
 
-# Déploiement Netlify
+# ⭐ ARCHITECTURE GLOBALE
 
-Le frontend est déployé avec Netlify.
-
-Le déploiement est directement connecté au dépôt GitHub.
-
-Processus :
-
-```txt
-Modification du projet
-        │
-        ▼
-Commit Git
-        │
-        ▼
-Push GitHub
-        │
-        ▼
-Déploiement Netlify
-```
-
-Cette approche permet une mise à jour rapide et centralisée du site.
-
----
-
-# Architecture de déploiement
-
-```txt
+```text
 Utilisateur
-      │
-      ▼
-Site Netlify
-      │
-      ▼
-Frontend Vite
-      │
-      ▼
+   ↓
+Frontend (Vite)
+   ↓
 API Express
-      │
-      ▼
-SQLite
-(esportify.db)
-```
-
----
-
-# Avantages du déploiement
-
-Cette stratégie apporte :
-
-* une installation rapide ;
-* une meilleure reproductibilité ;
-* une gestion simplifiée des dépendances ;
-* une automatisation partielle du workflow ;
-* une maintenance facilitée ;
-* une meilleure portabilité entre environnements ;
-* une préparation aux évolutions futures.
-
----
-
-# Conclusion
-
-Le projet Esportify+ peut être exécuté localement via Node.js ou dans un environnement conteneurisé avec Docker.
-
-L'utilisation combinée de GitHub, Netlify, Docker, Docker Compose, Express, SQLite, Better-SQLite3 et Zod permet de professionnaliser le cycle de développement, de déploiement et de maintenance du projet.
-
-Cette architecture facilite les futures évolutions du backend tout en conservant une base technique cohérente, maintenable et évolutive.
-
-Les dernières améliorations ont également permis d'automatiser une partie du workflow de développement et de déploiement afin de simplifier les opérations de maintenance, de compilation et de livraison du projet.
+   ↓
+SQLite Database
