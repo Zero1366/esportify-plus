@@ -1,3 +1,5 @@
+import { compareSync } from "bcryptjs";
+
 export type UserRole = "player" | "organizer" | "admin";
 
 export interface User {
@@ -35,7 +37,7 @@ export class UserEntity {
   }
 
   isPasswordValid(password: string): boolean {
-    return this.password === password;
+    return compareSync(password, this.password);
   }
 
   toSafeUser(): SafeUser {

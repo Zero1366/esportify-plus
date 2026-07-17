@@ -1,15 +1,26 @@
-import { Request, Response } from "express";
-import { getUsers, loginUser } from "../services/auth.service";
+import type { Request, Response } from "express";
 
-export function login(req: Request, res: Response): Response {
+import { loginUser } from "../services/auth.service.js";
+
+interface LoginRequestBody {
+  username: string;
+  password: string;
+}
+
+export function login(
+  req: Request<
+    Record<string, never>,
+    unknown,
+    LoginRequestBody
+  >,
+  res: Response
+): Response {
   const { username, password } = req.body;
 
   const result = loginUser(username, password);
 
   if (!result.success) {
-    const statusCode = result.message.includes("requis") ? 400 : 401;
-
-    return res.status(statusCode).json({
+    return res.status(401).json({
       success: false,
       message: result.message
     });
@@ -19,14 +30,5 @@ export function login(req: Request, res: Response): Response {
     success: true,
     message: result.message,
     user: result.user
-  });
-}
-
-export function listUsers(_req: Request, res: Response): Response {
-  const users = getUsers();
-
-  return res.status(200).json({
-    success: true,
-    users
   });
 }

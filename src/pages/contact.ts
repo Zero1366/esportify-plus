@@ -1,8 +1,16 @@
-
 import "../navigation";
 
-const contactForm = document.querySelector<HTMLFormElement>("#contactForm");
-const toastContainer = document.querySelector<HTMLElement>("#toastContainer");
+const TOAST_DURATION = 3000;
+
+const contactForm =
+  document.querySelector<HTMLFormElement>(
+    "#contactForm"
+  );
+
+const toastContainer =
+  document.querySelector<HTMLElement>(
+    "#toastContainer"
+  );
 
 function showToast(message: string): void {
   if (!toastContainer) {
@@ -11,6 +19,7 @@ function showToast(message: string): void {
   }
 
   const toast = document.createElement("div");
+
   toast.className = "toast";
   toast.textContent = message;
 
@@ -18,22 +27,34 @@ function showToast(message: string): void {
 
   window.setTimeout(() => {
     toast.remove();
-  }, 3000);
+  }, TOAST_DURATION);
 }
 
-contactForm?.addEventListener("submit", (event) => {
-  event.preventDefault();
+contactForm?.addEventListener(
+  "submit",
+  (event) => {
+    event.preventDefault();
 
-  if (!contactForm.checkValidity()) {
-    showToast("Veuillez remplir correctement le formulaire.");
-    return;
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+
+      showToast(
+        "Veuillez remplir correctement le formulaire."
+      );
+
+      return;
+    }
+
+    showToast(
+      "Message envoyé. Ceci est une démonstration."
+    );
+
+    contactForm.reset();
   }
-
-  showToast("Message envoyé. Ceci est une démonstration.");
-
-  contactForm.reset();
-});
+);
 
 requestAnimationFrame(() => {
-  document.body.classList.add("is-ready");
+  document.body.classList.add(
+    "is-ready"
+  );
 });

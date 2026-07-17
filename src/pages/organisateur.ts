@@ -1,10 +1,19 @@
-
 import "../navigation";
 
-import { eventsData, type EventItem } from "../data";
-import { canAccessRole, isAuthenticated } from "../session";
+import {
+  eventsData,
+  type EventItem
+} from "../data";
 
-type ActivityStatus = "pending" | "validated" | "refused";
+import {
+  canAccessRole,
+  isAuthenticated
+} from "../session";
+
+type ActivityStatus =
+  | "pending"
+  | "validated"
+  | "refused";
 
 interface ActivityRequest {
   id: number;
@@ -13,42 +22,110 @@ interface ActivityRequest {
   format: string;
   game: string;
   date: string;
-  maxPlayers: string;
+  maxPlayers: number;
   status: ActivityStatus;
 }
 
-const toastContainer = document.querySelector<HTMLElement>("#toastContainer");
+const TOAST_DURATION = 3000;
+
+const toastContainer =
+  document.querySelector<HTMLElement>(
+    "#toastContainer"
+  );
+
 const activityRequestForm =
-  document.querySelector<HTMLFormElement>("#activityRequestForm");
+  document.querySelector<HTMLFormElement>(
+    "#activityRequestForm"
+  );
 
 const activityTypeInput =
-  document.querySelector<HTMLSelectElement>("#activityTypeInput");
-const activityTitleInput =
-  document.querySelector<HTMLInputElement>("#activityTitleInput");
-const activityFormatInput =
-  document.querySelector<HTMLSelectElement>("#activityFormatInput");
-const activityGameInput =
-  document.querySelector<HTMLSelectElement>("#activityGameInput");
-const activityDateInput =
-  document.querySelector<HTMLInputElement>("#activityDateInput");
-const activityMaxPlayersInput =
-  document.querySelector<HTMLSelectElement>("#activityMaxPlayersInput");
+  document.querySelector<HTMLSelectElement>(
+    "#activityTypeInput"
+  );
 
-const eventsStat = document.querySelector<HTMLElement>("#eventsStat");
-const proposalStat = document.querySelector<HTMLElement>("#validatedStat");
+const activityTitleInput =
+  document.querySelector<HTMLInputElement>(
+    "#activityTitleInput"
+  );
+
+const activityFormatInput =
+  document.querySelector<HTMLSelectElement>(
+    "#activityFormatInput"
+  );
+
+const activityGameInput =
+  document.querySelector<HTMLSelectElement>(
+    "#activityGameInput"
+  );
+
+const activityDateInput =
+  document.querySelector<HTMLInputElement>(
+    "#activityDateInput"
+  );
+
+const activityMaxPlayersInput =
+  document.querySelector<HTMLSelectElement>(
+    "#activityMaxPlayersInput"
+  );
+
+const eventsStat =
+  document.querySelector<HTMLElement>(
+    "#eventsStat"
+  );
+
+const pendingRequestsStat =
+  document.querySelector<HTMLElement>(
+    "#validatedStat"
+  );
+
 const availableEventCard =
-  document.querySelector<HTMLElement>("#availableEventCard");
+  document.querySelector<HTMLElement>(
+    "#availableEventCard"
+  );
 
 const activityRequests: ActivityRequest[] = [];
 
+let nextActivityRequestId = 1;
+
 function redirectToLogin(): void {
-  window.location.href = "/inscription.html";
+  window.location.href =
+    "/inscription.html";
 }
 
 function protectPage(): void {
-  if (isAuthenticated() && canAccessRole("organizer")) return;
+  if (
+    isAuthenticated() &&
+    canAccessRole("organizer")
+  ) {
+    return;
+  }
 
   redirectToLogin();
+}
+
+function getTodayIsoDate(): string {
+  const today = new Date();
+
+  const year = today.getFullYear();
+
+  const month = String(
+    today.getMonth() + 1
+  ).padStart(2, "0");
+
+  const day = String(
+    today.getDate()
+  ).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function configureDateInput(): void {
+  if (!activityDateInput) {
+    return;
+  }
+
+  activityDateInput.min =
+    getTodayIsoDate();
 }
 
 function escapeHtml(value: string): string {
@@ -61,9 +138,13 @@ function escapeHtml(value: string): string {
 }
 
 function showToast(message: string): void {
-  if (!toastContainer) return;
+  if (!toastContainer) {
+    return;
+  }
 
-  const toast = document.createElement("div");
+  const toast =
+    document.createElement("div");
+
   toast.className = "toast";
   toast.textContent = message;
 
@@ -71,58 +152,94 @@ function showToast(message: string): void {
 
   window.setTimeout(() => {
     toast.remove();
-  }, 3000);
+  }, TOAST_DURATION);
 }
 
 function getAvailableEvents(): EventItem[] {
-  return eventsData.filter((event) => event.status === "validated");
+  return eventsData.filter(
+    (event) =>
+      event.status === "validated"
+  );
 }
 
 function renderStats(): void {
-  const availableEventsCount = getAvailableEvents().length;
-  const pendingRequestsCount = activityRequests.filter(
-    (request) => request.status === "pending"
-  ).length;
+  const availableEventsCount =
+    getAvailableEvents().length;
+
+  const pendingRequestsCount =
+    activityRequests.filter(
+      (request) =>
+        request.status === "pending"
+    ).length;
 
   if (eventsStat) {
-    eventsStat.textContent = String(availableEventsCount);
+    eventsStat.textContent =
+      String(availableEventsCount);
   }
 
-  if (proposalStat) {
-    proposalStat.textContent = String(pendingRequestsCount);
+  if (pendingRequestsStat) {
+    pendingRequestsStat.textContent =
+      String(pendingRequestsCount);
   }
 }
 
 function renderAvailableEventCard(): void {
-  if (!availableEventCard) return;
+  if (!availableEventCard) {
+    return;
+  }
 
-  const [mainEvent] = getAvailableEvents();
+  const [mainEvent] =
+    getAvailableEvents();
 
   if (!mainEvent) {
     availableEventCard.innerHTML = `
-      <span class="organizer-stat__icon" aria-hidden="true">○</span>
+      <span
+        class="organizer-stat__icon"
+        aria-hidden="true"
+      >
+        ○
+      </span>
+
       <strong>0</strong>
-      <span>Aucun événement disponible</span>
+
+      <span>
+        Aucun événement disponible
+      </span>
     `;
+
     return;
   }
 
   availableEventCard.innerHTML = `
-    <div class="available-event-card__content">
-      <span class="event-status event-status--validated">
+    <div
+      class="available-event-card__content"
+    >
+      <span
+        class="event-status
+               event-status--validated"
+      >
         Disponible
       </span>
 
-      <strong class="available-event-card__title">
+      <strong
+        class="available-event-card__title"
+      >
         ${escapeHtml(mainEvent.title)}
       </strong>
 
-      <span class="available-event-card__meta">
-        ${escapeHtml(mainEvent.game)} · ${escapeHtml(mainEvent.date)}
+      <span
+        class="available-event-card__meta"
+      >
+        ${escapeHtml(mainEvent.game)}
+        ·
+        ${escapeHtml(mainEvent.date)}
       </span>
     </div>
 
-    <a class="btn btn--primary btn--small" href="/replay.html">
+    <a
+      class="btn btn--primary btn--small"
+      href="/replay.html"
+    >
       Voir le replay
     </a>
   `;
@@ -144,7 +261,8 @@ function resetActivityForm(): void {
   }
 }
 
-function createActivityRequest(): ActivityRequest | null {
+function createActivityRequest():
+  ActivityRequest | null {
   if (
     !activityTypeInput ||
     !activityTitleInput ||
@@ -156,20 +274,68 @@ function createActivityRequest(): ActivityRequest | null {
     return null;
   }
 
-  const type = activityTypeInput.value;
-  const title = activityTitleInput.value.trim();
-  const format = activityFormatInput.value;
-  const game = activityGameInput.value;
-  const date = activityDateInput.value;
-  const maxPlayers = activityMaxPlayersInput.value;
+  const type =
+    activityTypeInput.value;
 
-  if (!type || !title || !format || !game || !date || !maxPlayers) {
-    showToast("Veuillez remplir tous les champs.");
+  const title =
+    activityTitleInput.value.trim();
+
+  const format =
+    activityFormatInput.value;
+
+  const game =
+    activityGameInput.value;
+
+  const date =
+    activityDateInput.value;
+
+  const maxPlayers = Number(
+    activityMaxPlayersInput.value
+  );
+
+  if (
+    !type ||
+    !title ||
+    !format ||
+    !game ||
+    !date
+  ) {
+    showToast(
+      "Veuillez remplir tous les champs."
+    );
+
     return null;
   }
 
-  return {
-    id: Date.now(),
+  if (title.length < 3) {
+    showToast(
+      "Le titre doit contenir au moins 3 caractères."
+    );
+
+    return null;
+  }
+
+  if (date < getTodayIsoDate()) {
+    showToast(
+      "La date ne peut pas être antérieure à aujourd’hui."
+    );
+
+    return null;
+  }
+
+  if (
+    !Number.isInteger(maxPlayers) ||
+    maxPlayers <= 0
+  ) {
+    showToast(
+      "Le nombre de joueurs est invalide."
+    );
+
+    return null;
+  }
+
+  const request: ActivityRequest = {
+    id: nextActivityRequestId,
     type,
     title,
     format,
@@ -178,32 +344,49 @@ function createActivityRequest(): ActivityRequest | null {
     maxPlayers,
     status: "pending"
   };
+
+  nextActivityRequestId += 1;
+
+  return request;
 }
 
 function initActivityRequestForm(): void {
-  if (!activityRequestForm) return;
+  if (!activityRequestForm) {
+    return;
+  }
 
-  activityRequestForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+  activityRequestForm.addEventListener(
+    "submit",
+    (event) => {
+      event.preventDefault();
 
-    const request = createActivityRequest();
+      const request =
+        createActivityRequest();
 
-    if (!request) return;
+      if (!request) {
+        return;
+      }
 
-    activityRequests.unshift(request);
+      activityRequests.unshift(request);
 
-    resetActivityForm();
-    renderStats();
+      resetActivityForm();
+      renderStats();
 
-    showToast("Proposition ajoutée en attente.");
-  });
+      showToast(
+        "Proposition ajoutée en attente."
+      );
+    }
+  );
 }
 
 protectPage();
+configureDateInput();
 renderStats();
 renderAvailableEventCard();
 initActivityRequestForm();
 
 requestAnimationFrame(() => {
-  document.body.classList.add("is-ready");
+  document.body.classList.add(
+    "is-ready"
+  );
 });

@@ -1,4 +1,3 @@
-
 import "../navigation";
 
 type ReplayAction = {
@@ -12,16 +11,53 @@ const REPLAY_INTERVAL = 1000;
 const FINAL_SCORE = "13 - 11";
 
 const actions: ReplayAction[] = [
-  { time: "00:45", text: "Nova Squad ouvre le score.", scoreA: 1, scoreB: 0 },
-  { time: "01:30", text: "Red Pulse égalise.", scoreA: 1, scoreB: 1 },
-  { time: "02:20", text: "Nova Squad reprend l'avantage.", scoreA: 2, scoreB: 1 },
-  { time: "03:15", text: "Red Pulse revient dans le match.", scoreA: 2, scoreB: 2 },
-  { time: "04:00", text: "Nova Squad prend le contrôle.", scoreA: 8, scoreB: 6 },
-  { time: "05:30", text: "Red Pulse résiste jusqu'au bout.", scoreA: 12, scoreB: 11 },
-  { time: "06:10", text: "Nova Squad conclut la finale.", scoreA: 13, scoreB: 11 }
+  {
+    time: "00:45",
+    text: "Nova Squad ouvre le score.",
+    scoreA: 1,
+    scoreB: 0
+  },
+  {
+    time: "01:30",
+    text: "Red Pulse égalise.",
+    scoreA: 1,
+    scoreB: 1
+  },
+  {
+    time: "02:20",
+    text: "Nova Squad reprend l'avantage.",
+    scoreA: 2,
+    scoreB: 1
+  },
+  {
+    time: "03:15",
+    text: "Red Pulse revient dans le match.",
+    scoreA: 2,
+    scoreB: 2
+  },
+  {
+    time: "04:00",
+    text: "Nova Squad prend le contrôle.",
+    scoreA: 8,
+    scoreB: 6
+  },
+  {
+    time: "05:30",
+    text: "Red Pulse résiste jusqu'au bout.",
+    scoreA: 12,
+    scoreB: 11
+  },
+  {
+    time: "06:10",
+    text: "Nova Squad conclut la finale.",
+    scoreA: 13,
+    scoreB: 11
+  }
 ];
 
-function getRequiredElement<T extends HTMLElement>(selector: string): T {
+function getRequiredElement<T extends HTMLElement>(
+  selector: string
+): T {
   const element = document.querySelector<T>(selector);
 
   if (!element) {
@@ -32,19 +68,33 @@ function getRequiredElement<T extends HTMLElement>(selector: string): T {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const scoreAElement = getRequiredElement<HTMLElement>("#replayScoreA");
-  const scoreBElement = getRequiredElement<HTMLElement>("#replayScoreB");
-  const statusElement = getRequiredElement<HTMLElement>("#replayStatus");
-  const feedElement = getRequiredElement<HTMLUListElement>("#replayFeed");
+  const scoreAElement =
+    getRequiredElement<HTMLElement>("#replayScoreA");
 
-  const playButton = getRequiredElement<HTMLButtonElement>("#playReplayBtn");
-  const pauseButton = getRequiredElement<HTMLButtonElement>("#pauseReplayBtn");
-  const restartButton = getRequiredElement<HTMLButtonElement>("#restartReplayBtn");
+  const scoreBElement =
+    getRequiredElement<HTMLElement>("#replayScoreB");
+
+  const statusElement =
+    getRequiredElement<HTMLElement>("#replayStatus");
+
+  const feedElement =
+    getRequiredElement<HTMLUListElement>("#replayFeed");
+
+  const playButton =
+    getRequiredElement<HTMLButtonElement>("#playReplayBtn");
+
+  const pauseButton =
+    getRequiredElement<HTMLButtonElement>("#pauseReplayBtn");
+
+  const restartButton =
+    getRequiredElement<HTMLButtonElement>("#restartReplayBtn");
 
   let actionIndex = 0;
   let replayTimer: number | undefined;
 
-  function setActiveButton(activeButton?: HTMLButtonElement): void {
+  function setActiveButton(
+    activeButton?: HTMLButtonElement
+  ): void {
     playButton.classList.remove("is-active");
     pauseButton.classList.remove("is-active");
     restartButton.classList.remove("is-active");
@@ -53,7 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function stopTimer(): void {
-    if (replayTimer === undefined) return;
+    if (replayTimer === undefined) {
+      return;
+    }
 
     window.clearInterval(replayTimer);
     replayTimer = undefined;
@@ -67,13 +119,32 @@ document.addEventListener("DOMContentLoaded", () => {
     pauseButton.disabled = !isPlaying;
   }
 
+  function createFeedItem(text: string): HTMLLIElement {
+    const item = document.createElement("li");
+    item.textContent = text;
+
+    return item;
+  }
+
+  function resetFeed(): void {
+    const initialItem = createFeedItem(
+      "00:00 · Le replay est prêt. Score : 0 - 0."
+    );
+
+    feedElement.replaceChildren(initialItem);
+  }
+
   function updateReplay(action: ReplayAction): void {
     scoreAElement.textContent = String(action.scoreA);
     scoreBElement.textContent = String(action.scoreB);
-    statusElement.textContent = `${action.time} · ${action.text}`;
 
-    const item = document.createElement("li");
-    item.textContent = `${action.time} · ${action.text} Score : ${action.scoreA} - ${action.scoreB}.`;
+    statusElement.textContent =
+      `${action.time} · ${action.text}`;
+
+    const item = createFeedItem(
+      `${action.time} · ${action.text} ` +
+      `Score : ${action.scoreA} - ${action.scoreB}.`
+    );
 
     feedElement.prepend(item);
   }
@@ -81,7 +152,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function finishReplay(): void {
     stopTimer();
     setActiveButton();
-    statusElement.textContent = `Replay terminé · Score final ${FINAL_SCORE}`;
+
+    statusElement.textContent =
+      `Replay terminé · Score final ${FINAL_SCORE}`;
+
     updateButtons();
   }
 
@@ -92,7 +166,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function playReplay(): void {
-    if (replayTimer !== undefined || actionIndex >= actions.length) return;
+    if (
+      replayTimer !== undefined ||
+      actionIndex >= actions.length
+    ) {
+      return;
+    }
 
     setActiveButton(playButton);
 
@@ -106,6 +185,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       updateReplay(currentAction);
       actionIndex += 1;
+
+      if (actionIndex >= actions.length) {
+        finishReplay();
+        return;
+      }
+
       updateButtons();
     }, REPLAY_INTERVAL);
 
@@ -114,14 +199,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function restartReplay(): void {
     stopTimer();
-
     actionIndex = 0;
 
     scoreAElement.textContent = "0";
     scoreBElement.textContent = "0";
-    statusElement.textContent = "Replay prêt · Score initial 0 - 0";
-    feedElement.innerHTML = "<li>00:00 · Le replay est prêt. Score : 0 - 0.</li>";
 
+    statusElement.textContent =
+      "Replay prêt · Score initial 0 - 0";
+
+    resetFeed();
     setActiveButton(restartButton);
     updateButtons();
 
@@ -134,8 +220,9 @@ document.addEventListener("DOMContentLoaded", () => {
   pauseButton.addEventListener("click", pauseReplay);
   restartButton.addEventListener("click", restartReplay);
 
-  window.addEventListener("beforeunload", stopTimer);
+  window.addEventListener("pagehide", stopTimer);
 
+  resetFeed();
   updateButtons();
 
   requestAnimationFrame(() => {

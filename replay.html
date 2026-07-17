@@ -26,13 +26,24 @@
       href="/index.html"
       aria-label="Retour à l'accueil Esportify+"
     >
-      <img src="/Logo/logo.png" alt="Logo Esportify+" />
+      <img
+        src="/Logo/logo.png"
+        alt="Logo Esportify+"
+      />
     </a>
 
-    <nav class="site-nav" aria-label="Navigation principale">
+    <nav
+      class="site-nav"
+      aria-label="Navigation principale"
+    >
       <a href="/index.html">Accueil</a>
       <a href="/events.html">Événements</a>
-      <a href="/replay.html" aria-current="page">Replay</a>
+      <a
+        href="/replay.html"
+        aria-current="page"
+      >
+        Replay
+      </a>
       <a href="/contact.html">Contact</a>
 
       <div id="sessionNav"></div>
@@ -46,8 +57,9 @@
       <h1>Valorant Night Clash</h1>
 
       <p>
-        Rejoue un match terminé avec score simulé,
-        actions de match et contrôles simples en TypeScript.
+        Rejoue un match terminé avec un score simulé,
+        des actions de match et des contrôles simples
+        développés en TypeScript.
       </p>
     </section>
 
@@ -57,37 +69,65 @@
     >
       <header class="section-title">
         <p class="eyebrow">Match terminé</p>
-        <h2 id="replayMatchTitle">Nova Squad vs Red Pulse</h2>
+
+        <h2 id="replayMatchTitle">
+          Nova Squad contre Red Pulse
+        </h2>
       </header>
 
-      <div class="replay-score" aria-label="Score du match">
+      <div
+        class="replay-score"
+        aria-label="Score du match"
+      >
         <div class="team team--nova">
-          <img src="/LogoTeams/NovaSquad.png" alt="Nova Squad" />
+          <img
+            src="/LogoTeams/NovaSquad.png"
+            alt="Logo de Nova Squad"
+          />
+
           <strong id="replayScoreA">0</strong>
         </div>
 
-        <span class="versus" aria-label="Versus">
-          <img src="/UI/vs.png" alt="" aria-hidden="true" />
+        <span
+          class="versus"
+          aria-label="contre"
+        >
+          VS
         </span>
 
         <div class="team team--pulse">
-          <img src="/LogoTeams/RedPulse.png" alt="Red Pulse" />
+          <img
+            src="/LogoTeams/RedPulse.png"
+            alt="Logo de Red Pulse"
+          />
+
           <strong id="replayScoreB">0</strong>
         </div>
       </div>
 
-      <p id="replayStatus" class="replay-status" aria-live="polite">
+      <p
+        id="replayStatus"
+        class="replay-status"
+        aria-live="polite"
+      >
         Replay prêt · Score initial 0 - 0
       </p>
 
-      <div class="replay-controls" aria-label="Contrôles du replay">
+      <div
+        class="replay-controls"
+        aria-label="Contrôles du replay"
+      >
         <button
           id="playReplayBtn"
           class="replay-control-btn"
           type="button"
           aria-label="Lire le replay"
         >
-          <img src="/UI/Play.png" alt="" aria-hidden="true" />
+          <img
+            src="/UI/Play.png"
+            alt=""
+            aria-hidden="true"
+          />
         </button>
 
         <button
@@ -96,7 +136,11 @@
           type="button"
           aria-label="Mettre le replay en pause"
         >
-          <img src="/UI/Pause.png" alt="" aria-hidden="true" />
+          <img
+            src="/UI/Pause.png"
+            alt=""
+            aria-hidden="true"
+          />
         </button>
 
         <button
@@ -105,7 +149,11 @@
           type="button"
           aria-label="Recommencer le replay"
         >
-          <img src="/UI/Replay.png" alt="" aria-hidden="true" />
+          <img
+            src="/UI/Replay.png"
+            alt=""
+            aria-hidden="true"
+          />
         </button>
       </div>
     </section>
@@ -114,17 +162,24 @@
       class="card replay-actions-card"
       aria-labelledby="replayActionsTitle"
     >
-      <h2 id="replayActionsTitle">Actions du match</h2>
+      <h2 id="replayActionsTitle">
+        Actions du match
+      </h2>
 
-      <ul id="replayFeed" class="replay-feed">
-        <li>00:00 · Le replay est prêt. Score : 0 - 0.</li>
+      <ul
+        id="replayFeed"
+        class="replay-feed"
+      >
+        <li>
+          00:00 · Le replay est prêt. Score : 0 - 0.
+        </li>
       </ul>
     </section>
   </main>
 
   <footer class="site-footer">
     <p>
-      Esportify+ · Replay simulé · Nova Squad vs Red Pulse
+      Esportify+ · Replay simulé · Nova Squad contre Red Pulse
     </p>
   </footer>
 

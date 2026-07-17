@@ -10,3 +10,8 @@ src/**/*.css.map
 *.db-wal
 *.db-shm
 
+backend/database/*.db
+backend/database/*.db-wal
+backend/database/*.db-shm
+backend/node_modules/
+backend/dist/

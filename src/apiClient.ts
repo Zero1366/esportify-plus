@@ -10,25 +10,37 @@ type ApiLoginResponse = {
   };
 };
 
-export type LoginResult = {
-  success: boolean;
-  source: "backend" | "fallback";
-  username: string;
-  role: UserRole;
-  message: string;
-};
+export type LoginResult =
+  | {
+      success: true;
+      source: "backend" | "fallback";
+      id: number;
+      username: string;
+      role: UserRole;
+      message: string;
+    }
+  | {
+      success: false;
+      source: "backend" | "fallback";
+      username: string;
+      role: UserRole;
+      message: string;
+    };
 
-const API_URL =
-  import.meta.env.VITE_API_BASE_URL ??
-  (
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1"
-      ? "http://localhost:3000"
-      : ""
-  );
+const isLocalHost =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
+
+const configuredApiUrl =
+  import.meta.env.VITE_API_BASE_URL?.trim();
+
+const API_URL = (
+  configuredApiUrl ||
+  (isLocalHost ? "http://localhost:3000" : "")
+).replace(/\/+$/, "");
 
 function canUseBackend(): boolean {
-  return API_URL.trim() !== "";
+  return API_URL !== "";
 }
 
 async function fetchWithTimeout(
@@ -52,13 +64,16 @@ async function fetchWithTimeout(
   }
 }
 
-function loginFallback(username: string, password: string): LoginResult {
+function loginFallback(
+  username: string,
+  password: string
+): LoginResult {
   const cleanUsername = username.trim().toLowerCase();
   const cleanPassword = password.trim();
 
   const demoUser = demoUsers.find(
     (user) =>
-      user.username === cleanUsername &&
+      user.username.toLowerCase() === cleanUsername &&
       user.password === cleanPassword
   );
 
@@ -66,15 +81,17 @@ function loginFallback(username: string, password: string): LoginResult {
     return {
       success: false,
       source: "fallback",
-      username,
+      username: cleanUsername,
       role: "player",
-      message: "Identifiants invalides."
+      message:
+        "Identifiants invalides en mode démonstration."
     };
   }
 
   return {
     success: true,
     source: "fallback",
+    id: demoUser.id,
     username: demoUser.username,
     role: demoUser.role,
     message: "Connexion en mode démonstration."
@@ -88,9 +105,14 @@ export async function loginWithFallback(
   const cleanUsername = username.trim();
   const cleanPassword = password.trim();
 
-  if (canUseBackend()) {
-    try {
-      const response = await fetchWithTimeout(`${API_URL}/api/auth/login`, {
+  if (!canUseBackend()) {
+    return loginFallback(cleanUsername, cleanPassword);
+  }
+
+  try {
+    const response = await fetchWithTimeout(
+      `${API_URL}/api/auth/login`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -99,34 +121,58 @@ export async function loginWithFallback(
           username: cleanUsername,
           password: cleanPassword
         })
-      });
-
-      if (response.ok) {
-        const data = (await response.json()) as ApiLoginResponse;
-
-        if (data.success && data.user) {
-          return {
-            success: true,
-            source: "backend",
-            username: data.user.username,
-            role: data.user.role,
-            message: data.message ?? "Connexion réussie via le backend."
-          };
-        }
       }
-    } catch {
-      return loginFallback(cleanUsername, cleanPassword);
-    }
-  }
+    );
 
-  return loginFallback(cleanUsername, cleanPassword);
+    const data = (await response
+      .json()
+      .catch(() => null)) as ApiLoginResponse | null;
+
+    if (!response.ok) {
+      return {
+        success: false,
+        source: "backend",
+        username: cleanUsername,
+        role: "player",
+        message:
+          data?.message ??
+          `Connexion refusée par le serveur (${response.status}).`
+      };
+    }
+
+    if (!data?.success || !data.user) {
+      return {
+        success: false,
+        source: "backend",
+        username: cleanUsername,
+        role: "player",
+        message: "Réponse invalide reçue du serveur."
+      };
+    }
+
+    return {
+      success: true,
+      source: "backend",
+      id: data.user.id,
+      username: data.user.username,
+      role: data.user.role,
+      message:
+        data.message ??
+        "Connexion réussie via le backend."
+    };
+  } catch {
+    return loginFallback(cleanUsername, cleanPassword);
+  }
 }
 
 export async function loginAdminWithFallback(
   username: string,
   password: string
 ): Promise<LoginResult> {
-  const result = await loginWithFallback(username, password);
+  const result = await loginWithFallback(
+    username,
+    password
+  );
 
   if (!result.success || result.role !== "admin") {
     return {

@@ -6,32 +6,65 @@ export interface SessionUser {
   role: UserRole;
 }
 
-interface ApiLoginResponse {
-  success: boolean;
-  message: string;
-  user?: SessionUser;
-}
-
 const STORAGE_KEY = "esportify-session";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000";
+const validRoles: UserRole[] = [
+  "player",
+  "organizer",
+  "admin"
+];
+
+function isUserRole(value: unknown): value is UserRole {
+  return (
+    typeof value === "string" &&
+    validRoles.includes(value as UserRole)
+  );
+}
+
+function isSessionUser(value: unknown): value is SessionUser {
+  if (
+    typeof value !== "object" ||
+    value === null
+  ) {
+    return false;
+  }
+
+  const session = value as Record<string, unknown>;
+
+  return (
+    typeof session.id === "number" &&
+    Number.isInteger(session.id) &&
+    typeof session.username === "string" &&
+    session.username.trim().length > 0 &&
+    isUserRole(session.role)
+  );
+}
 
 export function saveSession(user: SessionUser): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(user)
+  );
 }
 
 export function getSession(): SessionUser | null {
   const storedSession =
-    localStorage.getItem(STORAGE_KEY) ??
-    sessionStorage.getItem(STORAGE_KEY);
+    localStorage.getItem(STORAGE_KEY);
 
   if (!storedSession) {
     return null;
   }
 
   try {
-    return JSON.parse(storedSession) as SessionUser;
+    const parsedSession: unknown =
+      JSON.parse(storedSession);
+
+    if (!isSessionUser(parsedSession)) {
+      clearSession();
+      return null;
+    }
+
+    return parsedSession;
   } catch {
     clearSession();
     return null;
@@ -48,61 +81,12 @@ export function isAuthenticated(): boolean {
 }
 
 export function hasRole(role: UserRole): boolean {
-  const session = getSession();
-
-  if (!session) {
-    return false;
-  }
-
-  return session.role === role;
+  return getSession()?.role === role;
 }
 
-export function changeRole(role: UserRole): void {
-  const session = getSession();
-
-  if (!session) {
-    return;
-  }
-
-  saveSession({
-    ...session,
-    role
-  });
-}
-
-export async function loginWithAPI(
-  username: string,
-  password: string
-): Promise<SessionUser> {
-  const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      username,
-      password
-    })
-  });
-
-  const data = (await response.json()) as ApiLoginResponse;
-
-  if (!response.ok || !data.success || !data.user) {
-    throw new Error(data.message || "Erreur de connexion");
-  }
-
-  const sessionUser: SessionUser = {
-    id: data.user.id,
-    username: data.user.username,
-    role: data.user.role
-  };
-
-  saveSession(sessionUser);
-
-  return sessionUser;
-}
-
-export function canAccessRole(requiredRole: UserRole): boolean {
+export function canAccessRole(
+  requiredRole: UserRole
+): boolean {
   const session = getSession();
 
   if (!session) {

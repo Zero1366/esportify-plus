@@ -5,25 +5,37 @@ import {
   type UserRole
 } from "./session";
 
-const roleBanner = document.querySelector<HTMLElement>("#roleBanner");
-const sessionNav = document.querySelector<HTMLElement>("#sessionNav");
+const roleBanner =
+  document.querySelector<HTMLElement>("#roleBanner");
+
+const sessionNav =
+  document.querySelector<HTMLElement>("#sessionNav");
 
 function redirectToLogin(): void {
   window.location.href = "/inscription.html";
 }
 
 function getRoleLabel(role: UserRole): string {
-  if (role === "admin") return "Admin";
-  if (role === "organizer") return "Organisateur";
+  if (role === "admin") {
+    return "Administrateur";
+  }
 
-  return "Utilisateur";
+  if (role === "organizer") {
+    return "Organisateur";
+  }
+
+  return "Joueur";
 }
 
 function protectCurrentPage(): void {
   const requiredRole =
-    document.body.dataset.requiredRole as UserRole | undefined;
+    document.body.dataset.requiredRole as
+      | UserRole
+      | undefined;
 
-  if (!requiredRole) return;
+  if (!requiredRole) {
+    return;
+  }
 
   if (!canAccessRole(requiredRole)) {
     redirectToLogin();
@@ -31,12 +43,15 @@ function protectCurrentPage(): void {
 }
 
 function updateRoleBanner(): void {
-  if (!roleBanner) return;
+  if (!roleBanner) {
+    return;
+  }
 
   const session = getSession();
 
   if (!session) {
-    roleBanner.innerHTML = "<span>Mode visiteur</span>";
+    roleBanner.innerHTML =
+      "<span>Mode visiteur</span>";
     return;
   }
 
@@ -56,13 +71,17 @@ function updateRoleBanner(): void {
 }
 
 function renderSessionNav(): void {
-  if (!sessionNav) return;
+  if (!sessionNav) {
+    return;
+  }
 
   const session = getSession();
 
   if (!session) {
     sessionNav.innerHTML = `
-      <a href="/inscription.html">Connexion</a>
+      <a href="/inscription.html">
+        Connexion
+      </a>
     `;
     return;
   }
@@ -78,21 +97,30 @@ function renderSessionNav(): void {
         ${getRoleLabel(session.role)} ▾
       </button>
 
-      <div class="nav-dropdown__menu nav-dropdown__menu--right">
-        <a href="/admin.html" data-protected-role="admin">
-          Espace admin
+      <div
+        class="nav-dropdown__menu
+               nav-dropdown__menu--right"
+      >
+        <a
+          href="/admin.html"
+          data-protected-role="admin"
+        >
+          Espace administrateur
         </a>
 
-        <a href="/organisateur.html" data-protected-role="organizer">
+        <a
+          href="/organisateur.html"
+          data-protected-role="organizer"
+        >
           Espace organisateur
         </a>
 
         <button
           class="nav-dropdown__logout"
           type="button"
-          data-change-role
+          data-change-account
         >
-          Changer de rôle
+          Changer de compte
         </button>
 
         <button
@@ -108,38 +136,55 @@ function renderSessionNav(): void {
 }
 
 function closeAllDropdowns(): void {
-  const dropdowns = document.querySelectorAll<HTMLElement>(".nav-dropdown");
-
-  dropdowns.forEach((dropdown) => {
-    const button = dropdown.querySelector<HTMLButtonElement>(
-      ".nav-dropdown__button"
+  const dropdowns =
+    document.querySelectorAll<HTMLElement>(
+      ".nav-dropdown"
     );
 
+  dropdowns.forEach((dropdown) => {
+    const button =
+      dropdown.querySelector<HTMLButtonElement>(
+        ".nav-dropdown__button"
+      );
+
     dropdown.classList.remove("is-open");
-    button?.setAttribute("aria-expanded", "false");
+    button?.setAttribute(
+      "aria-expanded",
+      "false"
+    );
   });
 }
 
 function initDropdown(): void {
-  const dropdowns = document.querySelectorAll<HTMLElement>(".nav-dropdown");
-
-  dropdowns.forEach((dropdown) => {
-    const button = dropdown.querySelector<HTMLButtonElement>(
-      ".nav-dropdown__button"
+  const dropdowns =
+    document.querySelectorAll<HTMLElement>(
+      ".nav-dropdown"
     );
 
-    if (!button) return;
+  dropdowns.forEach((dropdown) => {
+    const button =
+      dropdown.querySelector<HTMLButtonElement>(
+        ".nav-dropdown__button"
+      );
+
+    if (!button) {
+      return;
+    }
 
     button.addEventListener("click", (event) => {
       event.stopPropagation();
 
-      const wasOpen = dropdown.classList.contains("is-open");
+      const wasOpen =
+        dropdown.classList.contains("is-open");
 
       closeAllDropdowns();
 
       if (!wasOpen) {
         dropdown.classList.add("is-open");
-        button.setAttribute("aria-expanded", "true");
+        button.setAttribute(
+          "aria-expanded",
+          "true"
+        );
       }
     });
   });
@@ -147,11 +192,14 @@ function initDropdown(): void {
   document.addEventListener("click", (event) => {
     const target = event.target;
 
-    if (!(target instanceof Node)) return;
+    if (!(target instanceof Node)) {
+      return;
+    }
 
-    const clickedInsideDropdown = Array.from(dropdowns).some((dropdown) =>
-      dropdown.contains(target)
-    );
+    const clickedInsideDropdown =
+      Array.from(dropdowns).some((dropdown) =>
+        dropdown.contains(target)
+      );
 
     if (!clickedInsideDropdown) {
       closeAllDropdowns();
@@ -166,18 +214,31 @@ function initDropdown(): void {
 }
 
 function initProtectedLinks(): void {
-  const protectedLinks = document.querySelectorAll<HTMLElement>(
-    "[data-protected-role]"
-  );
+  const protectedLinks =
+    document.querySelectorAll<HTMLElement>(
+      "[data-protected-role]"
+    );
 
   protectedLinks.forEach((link) => {
-    const requiredRole = link.dataset.protectedRole as UserRole | undefined;
+    const requiredRole =
+      link.dataset.protectedRole as
+        | UserRole
+        | undefined;
 
-    if (!requiredRole) return;
+    if (!requiredRole) {
+      return;
+    }
 
     if (!canAccessRole(requiredRole)) {
-      link.setAttribute("aria-disabled", "true");
-      link.setAttribute("title", "Accès réservé");
+      link.setAttribute(
+        "aria-disabled",
+        "true"
+      );
+
+      link.setAttribute(
+        "title",
+        "Accès réservé"
+      );
     }
 
     link.addEventListener("click", (event) => {
@@ -193,18 +254,12 @@ function initProtectedLinks(): void {
 }
 
 function initSessionButtons(): void {
-  const logoutButtons = document.querySelectorAll<HTMLElement>("[data-logout]");
-  const changeRoleButtons =
-    document.querySelectorAll<HTMLElement>("[data-change-role]");
+  const sessionButtons =
+    document.querySelectorAll<HTMLElement>(
+      "[data-logout], [data-change-account]"
+    );
 
-  logoutButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      clearSession();
-      redirectToLogin();
-    });
-  });
-
-  changeRoleButtons.forEach((button) => {
+  sessionButtons.forEach((button) => {
     button.addEventListener("click", () => {
       clearSession();
       redirectToLogin();
@@ -212,9 +267,9 @@ function initSessionButtons(): void {
   });
 }
 
+protectCurrentPage();
 renderSessionNav();
 updateRoleBanner();
-protectCurrentPage();
 initDropdown();
 initProtectedLinks();
 initSessionButtons();

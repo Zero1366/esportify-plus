@@ -1,9 +1,14 @@
-
 import "../navigation";
 
-import { getSession, type UserRole } from "../session";
+import {
+  getSession,
+  type UserRole
+} from "../session";
 
-const roleTestLink = document.querySelector<HTMLAnchorElement>("#roleTestLink");
+const roleTestLink =
+  document.querySelector<HTMLAnchorElement>(
+    "#roleTestLink"
+  );
 
 function getRoleUrl(role: UserRole): string {
   if (role === "admin") {
@@ -19,18 +24,20 @@ function getRoleUrl(role: UserRole): string {
 
 function getRoleLabel(role: UserRole): string {
   if (role === "admin") {
-    return "Accès Admin";
+    return "Accès Administrateur";
   }
 
   if (role === "organizer") {
     return "Accès Organisateur";
   }
 
-  return "Accès Utilisateur";
+  return "Accès Joueur";
 }
 
 function updateRoleTestLink(): void {
-  if (!roleTestLink) return;
+  if (!roleTestLink) {
+    return;
+  }
 
   const session = getSession();
 
@@ -40,12 +47,17 @@ function updateRoleTestLink(): void {
     return;
   }
 
-  roleTestLink.textContent = getRoleLabel(session.role);
-  roleTestLink.href = getRoleUrl(session.role);
+  roleTestLink.textContent =
+    getRoleLabel(session.role);
+
+  roleTestLink.href =
+    getRoleUrl(session.role);
 }
 
 updateRoleTestLink();
 
 requestAnimationFrame(() => {
-  document.body.classList.add("is-ready");
+  document.body.classList.add(
+    "is-ready"
+  );
 });

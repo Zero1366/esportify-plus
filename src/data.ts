@@ -1,6 +1,12 @@
 export type EventType = "tournament" | "event";
-export type EventStatus = "validated" | "pending" | "cancelled";
-export type UserRole = "player" | "organizer" | "admin";
+export type EventStatus =
+  | "validated"
+  | "pending"
+  | "cancelled";
+export type UserRole =
+  | "player"
+  | "organizer"
+  | "admin";
 
 export interface EventItem {
   id: number;
@@ -30,6 +36,7 @@ export interface ReportItem {
 }
 
 export interface DemoUser {
+  id: number;
   username: string;
   password: string;
   role: UserRole;
@@ -37,16 +44,19 @@ export interface DemoUser {
 
 export const demoUsers: DemoUser[] = [
   {
+    id: 1,
     username: "admin",
     password: "admin123",
     role: "admin"
   },
   {
+    id: 2,
     username: "organizer",
     password: "orga123",
     role: "organizer"
   },
   {
+    id: 3,
     username: "player",
     password: "player123",
     role: "player"
@@ -63,8 +73,10 @@ export const eventsData: EventItem[] = [
     date: "2026-06-12",
     players: 12,
     maxPlayers: 16,
-    description: "Match joué · Résultat : Nova Squad 13 - 11 Red Pulse.",
-    statusReason: "Replay disponible pour consulter la finale."
+    description:
+      "Match joué · Résultat : Nova Squad 13 - 11 Red Pulse.",
+    statusReason:
+      "Replay disponible pour consulter la finale."
   },
   {
     id: 2,
@@ -75,8 +87,10 @@ export const eventsData: EventItem[] = [
     date: "2026-06-18",
     players: 0,
     maxPlayers: 8,
-    description: "Compétition prévue, mais inscriptions non ouvertes.",
-    statusReason: "Autorisation en attente de confirmation."
+    description:
+      "Compétition prévue, mais inscriptions non ouvertes.",
+    statusReason:
+      "Autorisation en attente de confirmation."
   },
   {
     id: 3,
@@ -88,7 +102,8 @@ export const eventsData: EventItem[] = [
     players: 0,
     maxPlayers: 32,
     description: "Événement annulé.",
-    statusReason: "Autorisation non accordée par Nintendo."
+    statusReason:
+      "Autorisation non accordée par Nintendo."
   }
 ];
 
@@ -111,13 +126,15 @@ export const reportsData: ReportItem[] = [
   {
     id: 1,
     title: "Pseudo incorrect",
-    message: "Un joueur utilise un pseudo non conforme.",
+    message:
+      "Un joueur utilise un pseudo non conforme.",
     status: "open"
   },
   {
     id: 2,
     title: "Problème d'inscription",
-    message: "Une inscription semble bloquée sur un événement.",
+    message:
+      "Une inscription semble bloquée sur un événement.",
     status: "open"
   }
 ];

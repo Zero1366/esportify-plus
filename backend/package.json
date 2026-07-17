@@ -1,14 +1,16 @@
 {
   "name": "esportify-backend",
   "version": "1.0.0",
-  "description": "Backend Esportify+ avec Express, TypeScript, SQLite et authentification de démonstration",
+  "description": "Backend Esportify+ avec Express, TypeScript, SQLite et authentification sécurisée",
   "main": "dist/server.js",
   "scripts": {
     "dev": "npm run build && node dist/server.js",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test": "npm run build && node --test tests/*.test.mjs"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "better-sqlite3": "^11.10.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
