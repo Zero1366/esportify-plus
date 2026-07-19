@@ -590,14 +590,14 @@ $admin-panel-c: rgba(90, 75, 178, 0.82);
 
   padding: 0.58rem;
 
-  border-bottom: 1px solid rgba(255, 159, 58, 0.38);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 
   background:
     linear-gradient(
       90deg,
       rgba(84, 68, 180, 0.92),
       rgba(43, 29, 79, 0.96),
-      rgba(243, 154, 50, 0.84)
+      rgba(84, 68, 180, 0.92)
     );
 }
 
@@ -634,7 +634,7 @@ $admin-panel-c: rgba(90, 75, 178, 0.82);
 .admin-versus-team--nova {
   justify-content: flex-start;
 
-  border: 2px solid #9db6ff;
+  border: 0;
 
   background:
     linear-gradient(
@@ -647,7 +647,7 @@ $admin-panel-c: rgba(90, 75, 178, 0.82);
 .admin-versus-team--pulse {
   justify-content: flex-end;
 
-  border: 2px solid rgba(255, 90, 90, 0.85);
+  border: 0;
 
   background:
     linear-gradient(
@@ -1282,5 +1282,6 @@ $admin-panel-c: rgba(90, 75, 178, 0.82);
     font-size: 1.1rem;
   }
 }
+
 
 
