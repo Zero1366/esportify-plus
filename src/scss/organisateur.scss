@@ -1,5 +1,5 @@
 /* =========================
-   ORGANIZER
+   ORGANISATEUR
 ========================= */
 
 $organizer-gold: var(--color-accent-soft);
@@ -32,7 +32,7 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
   word-break: break-word;
 }
 
-@mixin organizer-hover {
+@mixin organizer-transition {
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -47,10 +47,10 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 }
 
 /* =========================
-   PAGE HEADER
+   PAGE
 ========================= */
 
-.organizer-page {
+.organizer-page main.page {
   display: grid;
   gap: 0.75rem;
   align-content: start;
@@ -63,7 +63,7 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
   text-align: center;
 }
 
-.organizer-page .eyebrow {
+.organizer-page .hero > .eyebrow {
   display: none;
 }
 
@@ -80,7 +80,7 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 }
 
 /* =========================
-   CONNECTED ROLE BANNER
+   BANDEAU DU RÔLE
 ========================= */
 
 .organizer-page .role-banner {
@@ -148,6 +148,7 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 
 .organizer-page .role-banner .btn {
   border: 2px solid rgba(255, 159, 28, 0.95);
+
   background: #101010;
   color: #ffffff;
 
@@ -157,7 +158,7 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 }
 
 /* =========================
-   BASE
+   PANNEAU PRINCIPAL
 ========================= */
 
 .organizer-dashboard {
@@ -225,7 +226,7 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 }
 
 /* =========================
-   STATS
+   STATISTIQUES
 ========================= */
 
 .organizer-stats {
@@ -236,7 +237,7 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 
 .organizer-stat {
   @include organizer-card;
-  @include organizer-hover;
+  @include organizer-transition;
 
   display: grid;
   gap: 0.28rem;
@@ -248,34 +249,24 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 
   color: $organizer-text;
   text-align: center;
+}
 
-  &:hover {
-    transform: translateY(-2px);
+.organizer-stat strong {
+  margin: 0;
 
-    border-color: rgba(255, 189, 111, 0.9);
+  color: $organizer-gold;
 
-    box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
-      0 14px 28px rgba(0, 0, 0, 0.28);
-  }
+  font-size: 1.18rem;
+  font-weight: 1000;
+  line-height: 1;
+}
 
-  strong {
-    margin: 0;
+.organizer-stat span:last-child {
+  color: $organizer-muted;
 
-    color: $organizer-gold;
-
-    font-size: 1.18rem;
-    font-weight: 1000;
-    line-height: 1;
-  }
-
-  span:last-child {
-    color: $organizer-muted;
-
-    font-size: 0.7rem;
-    font-weight: 900;
-    line-height: 1.15;
-  }
+  font-size: 0.7rem;
+  font-weight: 900;
+  line-height: 1.15;
 }
 
 .organizer-stat--available {
@@ -321,11 +312,11 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 }
 
 /* =========================
-   AVAILABLE EVENT CARD
+   ACTIVITÉ DISPONIBLE
 ========================= */
 
 .available-event-card {
-  @include organizer-hover;
+  @include organizer-transition;
 
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -333,20 +324,10 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
   gap: 0.85rem;
 
   text-align: left;
+}
 
-  &:hover {
-    transform: translateY(-2px);
-
-    border-color: rgba(255, 189, 111, 0.9);
-
-    box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
-      0 14px 28px rgba(0, 0, 0, 0.28);
-  }
-
-  .event-status {
-    width: fit-content;
-  }
+.available-event-card .event-status {
+  width: fit-content;
 }
 
 .available-event-card__content {
@@ -381,12 +362,12 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 }
 
 /* =========================
-   FORM
+   FORMULAIRE
 ========================= */
 
 .organizer-request-block {
   @include organizer-card;
-  @include organizer-hover;
+  @include organizer-transition;
 
   padding: 0.9rem;
 
@@ -402,82 +383,94 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 .organizer-request-form {
   display: grid;
   gap: 0.65rem;
+}
 
-  label {
-    margin-top: 0.08rem;
+.organizer-request-form label {
+  margin-top: 0.08rem;
 
-    color: $organizer-text;
+  color: $organizer-text;
 
-    font-size: 0.78rem;
-    font-weight: 900;
-    line-height: 1.15;
-  }
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
 
-  label[for*="type"]::before {
-    content: "🎲 ";
-  }
+.organizer-request-form label[for="activityTypeInput"]::before {
+  content: "🎲 ";
+}
 
-  label[for*="name"]::before,
-  label[for*="title"]::before {
-    content: "🏷️ ";
-  }
+.organizer-request-form label[for="activityTitleInput"]::before {
+  content: "🏷️ ";
+}
 
-  label[for*="format"]::before {
-    content: "⚙️ ";
-  }
+.organizer-request-form label[for="activityFormatInput"]::before {
+  content: "⚙️ ";
+}
 
-  label[for*="game"]::before {
-    content: "🎮 ";
-  }
+.organizer-request-form label[for="activityGameInput"]::before {
+  content: "🎮 ";
+}
 
-  label[for*="date"]::before {
-    content: "📅 ";
-  }
+.organizer-request-form label[for="activityDateInput"]::before {
+  content: "📅 ";
+}
 
-  label[for*="players"]::before,
-  label[for*="max"]::before {
-    content: "👥 ";
-  }
+.organizer-request-form label[for="activityMaxPlayersInput"]::before {
+  content: "👥 ";
+}
 
-  input,
-  select {
-    width: 100%;
-    min-width: 0;
-    min-height: 42px;
-    padding: 0 0.75rem;
+.organizer-request-form input,
+.organizer-request-form select {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 0.75rem;
 
-    border: 2px solid rgba(255, 159, 28, 0.78);
-    border-radius: var(--radius-sm);
+  border: 2px solid rgba(255, 159, 28, 0.78);
+  border-radius: var(--radius-sm);
 
-    background: rgba(255, 255, 255, 0.96);
-    color: var(--color-text-dark);
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--color-text-dark);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 6px 14px rgba(0, 0, 0, 0.16);
+}
+
+.organizer-request-form input:focus,
+.organizer-request-form select:focus {
+  border-color: var(--color-accent-soft);
+  outline: 3px solid rgba(255, 255, 255, 0.92);
+
+  box-shadow:
+    0 0 0 5px rgba(255, 159, 28, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.organizer-request-form select {
+  cursor: pointer;
+}
+
+.organizer-request-form .btn {
+  width: fit-content;
+  margin-top: 0.35rem;
+  padding-inline: 1rem;
+}
+
+.organizer-request-form .btn::before {
+  content: "🚀 ";
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .organizer-stat:hover,
+  .available-event-card:hover {
+    transform: translateY(-2px);
+
+    border-color: rgba(255, 189, 111, 0.9);
 
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.75),
-      0 6px 14px rgba(0, 0, 0, 0.16);
-
-    &:focus {
-      border-color: var(--color-accent-soft);
-      outline: 3px solid rgba(255, 255, 255, 0.92);
-
-      box-shadow:
-        0 0 0 5px rgba(255, 159, 28, 0.28),
-        inset 0 1px 0 rgba(255, 255, 255, 0.75);
-    }
-  }
-
-  select {
-    cursor: pointer;
-  }
-
-  .btn {
-    width: fit-content;
-    margin-top: 0.35rem;
-    padding-inline: 1rem;
-  }
-
-  .btn::before {
-    content: "🚀 ";
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 14px 28px rgba(0, 0, 0, 0.28);
   }
 }
 
@@ -490,7 +483,6 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
     width: min(100%, 680px);
   }
 
-  .organizer-stats,
   .available-event-card {
     grid-template-columns: 1fr;
   }
@@ -502,7 +494,7 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 }
 
 @media (max-width: 560px) {
-  .organizer-page {
+  .organizer-page main.page {
     gap: 0.65rem;
   }
 
@@ -550,6 +542,10 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
     font-size: 0.74rem;
   }
 
+  .organizer-stats {
+    grid-template-columns: 1fr;
+  }
+
   .organizer-stat {
     justify-items: start;
 
@@ -557,22 +553,14 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
     padding: 0.8rem;
 
     text-align: left;
+  }
 
-    &:hover {
-      transform: none;
-    }
-
-    strong {
-      font-size: 1.08rem;
-    }
+  .organizer-stat strong {
+    font-size: 1.08rem;
   }
 
   .available-event-card {
     gap: 0.72rem;
-
-    &:hover {
-      transform: none;
-    }
   }
 
   .available-event-card__title {
@@ -589,19 +577,19 @@ $organizer-panel-c: rgba(90, 75, 178, 0.82);
 
   .organizer-request-form {
     gap: 0.55rem;
+  }
 
-    label {
-      font-size: 0.74rem;
-    }
+  .organizer-request-form label {
+    font-size: 0.74rem;
+  }
 
-    input,
-    select {
-      min-height: 42px;
-    }
+  .organizer-request-form input,
+  .organizer-request-form select {
+    min-height: 42px;
+  }
 
-    .btn {
-      width: 100%;
-      justify-content: center;
-    }
+  .organizer-request-form .btn {
+    width: 100%;
+    justify-content: center;
   }
 }

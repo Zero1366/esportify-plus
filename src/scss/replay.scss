@@ -6,8 +6,6 @@ $replay-text: #ffffff;
 $replay-status: var(--color-accent-soft);
 $replay-border: var(--border-accent);
 $replay-border-soft: rgba(255, 159, 58, 0.28);
-$replay-panel: var(--color-replay-panel);
-$replay-panel-dark: var(--color-replay-panel-dark);
 
 @mixin replay-text-wrap {
   overflow-wrap: anywhere;
@@ -56,7 +54,8 @@ $replay-panel-dark: var(--color-replay-panel-dark);
 .replay-page {
   .replay-score {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
     align-items: center;
     justify-items: center;
     gap: clamp(3rem, 8vw, 6rem);
@@ -76,17 +75,14 @@ $replay-panel-dark: var(--color-replay-panel-dark);
     padding: 0.8rem;
 
     border: 0;
+
     background: transparent;
+
     box-shadow: none;
 
     transition:
       transform 0.2s ease,
       filter 0.2s ease;
-  }
-
-  .team:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.06);
   }
 
   .team img {
@@ -97,14 +93,17 @@ $replay-panel-dark: var(--color-replay-panel-dark);
     object-fit: contain;
     image-rendering: auto;
 
-    filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.45));
+    filter:
+      drop-shadow(
+        0 12px 16px rgba(0, 0, 0, 0.45)
+      );
   }
 
   .team:last-child img {
     width: min(310px, 95%);
     max-height: 195px;
 
-    transform: translateY(0px);
+    transform: none;
   }
 
   .team strong {
@@ -123,10 +122,7 @@ $replay-panel-dark: var(--color-replay-panel-dark);
       0 0 16px rgba(0, 0, 0, 0.28);
   }
 
-  .versus {
-    display: none;
-  }
-
+  .versus,
   .versus img {
     display: none;
   }
@@ -171,7 +167,8 @@ $replay-panel-dark: var(--color-replay-panel-dark);
     padding: 0;
 
     border: 2px solid rgba(255, 159, 58, 0.55);
-    border-bottom: 4px solid rgba(10, 6, 22, 0.95);
+    border-bottom:
+      4px solid rgba(10, 6, 22, 0.95);
     border-radius: var(--radius-md);
 
     background:
@@ -225,13 +222,10 @@ $replay-panel-dark: var(--color-replay-panel-dark);
     pointer-events: none;
 
     filter:
-      drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45))
+      drop-shadow(
+        0 2px 3px rgba(0, 0, 0, 0.45)
+      )
       brightness(1.05);
-  }
-
-  .replay-control-btn:hover:not(:disabled):not(.is-active) {
-    transform: translateY(-3px);
-    filter: brightness(1.12);
   }
 
   .replay-control-btn:active:not(:disabled),
@@ -257,6 +251,8 @@ $replay-panel-dark: var(--color-replay-panel-dark);
 
   .replay-control-btn:disabled {
     opacity: 0.5;
+    filter: none;
+
     cursor: not-allowed;
   }
 }
@@ -275,6 +271,8 @@ $replay-panel-dark: var(--color-replay-panel-dark);
     padding: 0 0.35rem 0 0;
 
     overflow-y: auto;
+    overscroll-behavior: contain;
+
     list-style: none;
   }
 
@@ -307,6 +305,20 @@ $replay-panel-dark: var(--color-replay-panel-dark);
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .replay-page {
+    .team:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+    }
+
+    .replay-control-btn:hover:not(:disabled):not(.is-active) {
+      transform: translateY(-3px);
+      filter: brightness(1.12);
+    }
+  }
+}
+
 /* =========================
    RESPONSIVE
 ========================= */
@@ -318,13 +330,17 @@ $replay-panel-dark: var(--color-replay-panel-dark);
       gap: 0.8rem;
     }
 
+    .team {
+      min-height: 190px;
+    }
+
     .team img {
       width: min(260px, 92%);
       max-height: 135px;
     }
 
     .team:last-child img {
-      width: min(260, 96%);
+      width: min(260px, 96%);
       max-height: 150px;
 
       transform: none;
@@ -332,11 +348,6 @@ $replay-panel-dark: var(--color-replay-panel-dark);
 
     .team strong {
       font-size: 2.25rem;
-    }
-
-    .versus,
-    .versus img {
-      display: none;
     }
 
     .replay-control-btn {
@@ -350,6 +361,10 @@ $replay-panel-dark: var(--color-replay-panel-dark);
   .replay-page {
     .replay-score {
       margin: 0.9rem 0;
+    }
+
+    .team {
+      min-height: 165px;
     }
 
     .replay-controls {
@@ -376,6 +391,10 @@ $replay-panel-dark: var(--color-replay-panel-dark);
 
 @media (max-width: 420px) {
   .replay-page {
+    .team {
+      min-height: 145px;
+    }
+
     .team img {
       width: min(225px, 90%);
       max-height: 105px;

@@ -90,14 +90,6 @@
     border-color 0.2s ease;
 }
 
-.auth-card:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    inset 0 0 0 2px rgba(255, 159, 58, 0.28),
-    0 22px 42px rgba(0, 0, 0, 0.42);
-}
-
 .auth-card h2 {
   display: flex;
   align-items: center;
@@ -161,13 +153,11 @@
   line-height: 1;
 }
 
-.auth-card label[for="loginUsername"]::before,
-.auth-card label[for="username"]::before {
+.auth-card label[for="usernameInput"]::before {
   content: "👤 Pseudo";
 }
 
-.auth-card label[for="loginPassword"]::before,
-.auth-card label[for="password"]::before {
+.auth-card label[for="passwordInput"]::before {
   content: "🔑 Mot de passe";
 }
 
@@ -274,14 +264,6 @@
     box-shadow 0.2s ease;
 }
 
-.auth-demo-info:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    inset 0 0 0 2px rgba(255, 159, 58, 0.24),
-    0 20px 38px rgba(0, 0, 0, 0.4);
-}
-
 .auth-demo-info h2,
 .auth-demo-info h3 {
   display: flex;
@@ -317,6 +299,10 @@
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.24);
 }
 
+.auth-demo-info > p {
+  color: rgba(255, 255, 255, 0.88);
+}
+
 .auth-demo-info ul {
   display: grid;
   gap: 0.65rem;
@@ -348,14 +334,6 @@
     background 0.22s ease;
 }
 
-.auth-demo-info li:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.08);
-
-  box-shadow:
-    0 0 18px rgba(255, 159, 58, 0.22);
-}
-
 /* Administrateur */
 .auth-demo-info li:nth-child(1) {
   border-color: #35d9ff;
@@ -365,18 +343,6 @@
       135deg,
       #ff1010 0%,
       #c90000 52%,
-      #233b9f 100%
-    );
-}
-
-.auth-demo-info li:nth-child(1):hover {
-  border-color: #ffffff;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ff1010 0%,
-      #8b1fc9 55%,
       #233b9f 100%
     );
 }
@@ -394,20 +360,8 @@
     );
 }
 
-.auth-demo-info li:nth-child(2):hover {
-  border-color: #ffffff;
 
-  background:
-    linear-gradient(
-      135deg,
-      #00a846 0%,
-      #007a2f 70%,
-      #005f25 100%
-    );
-}
-
-
-/* Utilisateur */
+/* Joueur */
 .auth-demo-info li:nth-child(3) {
   border-color: #ffffff;
 
@@ -416,18 +370,6 @@
       135deg,
       #d09b1c 0%,
       #b88412 100%
-    );
-}
-
-.auth-demo-info li:nth-child(3):hover {
-  border-color: #ffa645;
-
-  background:
-    linear-gradient(
-      135deg,
-      #f4b02a 0%,
-      #d09b1c 55%,
-      #7b4cff 100%
     );
 }
 
@@ -440,7 +382,7 @@
 }
 
 .auth-demo-info li:nth-child(3)::before {
-  content: "👤 Utilisateur";
+  content: "👤 Joueur";
 }
 
 .auth-demo-info li::before {
@@ -733,14 +675,6 @@
       background 0.2s ease;
   }
 
-  .event-card:hover {
-    transform: translateY(-4px);
-
-    box-shadow:
-      0 14px 30px rgba(0, 0, 0, 0.28),
-      0 0 18px rgba(255, 159, 58, 0.16);
-  }
-
   .event-card__header {
     display: flex;
     align-items: flex-start;
@@ -884,18 +818,6 @@
   overflow-wrap: anywhere;
 }
 
-.toast-root {
-  position: fixed;
-  right: 1rem;
-  bottom: 1rem;
-  z-index: 40;
-
-  display: grid;
-  gap: 0.75rem;
-
-  width: min(320px, calc(100vw - 2rem));
-}
-
 /* =========================
    FINAL POLISH
 ========================= */
@@ -912,14 +834,86 @@
     background 0.2s ease;
 }
 
-.list-item:hover,
-.auth-demo-info:hover,
-.contact-page .card:hover {
-  border-color: var(--border-accent);
-}
-
 .events-page .event-card .btn {
   margin-top: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .auth-card:hover,
+  .auth-demo-info:hover {
+    transform: translateY(-2px);
+  }
+
+  .auth-card:hover {
+    box-shadow:
+      inset 0 0 0 2px rgba(255, 159, 58, 0.28),
+      0 22px 42px rgba(0, 0, 0, 0.42);
+  }
+
+  .auth-demo-info:hover {
+    border-color: var(--border-accent);
+
+    box-shadow:
+      inset 0 0 0 2px rgba(255, 159, 58, 0.24),
+      0 20px 38px rgba(0, 0, 0, 0.4);
+  }
+
+  .auth-demo-info li:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+
+    box-shadow:
+      0 0 18px rgba(255, 159, 58, 0.22);
+  }
+
+  .auth-demo-info li:nth-child(1):hover {
+    border-color: #ffffff;
+
+    background:
+      linear-gradient(
+        135deg,
+        #ff1010 0%,
+        #8b1fc9 55%,
+        #233b9f 100%
+      );
+  }
+
+  .auth-demo-info li:nth-child(2):hover {
+    border-color: #ffffff;
+
+    background:
+      linear-gradient(
+        135deg,
+        #00a846 0%,
+        #007a2f 70%,
+        #005f25 100%
+      );
+  }
+
+  .auth-demo-info li:nth-child(3):hover {
+    border-color: #ffa645;
+
+    background:
+      linear-gradient(
+        135deg,
+        #f4b02a 0%,
+        #d09b1c 55%,
+        #7b4cff 100%
+      );
+  }
+
+  .events-page .event-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+      0 14px 30px rgba(0, 0, 0, 0.28),
+      0 0 18px rgba(255, 159, 58, 0.16);
+  }
+
+  .list-item:hover,
+  .contact-page .card:hover {
+    border-color: var(--border-accent);
+  }
 }
 
 /* =========================
@@ -983,9 +977,7 @@
 
 @media (max-width: 560px) {
   .mobile-view-tabs {
-    position: sticky;
-    top: 0.5rem;
-    z-index: 15;
+    position: static;
 
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1016,7 +1008,8 @@
     font-weight: 900;
   }
 
-  .mobile-view-tab.is-active {
+  .mobile-view-tab.is-active,
+  .mobile-view-tab[aria-pressed="true"] {
     border-color: var(--border-accent);
 
     background: var(--color-primary);
@@ -1027,10 +1020,6 @@
     .hero {
       min-height: auto;
     }
-  }
-
-  .page {
-    width: min(100% - 1rem, var(--container-width));
   }
 
   .events-page .hero {
@@ -1124,12 +1113,6 @@
     width: 100%;
   }
 
-  .toast-root {
-    right: 0.75rem;
-    bottom: 0.75rem;
-
-    width: calc(100vw - 1.5rem);
-  }
 }
 
 @media (max-width: 420px) {
