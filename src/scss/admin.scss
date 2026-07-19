@@ -634,13 +634,13 @@ $admin-panel-c: rgba(90, 75, 178, 0.82);
 .admin-versus-team--nova {
   justify-content: flex-start;
 
-  border: 2px solid rgba(86, 81, 189, 0.78);
+  border: 2px solid #9db6ff;
 
   background:
     linear-gradient(
       135deg,
-      rgba(86, 81, 189, 0.96),
-      rgba(43, 29, 79, 0.96)
+      #5b6ff5,
+      #3546b8
     );
 }
 
@@ -1282,3 +1282,5 @@ $admin-panel-c: rgba(90, 75, 178, 0.82);
     font-size: 1.1rem;
   }
 }
+
+
