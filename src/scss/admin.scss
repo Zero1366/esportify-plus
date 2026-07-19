@@ -647,13 +647,13 @@ $admin-panel-c: rgba(90, 75, 178, 0.82);
 .admin-versus-team--pulse {
   justify-content: flex-end;
 
-  border: 2px solid rgba(255, 159, 58, 0.78);
+  border: 2px solid rgba(255, 90, 90, 0.85);
 
   background:
     linear-gradient(
       135deg,
-      rgba(243, 154, 50, 0.92),
-      rgba(214, 107, 31, 0.9)
+      #ff1010,
+      #c90000
     );
 
   img {
