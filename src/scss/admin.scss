@@ -1285,3 +1285,53 @@ $admin-panel-c: rgba(90, 75, 178, 0.82);
 
 
 
+
+/* =========================
+   HARMONISATION FINALE
+   Suppression des contours orange structurels
+========================= */
+
+.admin-page .organizer-panel,
+.admin-page .organizer-dashboard,
+.admin-control-panel,
+.admin-live-details,
+.admin-alerts-panel,
+.admin-live-card,
+.admin-page .organizer-mobile-group,
+.admin-queue-item,
+.admin-versus-board,
+.admin-score-strip,
+.admin-live-log-panel {
+  border-color: rgba(185, 198, 255, 0.28);
+}
+
+.admin-versus-header {
+  border-bottom-color: rgba(255, 255, 255, 0.16);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(84, 68, 180, 0.92),
+      rgba(43, 29, 79, 0.96),
+      rgba(84, 68, 180, 0.92)
+    );
+}
+
+.admin-versus-team--nova,
+.admin-versus-team--pulse {
+  border: 2px solid rgba(255, 255, 255, 0.56);
+}
+
+.admin-versus-player:not(.is-warning):not(.is-danger) {
+  border-color: rgba(185, 198, 255, 0.22);
+}
+
+.admin-versus-row-separator::before {
+  background: rgba(185, 198, 255, 0.3);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .admin-queue-item:hover {
+    border-color: rgba(185, 198, 255, 0.5);
+  }
+}
