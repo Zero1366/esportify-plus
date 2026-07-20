@@ -1,10 +1,15 @@
 import Database from "better-sqlite3";
+import { mkdirSync } from "fs";
 import path from "path";
 
 const dbPath = path.join(
   __dirname,
   "../../database/esportify.db"
 );
+
+mkdirSync(path.dirname(dbPath), {
+  recursive: true
+});
 
 export const db = new Database(dbPath);
 
