@@ -1,23 +1,24 @@
-# Documentation SQL - Esportify+
+# Documentation SQL — Esportify+
 
 ## Objectif du document
 
 Ce document présente la partie SQL utilisée dans le projet Esportify+.
 
-Il accompagne la capture `EsportifyDb.png`, qui montre l'état actuel de la base SQLite utilisée pour la démonstration du backend.
+Il accompagne la capture `EsportifyDb.png`, qui montre l’état actuel de la base SQLite utilisée pour la démonstration du backend.
 
 ---
 
 ## Rôle de la base de données
 
-La base SQLite permet de stocker les utilisateurs de démonstration utilisés par le backend Express.
+La base SQLite permet de stocker les comptes de démonstration utilisés par le backend Express.
 
 Elle sert principalement à tester :
 
 - la connexion des utilisateurs ;
 - la récupération des comptes ;
 - la gestion des rôles ;
-- la communication entre le backend et les données.
+- la communication entre le backend et les données ;
+- la persistance des informations utilisées par l’API.
 
 ---
 
@@ -25,20 +26,28 @@ Elle sert principalement à tester :
 
 ![Capture de la base SQLite Esportify+](./EsportifyDb.png)
 
-La capture montre la table `users`, utilisée pour représenter les différents profils disponibles dans l'application.
+La capture montre la table `users`, utilisée pour représenter les différents profils disponibles dans l’application.
 
 ---
 
-## Table actuelle : users
+## Table actuelle : `users`
 
 La table `users` contient les comptes de démonstration du projet.
 
 | Champ | Rôle |
 |---|---|
-| `id` | Identifiant unique de l'utilisateur |
+| `id` | Identifiant unique de l’utilisateur |
 | `username` | Nom utilisé pour la connexion |
-| `password` | Mot de passe de démonstration |
-| `role` | Rôle attribué à l'utilisateur |
+| `password` | Empreinte bcrypt du mot de passe |
+| `role` | Rôle attribué à l’utilisateur |
+
+Le champ `username` est unique.
+
+Le champ `role` accepte uniquement les valeurs suivantes :
+
+- `player` ;
+- `organizer` ;
+- `admin`.
 
 ---
 
@@ -46,37 +55,50 @@ La table `users` contient les comptes de démonstration du projet.
 
 Les rôles actuellement utilisés sont :
 
-- `admin` : accès aux fonctionnalités d'administration ;
-- `organizer` : accès aux fonctionnalités d'organisation ;
-- `user` : accès aux fonctionnalités joueur / utilisateur.
+- `admin` : accès aux fonctionnalités d’administration ;
+- `organizer` : accès aux fonctionnalités d’organisation ;
+- `player` : accès aux fonctionnalités joueur.
 
-Ces rôles permettent de simuler plusieurs parcours dans l'application Esportify+.
+Ces rôles permettent de simuler plusieurs parcours dans l’application Esportify+.
+
+---
+
+## Sécurité des mots de passe
+
+Les mots de passe de démonstration sont enregistrés sous forme d’empreintes bcrypt.
+
+Lors de la connexion, le backend compare le mot de passe saisi à l’empreinte enregistrée dans SQLite.
+
+Le mot de passe et son empreinte ne sont jamais transmis au frontend.
 
 ---
 
 ## Utilisation dans le backend
 
-Le backend Express utilise cette base pour vérifier les identifiants et retourner le rôle associé à l'utilisateur.
+Le backend Express utilise cette base pour vérifier les identifiants et retourner le rôle associé à l’utilisateur.
 
-Ce fonctionnement permet ensuite au frontend d'adapter l'affichage selon le profil connecté.
+Ce fonctionnement permet ensuite au frontend d’adapter l’affichage selon le profil connecté.
 
 Exemples :
 
 - un administrateur accède à la page Admin ;
 - un organisateur accède à la page Organisateur ;
-- un utilisateur accède aux fonctionnalités classiques.
+- un joueur accède aux fonctionnalités classiques.
+
+Le répertoire destiné à la base SQLite est créé automatiquement par le backend avant l’ouverture du fichier `esportify.db`.
 
 ---
 
 ## Choix de SQLite
 
-SQLite a été utilisé car il est simple à mettre en place pour un projet de démonstration.
+SQLite a été choisi car il est simple à mettre en place pour un projet de démonstration.
 
 Ce choix permet :
 
-- d'éviter une installation complexe ;
+- d’éviter une installation complexe ;
 - de tester rapidement le backend ;
 - de conserver une base légère ;
+- de faciliter les tests automatisés ;
 - de préparer une évolution future vers une base plus complète.
 
 ---
@@ -87,47 +109,47 @@ La base actuelle reste volontairement simple.
 
 Elle ne gère pas encore :
 
-- l'inscription réelle ;
-- le hashage sécurisé des mots de passe ;
+- la création persistante de nouveaux comptes depuis le formulaire d’inscription ;
 - les événements en base ;
+- les tournois ;
 - les inscriptions aux événements ;
-- les matchs ;
 - les replays ;
-- l'archivage des résultats.
+- les messages entre utilisateurs ;
+- l’archivage des résultats.
 
-Ces éléments sont prévus comme des pistes d'évolution pour une version plus complète du projet.
+Ces éléments constituent des pistes d’évolution pour une version plus complète du projet.
 
 ---
 
 ## Évolutions possibles
 
-Dans une version professionnelle, la base pourrait être étendue avec plusieurs tables :
+Dans une version plus complète, la base pourrait être étendue avec plusieurs tables :
 
+- `roles` ;
 - `users` ;
 - `events` ;
-- `registrations` ;
-- `matches` ;
-- `teams` ;
+- `tournaments` ;
 - `replays` ;
-- `notifications`.
+- `registrations` ;
+- `messages`.
 
 Cela permettrait de gérer réellement :
 
 - les comptes utilisateurs ;
+- les rôles ;
 - les événements esport ;
+- les tournois ;
 - les inscriptions ;
-- les matchs ;
-- les scores ;
 - les replays ;
-- les notifications admin / organisateur ;
-- l'archivage des anciennes compétitions.
+- les messages ;
+- l’archivage des anciennes compétitions.
 
 ---
 
 ## Conclusion
 
-Cette base SQLite sert de première démonstration fonctionnelle pour Esportify+.
+Cette base SQLite constitue une première démonstration fonctionnelle pour Esportify+.
 
-Elle permet de relier le backend Express à des données persistantes et de préparer une évolution vers une architecture plus complète.
+Elle permet de relier le backend Express à des données persistantes, de sécuriser l’authentification avec bcrypt et de gérer plusieurs rôles utilisateur.
 
-Même si elle reste simple, elle montre la logique de séparation entre les données, le backend et l'interface utilisateur.
+Même si elle reste volontairement simple, elle montre la séparation entre les données, le backend et l’interface utilisateur, tout en préparant une évolution vers une architecture plus complète.

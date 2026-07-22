@@ -1,248 +1,381 @@
-# ⭐ Esportify+
+Site final — Esportify+
 
-Esportify+ est une application e-sport full-stack de démonstration.
+Présentation
 
-Le projet simule une plateforme complète avec :
+Ce dossier regroupe les captures finales de l’application Esportify+.
 
-* une interface utilisateur responsive ;
-* une gestion de rôles ;
-* un replay de match simulé ;
-* un backend fonctionnel ;
-* une base de données SQLite ;
-* un déploiement Docker et Netlify ;
-* une documentation organisée.
+Il constitue une preuve visuelle du résultat obtenu et permet de présenter rapidement l’interface, la navigation, les différents espaces utilisateurs ainsi que l’adaptation responsive du projet.
 
----
+Ces captures complètent la documentation technique, les diagrammes, les extraits de code et les preuves de fonctionnement préparés pour l’ECF.
 
-# ⭐ Point d’entrée recommandé
+Emplacement du répertoire
 
-Pour comprendre rapidement le projet, commencer par :
+Les captures sont organisées dans le dossier suivant :
 
-```text
-doc/site-final/
-```
+doc/
+└── site-final/
+    ├── Desktop/
+    └── Mobile/
 
-Ce dossier contient le rendu visuel final du projet en version Desktop et Mobile.
+Le dossier Desktop contient les captures réalisées dans un format d’écran d’ordinateur.
 
-Il permet de voir directement le résultat attendu de l’application.
+Le dossier Mobile contient les captures réalisées dans un format de smartphone.
 
----
+Objectifs du dossier
 
-# ⭐ Parcours de lecture conseillé
+Ce dossier permet de démontrer :
 
-## 1. Résultat final
+le rendu visuel final de l’application ;
 
-```text
-doc/site-final/
-```
+la cohérence graphique entre les pages ;
 
-Contenu :
+la navigation principale ;
 
-* captures Desktop ;
-* captures Mobile ;
-* pages finales de l’application.
+l’adaptation responsive ;
 
----
+la présence des différents rôles ;
 
-## 2. Architecture globale et déploiement
+la correspondance entre le code développé et le résultat affiché ;
 
-```text
-doc/database/deployment/Guide-Deployment/
-```
+la qualité générale de présentation du projet.
 
-Contenu :
+Formats utilisés
 
-* Docker ;
-* GitHub workflow ;
-* Netlify ;
-* architecture système ;
-* stratégie de déploiement.
+Deux formats principaux ont été retenus :
 
----
+Desktop : 1366 × 768 pixels ;
 
-## 3. Frontend
+Mobile : 360 × 800 pixels.
 
-Point d’entrée principal :
+Ces dimensions permettent de vérifier l’affichage de l’application sur deux contextes d’utilisation différents.
 
-```text
-index.html
-src/pages/index.ts
-```
+Les captures Desktop montrent principalement :
 
-Fichiers importants :
+la structure générale des pages ;
 
-```text
-src/pages/
-src/navigation.ts
-src/session.ts
-```
+l’organisation des contenus ;
 
-Le frontend gère :
+la navigation horizontale ;
 
-* l’affichage des pages ;
-* la navigation ;
-* les états utilisateur ;
-* les rôles simulés ;
-* l’expérience responsive.
+les cartes, tableaux et formulaires ;
 
----
+l’utilisation de l’espace disponible.
 
-## 4. Gestion des sessions et des rôles
+Les captures Mobile montrent principalement :
 
-```text
-src/session.ts
-```
+l’adaptation des blocs ;
 
-Ce fichier contient :
+la lisibilité des contenus ;
 
-* la gestion de l’utilisateur connecté ;
-* les rôles disponibles ;
-* la logique de connexion simulée ;
-* les protections d’accès côté interface.
+l’organisation verticale ;
 
-Rôles utilisés :
+l’accessibilité des boutons ;
 
-* utilisateur ;
-* organizer ;
-* admin.
+le comportement responsive de l’interface.
 
----
+Pages représentées
 
-## 5. Backend
+Les pages principales de l’application sont présentées dans les versions Desktop et Mobile :
 
-Point d’entrée principal :
+Accueil ;
 
-```text
-backend/src/server.ts
-```
+Événements ;
 
-Architecture backend :
+Replay ;
 
-```text
-backend/src/routes/
-backend/src/controllers/
-backend/src/services/
-backend/src/repositories/
-```
+Connexion ;
 
-Le backend est organisé en couches afin de séparer :
+Organisateur ;
 
-* les routes API ;
-* les contrôleurs ;
-* la logique métier ;
-* l’accès aux données.
+Administrateur ;
 
----
+Contact.
 
-## 6. Base de données
+Description des pages
 
-Fichiers principaux :
+Accueil
 
-```text
-doc/database/schema.sql
-doc/database/seed.sql
-```
+La page d’accueil présente l’identité visuelle d’Esportify+ et les principaux accès à l’application.
 
-Ces fichiers contiennent :
+Elle permet de vérifier :
 
-* la structure de la base de données ;
-* les tables principales ;
-* les données de démonstration.
+la navigation générale ;
 
----
+la hiérarchie visuelle ;
 
-# ⭐ Architecture globale
+la présentation des contenus ;
 
-```text
-Utilisateur
-   ↓
-Frontend Vite
-   ↓
-API Express
-   ↓
-SQLite Database
-```
+l’adaptation responsive.
 
----
+Événements
 
-# ⭐ Fonctionnalités principales
+La page Événements permet de consulter les compétitions et activités disponibles.
 
-Esportify+ propose :
+Elle présente notamment :
 
-* une page d’accueil responsive ;
-* une page événements ;
-* un système de rôles simulés ;
-* une interface organizer ;
-* une interface admin ;
-* un replay e-sport simulé ;
-* une API backend ;
-* une base de données documentée ;
-* une documentation de déploiement.
+les filtres ;
 
----
+la recherche ;
 
-# ⭐ Navigation rapide du projet
+les statuts ;
 
-## Frontend
+la liste dynamique des événements ;
 
-```text
-index.html
-src/pages/
-src/navigation.ts
-src/session.ts
-```
+le compteur de résultats.
 
-## Backend
+Replay
 
-```text
-backend/src/server.ts
-backend/src/routes/
-backend/src/controllers/
-backend/src/services/
-backend/src/repositories/
-```
+La page Replay présente un match e-sport simulé.
 
-## Documentation
+Elle permet de visualiser :
 
-```text
-doc/site-final/
-doc/database/
-doc/database/deployment/
-```
+les équipes ;
 
----
+le score ;
 
-# ⭐ Lecture recommandée pour un jury ou un recruteur
+les commandes de lecture ;
 
-Ordre conseillé :
+les actions du match ;
 
-1. `doc/site-final/`
-2. `index.html`
-3. `src/session.ts`
-4. `backend/src/server.ts`
-5. `doc/database/`
-6. `doc/database/deployment/Guide-Deployment/`
+les changements d’état gérés en TypeScript.
 
----
+Connexion
 
-# ⭐ Objectif du projet
+La page Connexion permet d’utiliser des comptes de démonstration.
 
-L’objectif d’Esportify+ est de démontrer la capacité à construire une application web complète, structurée et documentée.
+Elle présente les rôles suivants :
 
-Le projet met en avant :
+player
+organizer
+admin
 
-* la construction d’une interface moderne ;
-* l’organisation d’un frontend Vite / TypeScript ;
-* la mise en place d’un backend Express ;
-* la séparation des responsabilités dans le code ;
-* la gestion de rôles ;
-* la documentation technique ;
-* la préparation au déploiement.
+Ces rôles correspondent respectivement à :
 
----
+utilisateur ;
 
-# ⭐ Conclusion
+organisateur ;
 
-Esportify+ est un projet de démonstration complet permettant de présenter une application e-sport fonctionnelle, structurée et documentée.
+administrateur.
 
-Il montre à la fois le résultat visuel, la logique frontend, l’architecture backend, la base de données et les choix de déploiement.
+Organisateur
+
+L’espace Organisateur permet de :
+
+consulter un résumé des activités ;
+
+suivre les événements disponibles ;
+
+proposer une nouvelle activité ;
+
+renseigner un jeu, une date, un format et un nombre de joueurs.
+
+Administrateur
+
+L’espace Administrateur permet de :
+
+consulter les demandes ;
+
+suivre les signalements ;
+
+superviser les joueurs ;
+
+visualiser les actions traitées ;
+
+accéder à un panneau de supervision du live.
+
+Contact
+
+La page Contact contient un formulaire de démonstration.
+
+Elle permet de saisir :
+
+un nom ;
+
+une adresse e-mail ;
+
+un sujet ;
+
+un message.
+
+Convention de nommage recommandée
+
+Les captures peuvent être nommées selon une convention uniforme.
+
+Desktop
+
+DESKTOP-01-Accueil.png
+DESKTOP-02-Evenements.png
+DESKTOP-03-Replay.png
+DESKTOP-04-Connexion.png
+DESKTOP-05-Organisateur.png
+DESKTOP-06-Administrateur.png
+DESKTOP-07-Contact.png
+
+Mobile
+
+MOBILE-01-Accueil.png
+MOBILE-02-Evenements.png
+MOBILE-03-Replay.png
+MOBILE-04-Connexion.png
+MOBILE-05-Organisateur.png
+MOBILE-06-Administrateur.png
+MOBILE-07-Contact.png
+
+Des captures supplémentaires peuvent être ajoutées lorsque cela permet de montrer un état particulier :
+
+DESKTOP-08-Evenements-Filtres.png
+DESKTOP-09-Replay-En-Cours.png
+DESKTOP-10-Organisateur-Formulaire.png
+DESKTOP-11-Administrateur-Supervision.png
+MOBILE-08-Navigation.png
+MOBILE-09-Connexion-Role.png
+
+Critères de qualité des captures
+
+Chaque capture doit respecter les règles suivantes :
+
+affichage net ;
+
+texte lisible ;
+
+cadrage propre ;
+
+absence d’élément coupé ;
+
+absence de fenêtre inutile ;
+
+résolution suffisante ;
+
+nom de fichier explicite ;
+
+correspondance avec l’état final du projet ;
+
+absence d’information sensible.
+
+Les captures doivent représenter le projet dans un état cohérent et fonctionnel.
+
+Sécurité et confidentialité
+
+Aucune capture ne doit afficher :
+
+de mot de passe personnel ;
+
+de jeton privé ;
+
+de clé secrète ;
+
+de variable d’environnement sensible ;
+
+de chemin contenant une information personnelle inutile ;
+
+d’identifiant privé ;
+
+de donnée réelle appartenant à un utilisateur.
+
+Les identifiants visibles dans l’application sont uniquement des comptes de démonstration :
+
+admin / admin123
+organizer / orga123
+player / player123
+
+Ils ne correspondent pas à des comptes de production.
+
+Lien avec les compétences démontrées
+
+Les captures de ce dossier complètent les autres preuves du projet.
+
+Pour chaque fonctionnalité importante, le dossier projet doit idéalement présenter trois éléments :
+
+une capture du code ;
+
+une explication du fonctionnement ;
+
+une capture du résultat final.
+
+Exemple pour la page Replay :
+
+Code TypeScript du replay
+        ↓
+Explication de la logique
+        ↓
+Capture du replay en fonctionnement
+
+Exemple pour la gestion des rôles :
+
+Code de session et de protection
+        ↓
+Explication des rôles
+        ↓
+Captures des espaces Organisateur et Administrateur
+
+Exemple pour les événements :
+
+Code HTML et TypeScript
+        ↓
+Explication des filtres et du rendu
+        ↓
+Capture de la page Événements
+
+Vérification avant validation
+
+Avant de considérer le dossier comme définitif, vérifier que :
+
+toutes les pages principales sont présentes ;
+
+chaque page existe en version Desktop ;
+
+chaque page importante existe en version Mobile ;
+
+les noms des fichiers sont cohérents ;
+
+les anciennes captures obsolètes ont été remplacées ;
+
+les doublons inutiles ont été supprimés ;
+
+les captures correspondent au code final ;
+
+les rôles sont correctement représentés ;
+
+aucune information sensible n’est visible ;
+
+l’ordre des captures facilite la lecture du dossier.
+
+Limites de la version présentée
+
+Esportify+ reste une application de démonstration.
+
+Les captures présentent l’interface de référence du projet, mais ne signifient pas que l’ensemble du système full-stack est hébergé en production.
+
+Dans la version actuelle :
+
+le frontend peut être publié sur Netlify ;
+
+le backend Express est exécuté localement ou avec Docker ;
+
+la base SQLite est utilisée par le backend ;
+
+le replay reste simulé ;
+
+l’authentification reste adaptée à un contexte de démonstration.
+
+Ces limites sont assumées afin de conserver un projet clair, stable, documenté et présentable.
+
+Conclusion
+
+Le dossier doc/site-final/ présente le résultat visuel de référence d’Esportify+.
+
+Il permet de vérifier :
+
+l’apparence générale de l’application ;
+
+la cohérence entre les pages ;
+
+l’adaptation Desktop et Mobile ;
+
+la présence des différents rôles ;
+
+le fonctionnement des principales interfaces ;
+
+la correspondance entre la documentation, le code et le rendu final.
+
+Ces captures constituent une partie importante des preuves du projet et permettent au jury de comprendre rapidement le résultat obtenu.
